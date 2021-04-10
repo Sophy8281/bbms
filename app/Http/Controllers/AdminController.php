@@ -1,0 +1,859 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
+use App\Models\Platelet;
+use App\Models\Plasma;
+use App\Models\Rbc;
+use App\Models\IssuedPlatelet;
+use App\Models\IssuedPlasma;
+use App\Models\IssuedRbc;
+use App\Models\DiscardedPlatelet;
+use App\Models\DiscardedPlasma;
+use App\Models\DiscardedRbc;
+use App\Models\Bank;
+use App\Models\Admin;
+use App\Models\Group;
+use App\Models\Staff;
+use App\Models\Drive;
+use App\Models\User;
+use PDF;
+use Carbon\Carbon;
+use App\Notifications\DonorNewDriveNotification;
+use DB;
+
+class AdminController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        $donors = User::all()->count();
+        $platelets = Platelet::all()->count();
+        $plasma = Plasma::all()->count();
+        $rbc = Rbc::all()->count();
+        return view('admin.admin', compact('donors','platelets','plasma','rbc'));
+    }
+
+    public function send_sms()
+    {
+        //
+    }
+
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
+
+    /******************** ADMIN BANK - MANAGEMENT *****************************/
+    public function addBank()
+    {
+        return view('admin.add_bank');
+    }
+
+    public function storeBank(Request $request)
+    {
+        $data = new Bank();
+        $data->admin_id=Auth::user()->id;
+        $data['name']=$request->name;
+        $data['email']=$request->email;
+        $data['phone']=$request->phone;
+        $data['county']=$request->county;
+        // dd($data);
+        $data->save();
+        return redirect('admin/all-banks/')->with('success','Bank Created Successfully!');
+    }
+
+    public function allBanks()
+    {
+        $banks = Bank::paginate(2);
+        return view('admin.banks.index', compact('banks'));
+    }
+
+    public function edit_bank($id)
+    {
+        $bank = Bank::findOrFail($id);
+        return view('admin.banks.edit', compact('bank'));
+    }
+
+    public function update_bank(Request $request, $id)
+    {
+        $bank = Bank::findOrFail($id);
+         $constraints = [
+            'name' => 'required',
+         ];
+        $input = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'county' => $request['county'],
+        ];
+        $this->validate($request, $constraints);
+        Bank::where('id', $id)
+            ->update($input);
+        return redirect('admin/all-banks/')->with('success', 'Bank updated successfully');
+    }
+
+    public function delete_bank($id)
+     {
+         $bank = Bank::findOrFail($id);
+         $bank->delete();
+         return redirect('admin/all-banks/')->with('success','Bank deleted Successfully!');
+     }
+
+    /******************** ADMIN BlOOD-GROUP - MANAGEMENT *****************************/
+    public function add_blood_group()
+    {
+        return view('admin.add_blood_group');
+    }
+
+    public function store_blood_group(Request $request)
+    {
+        $data = new Group();
+        $data->admin_id=Auth::user()->id;
+        $data['name']=$request->name;
+        // dd($data);
+        $data->save();
+        return redirect('admin/all-blood-groups/')->with('success','Blood Group Created Successfully!');
+    }
+
+    public function all_blood_groups()
+     {
+         $blood_groups = Group::paginate(5);
+         return view('admin.blood_groups.index', compact('blood_groups'));
+     }
+
+     public function edit_blood_group($id)
+    {
+        $blood_group = Group::findOrFail($id);
+        return view('admin.blood_groups.edit', compact('blood_group'));
+    }
+
+    public function update_blood_group(Request $request, $id)
+    {
+        $blood_group = Group::findOrFail($id);
+         $constraints = [
+            'name' => 'required',
+         ];
+        $input = [
+            'name' => $request['name'],
+        ];
+        $this->validate($request, $constraints);
+        Group::where('id', $id)
+            ->update($input);
+        return redirect('admin/all-blood-groups/')
+            ->with('success', 'Blood Group updated successfully');
+    }
+
+    public function delete_blood_group($id)
+     {
+         $blood_group = Group::findOrFail($id);
+         $blood_group->delete();
+         return redirect('admin/all-blood-groups/')->with('success','Blood Group deleted Successfully!');
+     }
+
+     /******************** ADMIN STAFF - MANAGEMENT *****************************/
+    public function all_staff ()
+    {
+        $staffs = Staff::paginate(10);
+        return view('admin.staff.index', compact('staffs'));
+    }
+
+    public function create_staff()
+    {
+        $banks =Bank::all();
+        return view('admin.staff.index',compact('banks'));
+    }
+
+    public function store_staff(Request $request)
+    {
+        $request->validate([
+            'bank_id' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:staff'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        Staff::create([
+            'bank_id' => $request['bank_id'],
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+        ]);
+        // dd($request);
+
+       return redirect()->intended('/admin/all-staff')->with('success','Staff Created Successfully!');
+    }
+
+    public function all_unassigned_staff()
+    {
+        $staffs = Staff::whereNull('bank_id')->get();
+        return view('admin.all_unassigned_staff', compact('staffs'));
+    }
+    public function assign_bank($id)
+    {
+        $banks =Bank::all();
+        $staff = Staff::findOrFail($id);
+        return view('admin.assign_bank', compact('banks','staff'));
+    }
+
+    public function save_assigned_bank(Request $request, $id)
+    {
+        $staff = Staff::findOrFail($id);
+        $constraints = [
+            'bank_id' => 'required|max:255',
+        ];
+        $input = [
+            'bank_id' => $request['bank_id'],
+        ];
+        $this->validate($request, $constraints);
+        Staff::where('id', $id)
+            ->update($input);
+
+        return redirect()->route('admin.staff.index')->withMessage('Staff Assigned Bank successfully!');
+    }
+
+    public function edit_staff($id)
+     {
+        $banks =Bank::all();
+        $staff = Staff::findOrFail($id);
+        return view('admin.staff.edit', compact('banks','staff'));
+     }
+
+     public function update_staff(Request $request, $id)
+     {
+         $staff = Staff::findOrFail($id);
+         $constraints = [
+             'bank_id' => 'required|max:255',
+             'name' => 'required|max:255',
+             'email'=> 'required|max:255',
+
+         ];
+        $input = [
+            'bank_id' => $request['bank_id'],
+            'name' => $request['name'],
+            'email' => $request['email'],
+        ];
+        $this->validate($request, $constraints);
+        Staff::where('id', $id)
+            ->update($input);
+         return redirect('/admin/all-staff')->with('success','Staff Updated Successfully!');
+     }
+
+    public function delete_staff($id)
+     {
+         $staff = Staff::findOrFail($id);
+         $staff->delete();
+         return redirect('/admin/all-staff')->with('success','Staff Deleted Successfully!');
+
+     }
+
+    /******************** ADMIN DONOR - MANAGEMENT *****************************/
+    public function all_donors(Request $request)
+    {
+        $users = User::all();
+        return view('admin.donors.index', compact('users'));
+    }
+
+    public function search_donor(Request $request)
+    {
+        $fromDate = $request->input('fromDate');
+        $toDate   = $request->input('toDate');
+
+        $users = DB::table('users')->select()
+            ->where('created_at', '>=', $fromDate)
+            ->where('created_at', '<=', $toDate)
+            ->get();
+        return view('admin.donors.index', compact('users'));
+    }
+
+    public function edit_donor($id)
+    {
+        $user = User::findOrFail($id);
+        $blood_groups = Group::all();
+        return view('admin.donors.edit', compact('user','blood_groups'));
+    }
+
+    public function update_donor(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $constraints = [
+            'name' => 'required|max:255',
+            'email'=> 'required|max:255',
+            'gender'=> 'required|max:255',
+            'unique_no'=> 'required|max:255',
+            'birth_date'=> 'required|max:255',
+            'address'=> 'max:255',
+            'phone'=> 'required|max:255',
+            'blood_group'=> 'required|max:255',
+            'county'=> 'required|max:255',
+        ];
+        $input = [
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'gender' => $request['gender'],
+            'unique_no' => $request['unique_no'],
+            'birth_date' => $request['birth_date'],
+            'address' => $request['address'],
+            'phone' => $request['phone'],
+            'blood_group' => $request['blood_group'],
+            'county' => $request['county'],
+        ];
+        $this->validate($request, $constraints);
+        User::where('id', $id)
+            ->update($input);
+
+        return redirect('/admin/all-donors')->with('success','Donor Updated Successfully!');
+    }
+
+    public function delete_donor($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect('/admin/all-donors')->with('success','Donor Deleted Successfully!');
+    }
+    // public function all_donors(Request $request)
+    // {
+
+    //     $filter = $request->query('filter');
+
+    //     if (!empty($filter)){
+    //         $users = User::sortable()
+    //             ->where('name', 'like', '%'.$filter.'%')
+    //             ->orWhere('email', 'like', '%'.$filter.'%')
+    //             ->paginate(2);
+    //     }else{
+    //         $users = User::sortable()
+    //             ->paginate(2);
+    //     }
+    //     if($request->has('download')){
+    //         $users = User::all();
+    //         $pdf = PDF::loadView('reports.donors', compact('users'));
+    //         return $pdf->stream('donors_list.pdf');
+    //     }
+
+    //     return view('admin.donors.index', compact('users','filter'));
+    // }
+
+
+    public function test_table()
+    {
+        $users = User::all();
+        return view('test_table', compact('users'));
+    }
+
+    public function destroy()
+    {
+        //
+    }
+
+    //  public function search_donor(Request $request)
+    // {
+    //     $fromDate = $request->input('fromDate');
+    //     $toDate   = $request->input('toDate');
+    //     // $other    = $request->input('other');
+
+    //     $users = DB::table('users')->select()
+    //         ->where('created_at', '>=', $fromDate)
+    //         ->where('created_at', '<=', $toDate)
+    //         // ->where('name', 'LIKE','%' .$other.'%')
+    //         // ->orWhere('sex', 'LIKE','%' .$other.'%')
+    //         // ->orWhere('email', 'LIKE','%' .$other.'%')
+    //         // ->orWhere('phone', 'LIKE','%' .$other.'%')
+    //         // ->orWhere('job_position', 'LIKE','%' .$other.'%')
+    //         // ->orWhere('salary', 'LIKE','%' .$other.'%')
+    //         ->get();
+
+    //     // dd($query);
+    //     return view('test_table',compact('users'));
+    // }
+
+    /******************** ADMIN STOCK- MANAGEMENT *****************************/
+    public function banks_stock()
+    {
+        $banks = Bank::all();
+
+        return view('admin.stock.index',compact('banks'));
+    }
+
+    public function bank_stock($id)
+    {
+        $blood_groups = Group::all();
+        $platelets = Platelet::get()->where('bank_id',$id);
+        $plasma = Plasma::get()->where('bank_id',$id);
+        $rbcs = Rbc::get()->where('bank_id',$id);
+        return view('admin.stock.show',compact('blood_groups','platelets','plasma','rbcs'));
+    }
+
+    /******************** ADMIN DRIVES- MANAGEMENT *****************************/
+    public function unapproved_drives()
+    {
+        $unapproved_drives = Drive::whereNull('approved_at')->get();
+        $approved_drives = Drive::whereNotNull('approved_at')->get();
+        return view('admin.drives.unapproved', compact('unapproved_drives','approved_drives'));
+    }
+    public function approve_drive($id)
+    {
+        $unapproved_drive = Drive::findOrFail($id);
+
+        $admin_id=Auth::user()->id;
+        $approved_at = Carbon::now();
+
+        $input = [
+            'admin_id' => $admin_id,
+            'approved_at' => $approved_at,
+        ];
+
+        // dd($input);
+        Drive::where('id', $id)
+            ->update($input);
+
+        $donors = User::all();
+        foreach ($donors as $donor) {
+            $donor->notify(new DonorNewDriveNotification($unapproved_drive));
+        }
+        return redirect('admin/unapproved-drives')->withMessage('Drive Approved successfully');
+    }
+
+    /******************** ADMIN REPORTS- MANAGEMENT *****************************/
+    public function donors_pdf(Request $request)
+    {
+        $users = User::all();
+        $pdf = PDF::loadView('reports.donors', compact('users'));
+        return $pdf->stream();
+    }
+    public function staff_pdf(Request $request)
+    {
+        $staff = Staff::all();
+        $pdf = PDF::loadView('reports.staff', compact('staff'));
+        return $pdf->stream();
+    }
+    public function plasma_pdf(Request $request)
+    {
+        $plasma = Plasma::all();
+        $pdf = PDF::loadView('reports.plasma', compact('plasma'));
+        return $pdf->stream();
+    }
+    public function platelets_pdf(Request $request)
+    {
+        $platelets = Platelet::all();
+        $pdf = PDF::loadView('reports.platelets', compact('platelets'));
+        return $pdf->stream();
+    }
+    public function rbc_pdf(Request $request)
+    {
+        $rbc = Rbc::all();
+        $pdf = PDF::loadView('reports.rbc', compact('rbc'));
+        return $pdf->stream();
+    }
+     public function issued_plasma_pdf(Request $request)
+    {
+        $plasma = IssuedPlasma::all();
+        $pdf = PDF::loadView('reports.issued_plasma', compact('plasma'));
+        return $pdf->stream();
+    }
+    public function issued_platelets_pdf(Request $request)
+    {
+        $platelets = IssuedPlatelet::all();
+        $pdf = PDF::loadView('reports.issued_platelets', compact('platelets'));
+        return $pdf->stream();
+    }
+    public function issued_rbc_pdf(Request $request)
+    {
+        $rbc = IssuedRbc::all();
+        $pdf = PDF::loadView('reports.issued_rbc', compact('rbc'));
+        return $pdf->stream();
+    }
+
+    public function discarded_plasma_pdf(Request $request)
+    {
+        $plasma = DiscardedPlasma::all();
+        $pdf = PDF::loadView('reports.discarded_plasma', compact('plasma'));
+        return $pdf->stream();
+    }
+    public function discarded_platelets_pdf(Request $request)
+    {
+        $platelets = DiscardedPlatelet::all();
+        $pdf = PDF::loadView('reports.discarded_platelets', compact('platelets'));
+        return $pdf->stream();
+    }
+    public function discarded_rbc_pdf(Request $request)
+    {
+        $rbc = DiscardedRbc::all();
+        $pdf = PDF::loadView('reports.discarded_rbc', compact('rbc'));
+        return $pdf->stream();
+    }
+
+    /******************** ADMIN CHARTS- MANAGEMENT *****************************/
+    public function donors_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Users by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\User',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            // 'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Users by names',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\User',
+            'group_by_field' => 'blood_group',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.donors', compact('chart1', 'chart2'));
+    }
+
+    public function staff_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Staff by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Staff',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            // 'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Staff by names',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\Staff',
+            'group_by_field' => 'name',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.staff', compact('chart1', 'chart2'));
+    }
+
+    public function plasma_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Plasma by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Plasma',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Plasma by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\Plasma',
+            'group_by_field' => 'bank_id',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'year', // show bags only registered this year
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.plasma', compact('chart1', 'chart2'));
+    }
+
+    public function platelets_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Platelet by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Platelet',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Platelet by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\Platelet',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.platelets', compact('chart1', 'chart2'));
+    }
+
+    public function rbc_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'RBC by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Rbc',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'RBC by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\Rbc',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.rbc', compact('chart1', 'chart2'));
+    }
+
+    public function issued_plasma_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Plasma Issued months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\IssuedPlasma',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Issued Plasma by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\IssuedPlasma',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.issued_plasma', compact('chart1', 'chart2'));
+    }
+
+    public function issued_platelets_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Issued Platelet Bags by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\IssuedPlatelet',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Issued Platelet by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\IssuedPlatelet',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.issued_platelets', compact('chart1', 'chart2'));
+    }
+
+     public function issued_rbc_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Issued RBC Bags by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\IssuedRbc',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Issued RBC by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\IssuedRbc',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.issued_rbc', compact('chart1', 'chart2'));
+    }
+
+    public function discarded_plasma_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Plasma Discarded months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\DiscardedPlasma',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Discarded Plasma by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\DiscardedPlasma',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.discarded_plasma', compact('chart1', 'chart2'));
+    }
+
+    public function discarded_platelets_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Discarded Platelet Bags by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\DiscardedPlatelet',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Discarded Platelet by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\DiscardedPlatelet',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.discarded_platelets', compact('chart1', 'chart2'));
+    }
+
+     public function discarded_rbc_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Discarded RBC Bags by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\DiscardedRbc',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Discarded RBC by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\DiscardedRbc',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.discarded_rbc', compact('chart1', 'chart2'));
+    }
+
+    /********************ADMIN BBMS-SITE - MANAGEMENT *****************************/
+}

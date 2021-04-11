@@ -44,7 +44,7 @@
     <tr>
         <th>#Id</th>
         <th>Bank</th>
-        <th>Stored By</th>
+        <th>Discarded By</th>
         <th>Agitator</th>
         <th>Bag SNo.</th>
         <th>Blood Group</th>

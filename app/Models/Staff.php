@@ -36,6 +36,16 @@ class Staff extends Authenticatable
         return $this->hasMany(Donation::class);
     }
 
+    public function blood()
+    {
+        return $this->hasMany(Blood::class);
+    }
+
+    public function issued_blood()
+    {
+        return $this->hasMany(IssuedBlood::class);
+    }
+
      public function rbc()
     {
         return $this->hasMany(Rbc::class);

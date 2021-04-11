@@ -55,6 +55,16 @@ class Bank extends Model
         return $this->hasMany(Plasma::class);
     }
 
+    public function blood()
+    {
+        return $this->hasMany(Blood::class);
+    }
+
+    public function issued_blood()
+    {
+        return $this->hasMany(IssuedBlood::class);
+    }
+
     public function staff()
     {
         return $this->hasMany(Staff::class);

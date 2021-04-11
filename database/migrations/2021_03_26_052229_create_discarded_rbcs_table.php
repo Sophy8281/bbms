@@ -26,7 +26,7 @@ class CreateDiscardedRbcsTable extends Migration
             $table->unsignedBigInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade');
             $table->date('donation_date');
-            $table->date('expiry_date');
+            $table->date('expiry_date')->nullable();
             $table->dateTime('discarded_at');
             $table->timestamps();
         });

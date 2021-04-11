@@ -16,9 +16,9 @@
                             <label for="blood_group" class="col-md-4 col-form-label text-md-right">{{ __('Blood Group') }}</label>
 
                             <div class="col-md-6">
-                                <select  id="blood_group" type="text"  name="blood_group">
+                                <select  id="blood_group" type="text"  name="group_id">
                                     @foreach ($blood_groups as $blood_group)
-                                        <option>{{ $blood_group->name }}</option>
+                                        <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
                                     @endforeach
                                     </select>
                             </div>

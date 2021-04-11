@@ -11,9 +11,11 @@ use App\Models\Plasma;
 use App\Models\Rbc;
 use App\Models\IssuedPlatelet;
 use App\Models\IssuedPlasma;
+use App\Models\IssuedBlood;
 use App\Models\IssuedRbc;
 use App\Models\DiscardedPlatelet;
 use App\Models\DiscardedPlasma;
+use App\Models\DiscardedBlood;
 use App\Models\DiscardedRbc;
 use App\Models\Bank;
 use App\Models\Admin;
@@ -173,7 +175,7 @@ class AdminController extends Controller
      /******************** ADMIN STAFF - MANAGEMENT *****************************/
     public function all_staff ()
     {
-        $staffs = Staff::paginate(10);
+        $staffs = Staff::whereNotNull('bank_id')->get();
         return view('admin.staff.index', compact('staffs'));
     }
 
@@ -430,7 +432,7 @@ class AdminController extends Controller
         foreach ($donors as $donor) {
             $donor->notify(new DonorNewDriveNotification($unapproved_drive));
         }
-        return redirect('admin/unapproved-drives')->withMessage('Drive Approved successfully');
+        return redirect('admin/unapproved-drives')->withMessage('Drive Approved successfully!');
     }
 
     /******************** ADMIN REPORTS- MANAGEMENT *****************************/
@@ -482,7 +484,12 @@ class AdminController extends Controller
         $pdf = PDF::loadView('reports.issued_rbc', compact('rbc'));
         return $pdf->stream();
     }
-
+    public function issued_blood_pdf(Request $request)
+    {
+        $blood = IssuedBlood::all();
+        $pdf = PDF::loadView('reports.issued_blood', compact('blood'));
+        return $pdf->stream();
+    }
     public function discarded_plasma_pdf(Request $request)
     {
         $plasma = DiscardedPlasma::all();
@@ -499,6 +506,12 @@ class AdminController extends Controller
     {
         $rbc = DiscardedRbc::all();
         $pdf = PDF::loadView('reports.discarded_rbc', compact('rbc'));
+        return $pdf->stream();
+    }
+    public function discarded_blood_pdf(Request $request)
+    {
+        $blood = DiscardedBlood::all();
+        $pdf = PDF::loadView('reports.discarded_blood', compact('blood'));
         return $pdf->stream();
     }
 
@@ -727,7 +740,7 @@ class AdminController extends Controller
         return view('admin.charts.issued_platelets', compact('chart1', 'chart2'));
     }
 
-     public function issued_rbc_charts()
+    public function issued_rbc_charts()
     {
         $chart_options = [
             'chart_title' => 'Issued RBC Bags by months',
@@ -757,6 +770,38 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
 
         return view('admin.charts.issued_rbc', compact('chart1', 'chart2'));
+    }
+
+    public function issued_blood_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Issued Blood Bags by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\IssuedBlood',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Issued Blood by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\IssuedBlood',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.issued_blood', compact('chart1', 'chart2'));
     }
 
     public function discarded_plasma_charts()
@@ -823,7 +868,7 @@ class AdminController extends Controller
         return view('admin.charts.discarded_platelets', compact('chart1', 'chart2'));
     }
 
-     public function discarded_rbc_charts()
+    public function discarded_rbc_charts()
     {
         $chart_options = [
             'chart_title' => 'Discarded RBC Bags by months',
@@ -853,6 +898,38 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
 
         return view('admin.charts.discarded_rbc', compact('chart1', 'chart2'));
+    }
+
+    public function discarded_blood_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Discarded Blood Bags by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\DiscardedBlood',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Discarded Blood by Bag SNos.',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\DiscardedBlood',
+            'group_by_field' => 'bag_serial_number',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+
+        return view('admin.charts.discarded_blood', compact('chart1', 'chart2'));
     }
 
     /********************ADMIN BBMS-SITE - MANAGEMENT *****************************/

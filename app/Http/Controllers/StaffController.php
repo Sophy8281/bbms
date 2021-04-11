@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Notifications\NewDonationNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
+use App\Models\DiscardedBlood;
 use App\Models\Refrigerator;
 use App\Models\Appointment;
 use App\Models\Donation;
@@ -15,6 +16,7 @@ use App\Models\Agitator;
 use App\Models\Platelet;
 use App\Models\Freezer;
 use App\Models\Plasma;
+use App\Models\Blood;
 use App\Models\Drive;
 use App\Models\Bank;
 use App\Models\Admin;
@@ -71,14 +73,20 @@ class StaffController extends Controller
     public function all_donors ()
     {
         $users = User::all();
-
         return view('staff.donors.index', compact('users'));
     }
 
-    // public function users_datatable(UsersDataTable $dataTable)
-    // {
-    //     return $dataTable->render('users');
-    // }
+    public function search_donor(Request $request)
+    {
+        $fromDate = $request->input('fromDate');
+        $toDate   = $request->input('toDate');
+
+        $users = DB::table('users')->select()
+            ->where('created_at', '>=', $fromDate)
+            ->where('created_at', '<=', $toDate)
+            ->get();
+        return view('staff.donors.index', compact('users'));
+    }
 
     public function createUser()
     {
@@ -174,7 +182,22 @@ class StaffController extends Controller
     public function all_donations()
     {
         $bank_id=Auth::user()->bank_id;
-        $donations = Donation::where('bank_id',$bank_id)->paginate(10);
+        $donations = Donation::where('bank_id',$bank_id)
+            ->whereNull('processed_at')
+            ->whereNull('stored_at')->get();
+        return view('staff.donations.index', compact('donations'));
+    }
+
+    public function search_donation(Request $request)
+    {
+        $fromDate = $request->input('fromDate');
+        $toDate   = $request->input('toDate');
+
+        $bank_id=Auth::user()->bank_id;
+        $donations = Donation::where('bank_id',$bank_id)->whereNotNull('blood_group')
+            ->where('created_at', '>=', $fromDate)
+            ->where('created_at', '<=', $toDate)
+            ->get();
         return view('staff.donations.index', compact('donations'));
     }
 
@@ -195,22 +218,22 @@ class StaffController extends Controller
         $data['donor_id']=$request->donor_id;
         $data->bank_id=Auth::user()->bank_id;
         $data['bag_serial_number']=$request->bag_serial_number;
-        $data['blood_group']=$request->blood_group;
+        $data['group_id']=$request->group_id;
         $data['status']=$request->status;
        // dd($data);
         $data->save();
         $donor = User::get()->where('id',$data['donor_id']);
         // dd($donor);
         Notification::send( $donor, new NewDonationNotification($data));
-        $phone = DB::table('users')
-            ->where('id',$data['donor_id'])
-            ->select('phone')
-            ->pluck('phone')
-            ->first();
+        // $phone = DB::table('users')
+        //     ->where('id',$data['donor_id'])
+        //     ->select('phone')
+        //     ->pluck('phone')
+        //     ->first();
         // dd( $phone );
-        if($phone){
-            SendSms::sendsms($phone);
-        }
+        // if($phone){
+        //     SendSms::sendsms($phone);
+        // }
         return redirect('staff/all-donations/')->with('success','Donation Added Successfully!');
     }
 
@@ -228,13 +251,13 @@ class StaffController extends Controller
          $constraints = [
             'donor_id' => ['required'],
             'bag_serial_number' => ['required', 'unique:donations'],
-            'blood_group' => ['required'],
+            'group_id' => ['required'],
             'status' => ['required'],
          ];
         $input = [
             'donor_id' => $request['donor_id'],
             'bag_serial_number' => $request['bag_serial_number'],
-            'blood_group' => $request['blood_group'],
+            'group_id' => $request['group_id'],
             'status' => $request['status'],
         ];
         $this->validate($request, $constraints);
@@ -244,21 +267,43 @@ class StaffController extends Controller
         return redirect('staff/all-donations/')->with('success', 'Donation updated successfully!');
     }
 
-    public function delete_donation($id)
-     {
-         $donation = Donation::findOrFail($id);
-         $donation->delete();
+    public function discard_donation($id)
+    {
+        $discarded_at = Carbon::today();
+        $donation = Donation::findOrFail($id);
 
-         return redirect('staff/all-donations/')->with('success','Donation deleted Successfully!');
+        //now save the data in the variables;
+        $donation_id = $donation->id;
+        $bag_serial_number = $donation->bag_serial_number;
+        $group_id = $donation->group_id;
+        $donation_date = $donation->created_at;
 
-     }
+        $discarded_donation = new DiscardedBlood();
+        $discarded_donation->donation_id = $donation_id;//from blood
+
+        $discarded_donation->bank_id=Auth::user()->bank_id;//in session
+        $discarded_donation->staff_id=Auth::user()->id;//in session
+
+        $discarded_donation->bag_serial_number = $bag_serial_number;//from blood
+        $discarded_donation->group_id = $group_id;//from blood
+        $discarded_donation->donation_date = $donation_date;//from blood
+
+        $discarded_donation['discarded_at']=$discarded_at;//carbon
+
+        // dd($discarded_plasma);
+        $discarded_donation->save();
+        $donation->delete();
+
+        //then return to your view or whatever you want to do
+        return redirect('staff/all-donations/')->with('success','Donation discarded Successfully!');
+    }
 
     /******************** STAFF BLOOD-RESULTS - MANAGEMENT *****************************/
     public function all_unscreened_donations()
     {
         $bank_id=Auth::user()->bank_id;
         // $donations = Donation::where('bank_id',$bank_id)->paginate(10);
-        $donations = Donation::whereNull('blood_group')->where('bank_id',$bank_id)->get();
+        $donations = Donation::whereNull('group_id')->where('bank_id',$bank_id)->get();
         //  $donations = Donation::paginate(10);
          return view('staff.unscreened_donations', compact('donations'));
      }
@@ -274,7 +319,7 @@ class StaffController extends Controller
     public function store_blood_results(Request $request, $id)
     {
         $data =array();
-        $data['blood_group']=$request->blood_group;
+        $data['group_id']=$request->group_id;
         $data['status']=$request->status;
 
         DB::table('donations')
@@ -512,12 +557,25 @@ class StaffController extends Controller
     }
 
     public function delete_refrigerator($id)
-     {
-         $refrigerator = Refrigerator::findOrFail($id);
-         $refrigerator->delete();
-         return redirect('staff/all-refrigerators/')->with('success','Refrigerator deleted Successfully!');
+    {
+        $refrigerator = Refrigerator::findOrFail($id);
+        $refrigerator->delete();
+        return redirect('staff/all-refrigerators/')->with('success','Refrigerator deleted Successfully!');
 
-     }
+    }
+
+    /******************** STAFF WHOLE-BLOOD - MANAGEMENT *****************************/
+    public function whole_blood()
+    {
+        return view('staff.blood.index');
+    }
+
+    public function all_safe()
+    {
+        $safe = 'Safe';
+        $safe_blood = Donation::where('status', $safe)->get();
+        return view('staff.blood.process',compact('safe_blood'));
+    }
 
     /******************** STAFF DRIVE - MANAGEMENT *****************************/
     public function all_drives()
@@ -629,6 +687,13 @@ class StaffController extends Controller
         return $pdf->stream();
     }
 
+    public function donations_pdf(Request $request)
+    {
+        $donations = Donation::all();
+        $pdf = PDF::loadView('reports.donations', compact('donations'));
+        return $pdf->stream();
+    }
+
     public function plasma_pdf(Request $request)
     {
         $bank_id=Auth::user()->bank_id;
@@ -648,8 +713,16 @@ class StaffController extends Controller
     public function rbc_pdf(Request $request)
     {
         $bank_id=Auth::user()->bank_id;
-        $rbc = rbc::where('bank_id',$bank_id)->get();
+        $rbc = Rbc::where('bank_id',$bank_id)->get();
         $pdf = PDF::loadView('reports.rbc', compact('rbc'));
+        return $pdf->stream();
+    }
+
+     public function blood_pdf(Request $request)
+    {
+        $bank_id=Auth::user()->bank_id;
+        $blood = Blood::where('bank_id',$bank_id)->get();
+        $pdf = PDF::loadView('reports.blood', compact('blood'));
         return $pdf->stream();
     }
 

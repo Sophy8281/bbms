@@ -50,6 +50,7 @@
         <th>Blood Group</th>
         <th>Donation</th>
         <th>Expiry</th>
+        <th>Issued To</th>
         <th>Days Remaining</th>
 
 
@@ -66,6 +67,7 @@
         <td>{{ $platelet->group->name }}</td>
         <td>{{ $platelet->donation_date }}</td>
         <td>{{ $platelet->expiry_date }}</td>
+        <td>{{ $platelet->hospital->name }}</td>
         @if ($platelet->expiry_date == Carbon\Carbon::today()|$platelet->expiry_date < Carbon\Carbon::today())
             <td>
                 <a href="" class="btn btn-warning"> EXPIRED</a>

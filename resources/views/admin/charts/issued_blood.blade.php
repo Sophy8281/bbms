@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-md">
         <div class="card">
-            <div class="card-header">Discarded Whole-Blood Charts</div>
+            <div class="card-header">Issued Whole-Blood Charts</div>
 
             <div class="card-body">
 

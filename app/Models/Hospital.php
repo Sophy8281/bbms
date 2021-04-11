@@ -31,6 +31,11 @@ class Hospital extends Model
         return $this->hasMany(Platelet::class);
     }
 
+    public function blood()
+    {
+        return $this->hasMany(Blood::class);
+    }
+
     public function admin()
     {
        return $this->belongsTo(Admin::class);

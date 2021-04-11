@@ -18,7 +18,7 @@
             <button type="submit" class="btn btn-primary" name="search" title="Search">Filter Range</button>
         </div>
         {{-- <div class="col-sm">
-            <a class="btn btn-primary" href="{{ url('admin/reports/donors') }}" target="_blank">Export All</a>
+            <a class="btn btn-primary" href="{{ url('staff/reports/donors') }}" target="_blank">Export All</a>
         </div> --}}
     </div>
 </form>

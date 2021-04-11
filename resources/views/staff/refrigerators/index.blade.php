@@ -10,7 +10,7 @@
             <i class="fa fa-plus-circle"></i>   Add RBC to Stock</a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Refrigerators </div>
+    <div class="panel-heading"><i class="fa fa-group"></i> Refrigerators(Store RBC) </div>
     <div class="panel-body">
 
         <table class="table">

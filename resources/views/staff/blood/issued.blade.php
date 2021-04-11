@@ -1,45 +1,38 @@
 @extends('layouts.staff_dashboard')
-
 @section('content')
 @include('flash-message')
 
-{{-- <div>
-    <a href="{{ URL::to('staff/plasma/add')  }}" class="btn btn-success">
-        <i class="fa fa-plus-square"></i>   Store Plasma</a>
-</div> --}}
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Platelets Issued</div>
+    <div class="panel-heading"><i class="fa fa-group"></i> Whole-Blood Issued</div>
     <div class="panel-body">
 
         <div class="col-md">
            <table id="example" class="table table-bordered table-hover">
                <thead>
                    <tr>
-                        <th>#Id</th>
-                        <th>Platelet ID</th>
-                        <th>Bank ID</th>
+                         <th>#Id</th>
+                        <th>Donation Id</th>
+                        <th>Bank</th>
                         <th>Issued_By</th>
-                        <th>Agitator</th>
                         <th>Bag Serial No.</th>
-                        <th>Blood Group</th>
+                        <th>B_Group</th>
                         <th>Issued_To</th>
 
                     </tr>
                </thead>
-               @forelse($platelets as $platelet)
+               @forelse($blood as $blood)
                <tr>
-                    <td>{{ $platelet->id }}</td>
-                    <td>{{ $platelet->platelet_id }}</td>
-                    <td>{{ $platelet->bank_id }}</td>
-                    <td>{{ $platelet->staff_id }}</td>
-                    <td>{{ $platelet->agitator->name}}</td>
-                    <td>{{ $platelet->bag_serial_number }}</td>
-                    <td>{{ $platelet->group->name }}</td>
-                    <td>{{ $platelet->hospital->name }}</td>
+                    <td>{{ $blood->id }}</td>
+                    <td>{{ $blood->donation_id }}</td>
+                    <td>{{ $blood->bank->name }}</td>
+                    <td>{{ $blood->staff->name }}</td>
+                    <td>{{ $blood->bag_serial_number }}</td>
+                    <td>{{ $blood->group->name }}</td>
+                    <td>{{ $blood->hospital->name }}</td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4">No Platelet Bags Issued.</td>
+                    <td colspan="4">No Whole-Blood Bags Issued.</td>
                 </tr>
                 @endforelse
             </table>

@@ -276,7 +276,24 @@
               <li class="nav-item">
                 <a href="{{ URL::to('/staff/unscreened-donations') }}" class="nav-link">
                   <i class="fa fa-plus-circle"></i>
-                  <p>Add Blood Results</p>
+                  <p>Add Test Results</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+             <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
+              <i class="fa fa-hourglass"></i>
+              <p>
+                Processing
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ URL::to('/staff/process') }}" class="nav-link">
+                  <i class="fa fa-hourglass"></i>
+                  <p>Process/Store</p>
                 </a>
               </li>
             </ul>
@@ -308,6 +325,12 @@
                     <p>Refrigerators</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{ URL::to('staff/cold-room')  }}" class="nav-link">
+                    <i class="fa fa-archive"></i>
+                    <p>Cold Room</p>
+                  </a>
+                </li>
               </ul>
           </li>
           <li class="nav-item has-treeview menu-open">
@@ -337,8 +360,15 @@
                   <p>Issued RBCs</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/blood/issued')  }}" class="nav-link">
+                  <i class="fa fa-minus-circle"></i>
+                  <p>Issued Blood</p>
+                </a>
+              </li>
             </ul>
           </li>
+
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link active">
               <i class="fa fa-ambulance"></i>
@@ -395,6 +425,12 @@
                   <p>Red Blood Cells</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/reports/blood') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Whole Blood</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -432,11 +468,11 @@
     <section class="content">
         <div class="container-fluid">
             <main class="">
-                <div class="row">
+
                     <div class="">
                         @yield('content')
                     </div>
-                </div>
+
                 {{-- @yield('content') --}}
              </main>
         </div>

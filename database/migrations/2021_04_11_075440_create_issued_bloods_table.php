@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDonationsTable extends Migration
+class CreateIssuedBloodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,21 @@ class CreateDonationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('donations', function (Blueprint $table) {
+        Schema::create('issued_bloods', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('staff_id');
-            $table->foreign('staff_id')->references('id')->on('staff');
-            $table->unsignedBigInteger('donor_id');
-            $table->foreign('donor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('donation_id');
             $table->unsignedBigInteger('bank_id');
             $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('staff_id');
+            $table->foreign('staff_id')->references('id')->on('staff');
             $table->string('bag_serial_number')->unique();
-            $table->unsignedBigInteger('group_id')->nullable();
+            $table->unsignedBigInteger('group_id');
             $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade');
-            // $table->string('blood_group')->nullable();
-            $table->string('status')->nullable();
-            $table->dateTime('processed_at')->nullable();
-            $table->dateTime('stored_at')->nullable();
-
+            $table->date('donation_date');
+            $table->date('expiry_date');
+            $table->unsignedBigInteger('hospital_id');
+            $table->foreign('hospital_id')->references('id')->on('hospitals');
+            $table->dateTime('issued_at');
             $table->timestamps();
         });
     }
@@ -40,6 +39,6 @@ class CreateDonationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donations');
+        Schema::dropIfExists('issued_bloods');
     }
 }

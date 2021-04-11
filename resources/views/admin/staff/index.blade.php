@@ -19,7 +19,7 @@
             </tr>
 
 
-            @foreach($staffs as $staff)
+            @forelse($staffs as $staff)
             <tr>
                 <td>{{ $staff->id }}</td>
                 <td>{{ $staff->bank->name }}</td>
@@ -34,15 +34,16 @@
                     <a href="{{ url('admin/staff/delete/'.$staff->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
-            @endforeach
-
-
-
+            @empty
+            <tr>
+                <td colspan="4">There are no staff in the system.</td>
+            </tr>
+            @endforelse
 
         </table>
 
 
-        {{ $staffs->render() }}
+        {{-- {{ $staffs->render() }} --}}
 
     </div>
 

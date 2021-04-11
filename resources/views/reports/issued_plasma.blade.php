@@ -44,12 +44,13 @@
     <tr>
         <th>#Id</th>
         <th>Bank</th>
-        <th>Stored By</th>
+        <th>Issued By</th>
         <th>Freezer</th>
         <th>Bag SNo.</th>
         <th>Blood Group</th>
         <th>Donation</th>
         <th>Expiry</th>
+        <th>Issued To</th>
         <th>Days Remaining</th>
 
 
@@ -65,6 +66,7 @@
         <td>{{ $plasma->group->name }}</td>
         <td>{{ $plasma->donation_date }}</td>
         <td>{{ $plasma->expiry_date }}</td>
+        <td>{{ $plasma->hospital->name }}</td>
         @if ($plasma->expiry_date == Carbon\Carbon::today()|$plasma->expiry_date < Carbon\Carbon::today())
             <td>
                 <a href="" class="btn btn-warning"> EXPIRED</a>

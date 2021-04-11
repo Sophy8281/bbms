@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Issued red blood cells pdf report</title>
+    <title>Available whole blood pdf report</title>
 
     <!-- Styles -->
     <style>
@@ -38,48 +38,48 @@
             </tr>
         </table>
     </div>
-<h3 style="color: red">Red Blood Cells Issued</h3>
+<h3 style="color: red">Whole Blood Available</h3>
 <table class="table">
 
     <tr>
         <th>#Id</th>
+        <th>Donation Id</th>
         <th>Bank</th>
         <th>Stored By</th>
         <th>Refrigerator</th>
         <th>Bag SNo.</th>
         <th>Blood Group</th>
-        <th>Donation</th>
+        <th>Donation Date</th>
         <th>Expiry</th>
-        <th>Issued To</th>
         <th>Days Remaining</th>
 
 
     </tr>
 
-    @forelse($rbc as $rbc)
+    @forelse($blood as $blood)
     <tr>
-        <td>{{ $rbc->id }}</td>
-        <td>{{ $rbc->bank->name }}</td>
-        <td>{{ $rbc->staff->name }}</td>
-        <td>{{ $rbc->refrigerator->name}}</td>
-        <td>{{ $rbc->bag_serial_number }}</td>
-        <td>{{ $rbc->group->name }}</td>
-        <td>{{ $rbc->donation_date }}</td>
-        <td>{{ $rbc->expiry_date }}</td>
-        <td>{{ $rbc->hospital->name }}</td>
-        @if ($rbc->expiry_date == Carbon\Carbon::today()|$rbc->expiry_date < Carbon\Carbon::today())
+        <td>{{ $blood->id }}</td>
+        <td>{{ $blood->donation_id }}</td>
+        <td>{{ $blood->bank->name }}</td>
+        <td>{{ $blood->staff->name }}</td>
+        <td>{{ $blood->refrigerator->name}}</td>
+        <td>{{ $blood->bag_serial_number }}</td>
+        <td>{{ $blood->group->name }}</td>
+        <td>{{ $blood->donation_date }}</td>
+        <td>{{ $blood->expiry_date }}</td>
+        @if ($blood->expiry_date == Carbon\Carbon::today()|$blood->expiry_date < Carbon\Carbon::today())
             <td>
                 <a href="" class="btn btn-warning">EXPIRED</a>
             </td>
 
         @else
-            <td>{{ Carbon\Carbon::create($rbc->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
+            <td>{{ Carbon\Carbon::create($blood->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
 
         @endif
     </tr>
     @empty
     <tr>
-        <td colspan="4">No Red Blood Cells issued.</td>
+        <td colspan="4">No Whole Blood found.</td>
     </tr>
 @endforelse
 </table>

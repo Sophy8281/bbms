@@ -10,7 +10,7 @@
         <i class="fa fa-plus-circle"></i>   Add Plasma to Stock</a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Freezers </div>
+    <div class="panel-heading"><i class="fa fa-group"></i> Freezers(Store Plasma) </div>
     <div class="panel-body">
 
         <table class="table">

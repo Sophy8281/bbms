@@ -396,6 +396,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ URL::to('admin/reports/issued-blood') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Issued Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ URL::to('admin/reports/discarded-plasma') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Discarded Plasma</p>
@@ -411,6 +417,12 @@
                 <a href="{{ URL::to('admin/reports/discarded-rbc') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Discarded RBC</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/reports/discarded-blood') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Discarded Blood</p>
                 </a>
               </li>
             </ul>
@@ -472,6 +484,12 @@
                   <p>Issued RBC</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/charts/issued-blood') }}" class="nav-link">
+                  <i class="ion ion-pie-graph"></i>
+                  <p>Issued Blood</p>
+                </a>
+              </li>
                 <li class="nav-item">
                 <a href="{{ URL::to('admin/charts/discarded-plasma') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
@@ -488,6 +506,12 @@
                 <a href="{{ URL::to('admin/charts/discarded-rbc') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
                   <p>Discarded RBC</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/charts/discarded-blood') }}" class="nav-link">
+                  <i class="ion ion-pie-graph"></i>
+                  <p>Discarded Blood</p>
                 </a>
               </li>
             </ul>

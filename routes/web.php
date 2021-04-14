@@ -270,6 +270,18 @@ Route::prefix('admin')->group(function () {
     // Stock view routes
     Route::get('/stock', 'App\Http\Controllers\AdminController@banks_stock');
     Route::get('/stock/show/{id}', 'App\Http\Controllers\AdminController@bank_stock');
+    Route::get('/blood', 'App\Http\Controllers\AdminController@blood');
+    Route::get('/plasma', 'App\Http\Controllers\AdminController@plasma');
+    Route::get('/platelets', 'App\Http\Controllers\AdminController@platelets');
+    Route::get('/rbc', 'App\Http\Controllers\AdminController@rbc');
+    Route::get('/issued-blood', 'App\Http\Controllers\AdminController@issued_blood');
+    Route::get('/issued-plasma', 'App\Http\Controllers\AdminController@issued_plasma');
+    Route::get('/issued-platelets', 'App\Http\Controllers\AdminController@issued_platelets');
+    Route::get('/issued-rbc', 'App\Http\Controllers\AdminController@issued_rbc');
+    Route::get('/discarded-blood', 'App\Http\Controllers\AdminController@discarded_blood');
+    Route::get('/discarded-plasma', 'App\Http\Controllers\AdminController@discarded_plasma');
+    Route::get('/discarded-platelets', 'App\Http\Controllers\AdminController@discarded_platelets');
+    Route::get('/discarded-rbc', 'App\Http\Controllers\AdminController@discarded_rbc');
 
     // Report management routes
     Route::get('/reports/donors', 'App\Http\Controllers\AdminController@donors_pdf');

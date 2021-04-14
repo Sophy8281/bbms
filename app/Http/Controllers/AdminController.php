@@ -17,6 +17,8 @@ use App\Models\DiscardedPlatelet;
 use App\Models\DiscardedPlasma;
 use App\Models\DiscardedBlood;
 use App\Models\DiscardedRbc;
+use App\Models\Hospital;
+use App\Models\Blood;
 use App\Models\Bank;
 use App\Models\Admin;
 use App\Models\Group;
@@ -392,7 +394,6 @@ class AdminController extends Controller
     public function banks_stock()
     {
         $banks = Bank::all();
-
         return view('admin.stock.index',compact('banks'));
     }
 
@@ -404,6 +405,79 @@ class AdminController extends Controller
         $rbcs = Rbc::get()->where('bank_id',$id);
         return view('admin.stock.show',compact('blood_groups','platelets','plasma','rbcs'));
     }
+
+    public function blood()
+    {
+        $bloods = Blood::all();
+        return view('admin.stock.blood',compact('bloods'));
+    }
+
+    public function plasma()
+    {
+        $plasma = Plasma::all();
+        return view('admin.stock.plasma',compact('plasma'));
+    }
+
+    public function platelets()
+    {
+        $platelets = Platelet::all();
+        return view('admin.stock.platelets',compact('platelets'));
+    }
+
+    public function rbc()
+    {
+        $rbc = Rbc::all();
+        return view('admin.stock.rbc',compact('rbc'));
+    }
+
+    public function issued_blood()
+    {
+        $blood = IssuedBlood::all();
+        return view('admin.stock.issued_blood',compact('blood'));
+    }
+
+    public function issued_plasma()
+    {
+        $plasma = IssuedPlasma::all();
+        return view('admin.stock.issued_plasma',compact('plasma'));
+    }
+
+    public function issued_platelets()
+    {
+        $platelets = IssuedPlatelet::all();
+        return view('admin.stock.issued_platelets',compact('platelets'));
+    }
+
+    public function issued_rbc()
+    {
+        $rbc = IssuedRbc::all();
+        return view('admin.stock.issued_rbc',compact('rbc'));
+    }
+
+    public function discarded_blood()
+    {
+        $blood  = DiscardedBlood::all();
+        return view('admin.stock.discarded_blood',compact('blood'));
+    }
+
+    public function discarded_plasma()
+    {
+        $plasma = DiscardedPlasma::all();
+        return view('admin.stock.discarded_plasma',compact('plasma'));
+    }
+
+    public function discarded_platelets()
+    {
+        $platelets = DiscardedPlatelet::all();
+        return view('admin.stock.discarded_platelets',compact('platelets'));
+    }
+
+    public function discarded_rbc()
+    {
+        $rbc = DiscardedRbc::all();
+        return view('admin.stock.discarded_rbc',compact('rbc'));
+    }
+
 
     /******************** ADMIN DRIVES- MANAGEMENT *****************************/
     public function unapproved_drives()
@@ -789,19 +863,20 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued Blood by Bag SNos.',
+            'chart_title' => 'Issued Blood by Hospital.',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedBlood',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'hospital_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month', // show  only registered this month
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $hospitals = Hospital::all();
 
-        return view('admin.charts.issued_blood', compact('chart1', 'chart2'));
+        return view('admin.charts.issued_blood', compact('chart1', 'chart2','hospitals'));
     }
 
     public function discarded_plasma_charts()

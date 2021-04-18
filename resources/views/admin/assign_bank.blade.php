@@ -38,6 +38,7 @@
                           </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
+                        <a href="{{ url('admin/unassigned-staff') }}" class="btn btn-danger">Cancel</a>
                     </form>
             </div>
         </div>

@@ -73,6 +73,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Save') }}
                                 </button>
+                                <a href="{{ url('staff/all-donations') }}" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
                     </form>

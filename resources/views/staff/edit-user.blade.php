@@ -122,6 +122,7 @@
                 </p>
             </div>
             <input type="submit" class="btn btn-primary" value="Submit">
+            <a href="{{ url('staff/all-users') }}" class="btn btn-danger">Cancel</a>
         </form>
     </div>
 </div>

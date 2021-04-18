@@ -40,6 +40,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Save') }}
                                 </button>
+                                <a href="{{ URL::to('staff/unscreened-donations')  }}" class="btn btn-danger">
+                                    <i class=""></i>   Cancel</a>
                             </div>
                         </div>
                     </form>

@@ -1,10 +1,6 @@
 @extends('layouts.staff_dashboard')
 
 @section('content')
-{{-- <div>
-    <a href="{{ URL::to('staff/plasma')  }}" class="btn btn-success">
-        <i class=""></i>   Plasma in Stock</a>
-</div> --}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -57,6 +53,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Update') }}
                                 </button>
+                                <a href="{{ url('staff/drives') }}" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
                     </form>

@@ -172,7 +172,7 @@ class BloodController extends Controller
 
         //then return to your view or whatever you want to do
         return redirect('staff/process')
-            ->with('success', 'Blood Bag stored successfully!');
+            ->with('success', 'Blood Bag stored in Cold Room successfully!');
     }
 
     public function process_blood($id)
@@ -189,7 +189,8 @@ class BloodController extends Controller
         Donation::where('id', $id)
             ->update($input);
 
-        return redirect('staff/process')->withMessage('Blood Processed successfully!');
+        return redirect('staff/process')
+            ->with('success', 'Blood Processed successfully!');
     }
 
 

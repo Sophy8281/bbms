@@ -14,6 +14,10 @@
                 <hr />
 
                 <h1>{{ $chart2->options['chart_title'] }}</h1>
+                <h3>Key</h3>
+                @foreach ($hospitals as $hospital)
+                {{$hospital->id}}-{{$hospital->name}}
+                @endforeach
                 {!! $chart2->renderHtml() !!}
             </div>
         </div>

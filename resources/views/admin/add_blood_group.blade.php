@@ -9,7 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-danger text-light">{{ __('Add New Blood Group') }}</div>
+                <div class="card-header bg-primary text-light">{{ __('Add New Blood Group') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ url('admin/add-blood-group') }}" aria-label="{{ __('Add New Blood Group') }}">
@@ -34,6 +34,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Save') }}
                                 </button>
+                                <a href="{{ url('admin/all-blood-groups') }}" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
                     </form>

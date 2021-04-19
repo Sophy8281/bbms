@@ -654,6 +654,38 @@ class AdminController extends Controller
         return view('admin.charts.staff', compact('chart1', 'chart2'));
     }
 
+    public function blood_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Whole Blood Availability by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Blood',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30,
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Whole Blood Availability by Bank',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\Blood',
+            'group_by_field' => 'bank_id',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'year',
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
+
+        return view('admin.charts.blood', compact('chart1', 'chart2'));
+    }
     public function plasma_charts()
     {
         $chart_options = [

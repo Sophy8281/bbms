@@ -593,7 +593,7 @@ class AdminController extends Controller
     public function donors_charts()
     {
         $chart_options = [
-            'chart_title' => 'Users by months',
+            'chart_title' => 'Donors registered by Month',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\User',
             'group_by_field' => 'created_at',
@@ -601,20 +601,20 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            // 'filter_days' => 30, // show only last 30 days
+            // 'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Users by names',
+            'chart_title' => 'Donors by Blood Group',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\User',
             'group_by_field' => 'blood_group',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
@@ -625,7 +625,7 @@ class AdminController extends Controller
     public function staff_charts()
     {
         $chart_options = [
-            'chart_title' => 'Staff by months',
+            'chart_title' => 'Staff registered by Month',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Staff',
             'group_by_field' => 'created_at',
@@ -633,20 +633,20 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            // 'filter_days' => 30, // show only last 30 days
+            // 'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Staff by names',
+            'chart_title' => 'Staff by banks',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Staff',
-            'group_by_field' => 'name',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
@@ -686,10 +686,11 @@ class AdminController extends Controller
 
         return view('admin.charts.blood', compact('chart1', 'chart2'));
     }
+
     public function plasma_charts()
     {
         $chart_options = [
-            'chart_title' => 'Plasma by months',
+            'chart_title' => 'Plasma Availability by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Plasma',
             'group_by_field' => 'created_at',
@@ -697,23 +698,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Plasma by Bag SNos.',
+            'chart_title' => 'Plasma Availability by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Plasma',
             'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'year', // show bags only registered this year
+            'filter_period' => 'year',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.plasma', compact('chart1', 'chart2'));
     }
@@ -721,7 +723,7 @@ class AdminController extends Controller
     public function platelets_charts()
     {
         $chart_options = [
-            'chart_title' => 'Platelet by months',
+            'chart_title' => 'Platelet Availability by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Platelet',
             'group_by_field' => 'created_at',
@@ -729,23 +731,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Platelet by Bag SNos.',
+            'chart_title' => 'Platelet Availability by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Platelet',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.platelets', compact('chart1', 'chart2'));
     }
@@ -753,7 +756,7 @@ class AdminController extends Controller
     public function rbc_charts()
     {
         $chart_options = [
-            'chart_title' => 'RBC by months',
+            'chart_title' => 'RBC Availability by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Rbc',
             'group_by_field' => 'created_at',
@@ -761,23 +764,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'RBC by Bag SNos.',
+            'chart_title' => 'RBC Availability by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Rbc',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.rbc', compact('chart1', 'chart2'));
     }
@@ -793,23 +797,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued Plasma by Bag SNos.',
+            'chart_title' => 'Issued Plasma by Hospital',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedPlasma',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'hospital_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $hospitals = Hospital::all();
 
         return view('admin.charts.issued_plasma', compact('chart1', 'chart2'));
     }
@@ -825,23 +830,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued Platelet by Bag SNos.',
+            'chart_title' => 'Issued Platelet by Hospital',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedPlatelet',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'hospital_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $hospitals = Hospital::all();
 
         return view('admin.charts.issued_platelets', compact('chart1', 'chart2'));
     }
@@ -857,23 +863,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued RBC by Bag SNos.',
+            'chart_title' => 'Issued RBC by Hospital',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedRbc',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'hospital_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $hospitals = Hospital::all();
 
         return view('admin.charts.issued_rbc', compact('chart1', 'chart2'));
     }
@@ -889,20 +896,20 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued Blood by Hospital.',
+            'chart_title' => 'Issued Blood by Hospital',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedBlood',
             'group_by_field' => 'hospital_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show  only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
@@ -922,23 +929,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Discarded Plasma by Bag SNos.',
+            'chart_title' => 'Discarded Plasma by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\DiscardedPlasma',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.discarded_plasma', compact('chart1', 'chart2'));
     }
@@ -954,23 +962,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Discarded Platelet by Bag SNos.',
+            'chart_title' => 'Discarded Platelet by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\DiscardedPlatelet',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.discarded_platelets', compact('chart1', 'chart2'));
     }
@@ -986,23 +995,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Discarded RBC by Bag SNos.',
+            'chart_title' => 'Discarded RBC by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\DiscardedRbc',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.discarded_rbc', compact('chart1', 'chart2'));
     }
@@ -1018,23 +1028,24 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_days' => 30, // show only last 30 days
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Discarded Blood by Bag SNos.',
+            'chart_title' => 'Discarded Blood by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\DiscardedBlood',
-            'group_by_field' => 'bag_serial_number',
+            'group_by_field' => 'bank_id',
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month', // show users only registered this month
+            'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
         return view('admin.charts.discarded_blood', compact('chart1', 'chart2'));
     }

@@ -338,8 +338,91 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fa fa-archive"></i>
+              <p>
+                Stock
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/blood') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/plasma') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Plasma</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/platelets') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Platelets</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/rbc') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>RBC</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/issued-blood') }}" class="nav-link">
+                  <i class="fa fa-minus-circle"></i>
+                  <p>Issued Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/issued-plasma') }}" class="nav-link">
+                  <i class="fa fa-minus-circle"></i>
+                  <p>Issued Plasma</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/issued-platelets') }}" class="nav-link">
+                  <i class="fa fa-minus-circle"></i>
+                  <p>Issued Platelets</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/issued-rbc') }}" class="nav-link">
+                  <i class="fa fa-minus-circle"></i>
+                  <p>Issued RBC</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/discarded-blood') }}" class="nav-link">
+                  <i class="fa fa-trash"></i>
+                  <p>Discarded Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/discarded-plasma') }}" class="nav-link">
+                  <i class="fa fa-trash"></i>
+                  <p>Discarded Plasma</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/discarded-platelets') }}" class="nav-link">
+                  <i class="fa fa-trash"></i>
+                  <p>Discarded Platelets</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/discarded-rbc') }}" class="nav-link">
+                  <i class="fa fa-trash"></i>
+                  <p>Discarded RBC</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-book"></i>
               <p>
                 Reports

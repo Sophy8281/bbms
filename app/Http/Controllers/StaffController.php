@@ -250,13 +250,13 @@ class StaffController extends Controller
         $donation = Donation::findOrFail($id);
          $constraints = [
             'donor_id' => ['required'],
-            'bag_serial_number' => ['required', 'unique:donations'],
+            // 'bag_serial_number' => ['required', 'unique:donations'],
             'group_id' => ['required'],
             'status' => ['required'],
          ];
         $input = [
             'donor_id' => $request['donor_id'],
-            'bag_serial_number' => $request['bag_serial_number'],
+            // 'bag_serial_number' => $request['bag_serial_number'],
             'group_id' => $request['group_id'],
             'status' => $request['status'],
         ];

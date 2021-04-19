@@ -1,9 +1,9 @@
 @extends('layouts.admin-app')
 
 @section('content')
-<div class="container" style="margin-top: 79px;">
+<div class="container" style="margin-top: 150px;">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-light">{{ __('Admin Login') }}</div>
 

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header bg-danger text-light" >{{ __('Edit Staff') }}</div>
+                <div class="card-header bg-primary text-light" >{{ __('Edit Staff') }}</div>
                 <div class="card-body">
                     <form action="{{ url('admin/staff/edit/'.$staff->id) }}" method="POST" aria-label="{{ __('Assign Blood Bank') }}"">
                         {{ csrf_field() }}
@@ -50,6 +50,7 @@
                           </div>
 
                         <input type="submit" class="btn btn-primary" value="Submit">
+                        <a href="{{ url('admin/all-staff') }}" class="btn btn-danger">Cancel</a>
                     </form>
             </div>
         </div>

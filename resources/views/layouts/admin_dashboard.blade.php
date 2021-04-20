@@ -55,22 +55,8 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{ URL::to('admin/') }}" class="nav-link">Home</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
     </ul>
 
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -186,7 +172,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="{{ URL::to('admin/') }}" class="brand-link">
       <img src="{{asset('frontend/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Admin Dashboard</span>
@@ -196,11 +182,8 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('frontend/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
-        </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="#" class="d-block">User: {{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -209,16 +192,16 @@
         <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="{{ URL::to('admin/') }}" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="{{ URL::to('admin/') }}" class="nav-link">
               <i class="fa fa-home"></i>
               <p>
                 Home
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-envelope"></i>
               <p>
                 Awaiting Approval
@@ -240,8 +223,8 @@
          </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-users"></i>
               <p>
                 Users
@@ -269,8 +252,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-university"></i>
               <p>
                 Banks
@@ -292,8 +275,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-university"></i>
               <p>
                 Hospitals
@@ -315,8 +298,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-heart"></i>
               <p>
                 Blood Groups
@@ -336,6 +319,23 @@
                   <p>Add Blood Group</p>
                 </a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fa fa-heart"></i>
+              <p>
+                Donations
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ URL::to('admin/donations') }}" class="nav-link">
+                        <i class="fa fa-handshake"></i>
+                        <p>All Donations</p>
+                    </a>
+                </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -443,6 +443,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ URL::to('admin/reports/donations') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Donations</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ URL::to('admin/reports/plasma') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Plasma</p>
@@ -510,8 +516,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="ion ion-pie-graph"></i>
               <p>
                 Charts
@@ -529,6 +535,12 @@
                 <a href="{{ URL::to('admin/charts/staff') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
                   <p>Staff</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/charts/donations') }}" class="nav-link">
+                  <i class="ion ion-pie-graph"></i>
+                  <p>Donations</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -599,9 +611,9 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="ion ion-pie-graph"></i>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fa fa-globe"></i>
               <p>
                 Manage Site Content
                 <i class="right fas fa-angle-left"></i>
@@ -609,13 +621,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="ion ion-pie-graph" class="nav-link">
+                <a href="{{ URL::to('admin/about') }}" class="nav-link">
                   <i class=""></i>
                   <p>About</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="ion ion-pie-graph" class="nav-link">
+                <a href="{{ URL::to('admin/donation-process') }}" class="nav-link">
                   <i class=""></i>
                   <p>Donation Process</p>
                 </a>
@@ -722,7 +734,21 @@
 <!-- for export all -->
 <script src="{{asset('frontend/assets/js/datatables.min.js')}}"></script>
 <script src="{{asset('frontend/assets/js/dataTables.bootstrap4.min.js')}}"></script>
-
+<script>
+    $('.nav-item').click(function(event){
+        event.preventDefault();
+        $('.content').load($this).attr('href'));
+    });
+</script>
+<script>
+    const url = window.location;
+    /*remove all active and menu open classes(collapse)*/
+//    $('ul.nav-sidebar a').removeClass('active').parent().siblings().removeClass('menu-open');
+    /*find active element add active class ,if it is inside treeview element, expand its elements and select treeview*/
+    $('ul.nav-sidebar a').filter(function () {
+        return this.href == url;
+    }).addClass('active').closest(".has-treeview").addClass('menu-open').find("> a").addClass('active');
+</script>
 @yield('javascript')
 </body>
 </html>

@@ -20,6 +20,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-@yield('content')
+{{-- <body style="background-image: url('{{ asset('frontend/assets/bg1.jpg') }}')"> --}}
+    @yield('content')
 </body>
 </html>

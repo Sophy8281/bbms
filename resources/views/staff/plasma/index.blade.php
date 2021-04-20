@@ -3,10 +3,6 @@
 @section('content')
 @include('flash-message')
 
-{{-- <div>
-    <a href="{{ URL::to('staff/plasma/add')  }}" class="btn btn-success">
-        <i class="fa fa-plus-square"></i>   Store Plasma</a>
-</div> --}}
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-group"></i> Plasma in Stock</div>
     <div class="panel-body">
@@ -48,7 +44,7 @@
                             <a href="" class="btn btn-warning"> EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/plasma/discard/'.$plasma->id) }}" class="btn btn-danger"> Discard</a>
+                            <a href="{{ url('staff/plasma/discard/'.$plasma->id) }}" class="btn btn-warning"> Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($plasma->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

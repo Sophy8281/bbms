@@ -30,7 +30,7 @@
                         <td>{{ $safe_blood->status  }}</td>
                         <td>{{ date('F d, Y', strtotime($safe_blood->created_at)) }}</td>
                         <td>
-                            <a href="{{ url('staff/process/process/'.$safe_blood->id) }}" class="btn btn-info"> Process</a>
+                            <a href="{{ url('staff/process/process/'.$safe_blood->id) }}" class="btn btn-info"> Processed</a>
                             <a href="{{ url('staff/process/store/'.$safe_blood->id) }}" class="btn btn-info"> Store</a>
                         </td>
                     </tr>

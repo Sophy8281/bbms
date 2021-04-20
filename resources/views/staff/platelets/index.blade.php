@@ -3,7 +3,6 @@
 @section('content')
 @include('flash-message')
 
-
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-group"></i> Platelets in Stock</div>
     <div class="panel-body">
@@ -42,7 +41,7 @@
                             <a href="" class="btn btn-warning"> EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/platelet/discard/'.$platelet->id) }}" class="btn btn-danger"> Discard</a>
+                            <a href="{{ url('staff/platelet/discard/'.$platelet->id) }}" class="btn btn-warning"> Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($platelet->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

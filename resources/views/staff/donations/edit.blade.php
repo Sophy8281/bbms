@@ -18,13 +18,13 @@
                             <div class="col-md-6">
                                 <select  id="donor_id" type="text"  name="donor_id">
                                     @foreach ($donors as $donor)
-                                        <option>{{ $donor->id }}</option>
+                                        <option value="{{ $donor->id }}">{{ $donor->name }}</option>
                                     @endforeach
                                     </select>
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label for="bag_serial_number" class="col-md-4 col-form-label text-md-right">{{ __('Bag Serial Number') }}</label>
                             <div class="col-md-6">
                                 <input id="bag_serial_number" type="text" class="form-control @error('bag_serial_number') is-invalid @enderror " name="bag_serial_number" value="{{ $donation->bag_serial_number }}" required>
@@ -34,15 +34,15 @@
                                 </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group row">
                             <label for="blood_group" class="col-md-4 col-form-label text-md-right">{{ __('Blood Group') }}</label>
 
                             <div class="col-md-6">
-                                <select  id="blood_group" type="text"  name="blood_group">
+                                <select  id="blood_group" type="text"  name="group_id">
                                     @foreach ($blood_groups as $blood_group)
-                                        <option>{{ $blood_group->name }}</option>
+                                        <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
                                     @endforeach
                                     </select>
                             </div>
@@ -53,8 +53,8 @@
 
                             <div class="col-md-6">
                                 <select name="status" id="status" class="form-control">
-                                    <option>Safe</option>
-                                    <option>Unsafe</option>
+                                    <option value="Safe">Safe</option>
+                                    <option value="Unsafe">Unsafe</option>
                                 </select>
                             </div>
                         </div>
@@ -64,6 +64,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Save') }}
                                 </button>
+                                <a href="{{ URL::to('staff/all-donations')  }}" class="btn btn-danger">
+                                    <i class=""></i>   Cancel</a>
                             </div>
                         </div>
                     </form>

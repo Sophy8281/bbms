@@ -178,32 +178,29 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{asset('frontend/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="info">
+            <a href="#" class="d-block">User: {{ Auth::user()->name }}</a>
+          </div>
         </div>
-        <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-        </div>
-      </div>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column text-sm nav-flat" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item has-treeview menu-open">
-            <a href="{{ URL::to('staff/') }}" class="nav-link active">
+            <li class="nav-item has-treeview">
+            <a href="{{ URL::to('staff/') }}" class="nav-link">
                 <i class="fa fa-home"></i>
                 <p>
                 Home
                 </p>
             </a>
             </li>
-            <li class="nav-item has-treeview menu-open">
-                <a href="#" class="nav-link active">
-                  <i class="fa fa-users"></i>
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fa fa-calendar"></i>
                   <p>
                     Appointments
                     <i class="right fas fa-angle-left"></i>
@@ -212,14 +209,14 @@
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
                     <a href="{{ URL::to('/staff/appointments') }}" class="nav-link">
-                      <i class="fa fa-users"></i>
+                      <i class="fa fa-calendar"></i>
                       <p>Appointments</p>
                     </a>
                 </li>
                 </ul>
               </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-users"></i>
               <p>
                 Donors
@@ -241,8 +238,8 @@
             </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-handshake"></i>
               <p>
                 Donation
@@ -264,8 +261,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-flask"></i>
               <p>
                 Screening
@@ -281,8 +278,8 @@
               </li>
             </ul>
           </li>
-             <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+             <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-hourglass"></i>
               <p>
                 Processing
@@ -298,8 +295,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-archive"></i>
               <p>
                Storage
@@ -333,8 +330,8 @@
                 </li>
               </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-minus-circle"></i>
               <p>
                 Issuance
@@ -369,8 +366,8 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-ambulance"></i>
               <p>
                 Drives
@@ -392,8 +389,8 @@
               </li> --}}
             </ul>
           </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-book"></i>
               <p>
                 Reports
@@ -564,7 +561,19 @@
 <!-- for export all -->
 <script src="{{asset('frontend/assets/js/datatables.min.js')}}"></script>
 <script src="{{asset('frontend/assets/js/dataTables.bootstrap4.min.js')}}"></script>
-
+<script>
+    $('.nav-item').click(function(event){
+        event.preventDefault();
+        $('.content').load($this).attr('href'));
+    });
+</script>
+<script>
+    const url = window.location;
+    /*find active element add active class ,if it is inside treeview element, expand its elements and select treeview*/
+    $('ul.nav-sidebar a').filter(function () {
+        return this.href == url;
+    }).addClass('active').closest(".has-treeview").addClass('menu-open').find("> a").addClass('active');
+</script>
 @yield('javascript')
 </body>
 </html>

@@ -37,7 +37,7 @@
                             <a href="" class="btn btn-warning"> EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/blood/discard/'.$blood->id) }}" class="btn btn-danger"> Discard</a>
+                            <a href="{{ url('staff/blood/discard/'.$blood->id) }}" class="btn btn-warning"> Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($blood->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

@@ -1,10 +1,6 @@
 @extends('layouts.staff_dashboard')
 
 @section('content')
-{{-- <div>
-    <a href="{{ URL::to('staff/plasma')  }}" class="btn btn-success">
-        <i class=""></i>   Plasma in Stock</a>
-</div> --}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@include('flash-message')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md">
@@ -57,7 +58,10 @@
                     <b>Gender</b> <a class="float-right">{{ Auth::user()->gender }}</a>
                   </li>
                   <li class="list-group-item">
-                    <b>Born</b> <a class="float-right">{{ date('F d, Y', strtotime(Auth::user()->birth_date)) }}</a>
+                    <b>Born</b>
+                    @if ( Auth::user()->birth_date )
+                    <a class="float-right">{{ date('F d, Y', strtotime(Auth::user()->birth_date)) }}</a>
+                    @endif
                   </li>
                   <li class="list-group-item">
                     <b>Phone</b> <a class="float-right">{{ Auth::user()->phone }}</a>

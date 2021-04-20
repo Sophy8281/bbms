@@ -3,16 +3,17 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>BBMS - Index</title>
+    <title>BBMS | Index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicons -->
-    {{-- <link href="img/logo.png" rel="icon">
-    <!-- CSS -->
+    <link href="{{ asset('site/img/logo.png') }}" rel="icon">
+    {{-- <!-- CSS -->
     <link rel="stylesheet" href="css/all.css" />
     <link href="bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" /> --}}
+    <!-- Icons -->
     <link href="{{ asset('site/icofont/icofont.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('site/boxicons/css/boxicons.min.css') }}" rel="stylesheet"/>
 
@@ -32,10 +33,12 @@
 
 </head>
 
-<!-- The scrollable area -->
+<!-- ======= Start Body ======= -->
 <body>
 
-    <!-- ======= Top Bar ======= -->
+    <!-- ======= Start Top Bar ======= -->
+    {{-- Display control on different screens, transform direct children elements into
+        flex items on large screens, align items at the center and  have it fixed on top--}}
     <div id="topbar" class="d-none d-lg-flex align-items-center fixed-top">
         <div class="container d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
@@ -46,12 +49,13 @@
             </div>
         </div>
     </div>
+    <!-- ======= End Top Bar ======= -->
 
-    <!-- ======= Header ======= -->
+    <!-- ======= Start Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
 
-            <a href="index.html" class="logo mr-auto"><img src="{{ asset('site/img/logo.jpg') }}" alt=""></a>
+            <a href="{{ url('/')}}" class="logo mr-auto"><img src="{{ asset('site/img/logo.jpg') }}" alt="Logo"></a>
             <!-- Using an image logo -->
             <!-- <h1 class="logo mr-auto"><a href="index.html">Donate Blood</a></h1> -->
 
@@ -71,12 +75,13 @@
 
 
                 </ul>
-            </nav><!--  End nav-menu -->
-            {{-- <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Book an</span> Appointment</a> --}}
+            </nav>
+            <!--  End nav-menu -->
         </div>
-    </header><!-- End Header -->
+    </header>
+    <!-- ======= End Header ======= -->
 
-    <!-- ======= Hero Section ======= -->
+    <!-- ======= Start Hero Section ======= -->
     <section id="hero">
         <div id="heroCarousel" class="carousel slide carousel-fade" data-ride="carousel">
 
@@ -86,7 +91,6 @@
 
                 <!-- Slide 1 -->
                 <div class="carousel-item active" style="background-image: url('{{ asset('site/img/slide/images3.jpg') }}')">
-                    {{-- <img src="{{ asset('site/img/slide/images3.jpg') }}"> --}}
                     <div class="container">
                         <h2>Welcome to <span>Donate Blood</span></h2>
                         <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
@@ -126,10 +130,12 @@
             </a>
 
         </div>
-    </section><!-- End Hero -->
+    </section>
+    <!-- ======= End Hero Section ======= -->
+
     <main id="main">
 
-        <!-- ======= About Us Section ======= -->
+        <!-- ======= Start About Us Section ======= -->
         <section id="about" class="about">
             <div class="container" data-aos="fade-up">
 
@@ -141,20 +147,10 @@
                 <div class="row">
                     <div class="col-lg-6" data-aos="fade-right">
                         <img src="{{asset('site/img/about-us.jpg')}}" class="img-fluid" alt="about us">
-                            <h4>Our Vision</h4>
-                            An effective, efficient and sustainable Blood Transfusion Service in Uganda
-
-                            <h4>Our Mission</h4>
-                            To provide sufficient and efficacious blood and blood components through voluntary donations for appropriate use in health care service delivery.
-
                             <h4>Our Objectives</h4>
-                            The objectives of UBTS have been aligned to the National Health Sector Strategic plan 11 and contribute to the fulfillment of Uganda's Health Sector goals and the United Nation's Millennium Development Goals (MDGs).
-
-                            <h5> The objectives are:</h5>
                             To expand blood transfusion Infrastructure to operate adequately within a decentralized healthcare delivery system. To increase the annual blood collection necessary to meet the transfusion needs for all patients in the country. To operate an active nationwide quality assurance program that ensures blood safety. To promote appropriate clinical use of blood. To strengthen the organizational capacity of UBTS to enable efficient and effective service delivery.
 
-                            <h4>Our Core Values</h4>
-                            Proffessionalism, Altruism, Accountable, Excellence
+
                     </div>
                     <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
                         <h3>History & Background</h3>
@@ -163,25 +159,26 @@
                         </p>
 
                         <p>
-                            The Uganda Blood Transfusion Service is the National Blood Service responsible for all blood transfusion and safety activities for the entire country. The Uganda Blood Transfusion Service was established as an autonomous institution and commissioned in January 2003 by a Board of Directors. It operates within the framework of the National Health Policy (NHP) and the Health Sector Strategic Plan HSSP).
-
-                            The Uganda Blood Transfusion Service is a centrally coordinated department in the Ministry of Health with efficient central coordination sufficiently decentralized to render service to all regions of the country. The headquarters at Nakasero Blood Bank acts as a reference centre for the regional blood banks and other public and private hospitals. The blood collection depends on healthy volunteer donors with least risk for Transfusion Transmissible Infections (TTIs).
-
-                            UBTS has grown from a service supplying blood in Central Uganda within a radius of 100 km from Kampala in 1989 to a network of 7 Regional Blood banks which include Arua, Fort-Portal, Gulu, Kitovu, Mbale, Mbarara and Nakasero; Six- (6) blood collection centers in Hoima, Jinja, Kabale, Rukungiri Lira and Soroti. At that time blood collection was mainly replacement donation and hardly any Voluntary Non-Remunerated Blood Donors (VNRBD). The percentage of VNRBD gradually increased to 85% in 1999 and currently stands at 100%.
-
-                            The UBTS operates within the framework of the National Health Policy and the Health Sector Strategic plan. The core function of this plan is to ensure that UBTS meets the increased demand for safe blood transfusion especially at Health Centre IVs that are located in rural areas where most of the population lives. Over the next five years, UBTS will continue providing safe blood and blood components in the areas of Prevention and Treatment of Malaria Anemia, Morbidity and Mortality Reduction, Prevention of HIV/AIDS and other TTIs, Maternal and Child Health and Accidents and emergencies. In order to scale up service delivery in blood transfusion services in the entire country, UBTS will continue to collaborate with key partners like the Uganda Red Cross Society (URCS), Blood donors, users and recipients of blood and other partnerships to delivery blood transfusion services in the entire country.
-
-                            UBTS has grown from a service supplying blood in central Uganda within a radius of 100kms from Kampala in 1989 to a network of:
-                            Seven Regional Blood banks at Arua, Fort- Portal, Gulu, Kitovu, Mbale, Mbarara and Nakasero. Six blood collection centers in Hoima, Jinja, Kabale, Rukungiri, Lira and Soroti. Plans are underway to turn collection centers into blood distribution centers as well.
-
+                            The Donate Blood Service is the National Blood Service responsible for all blood donation and safety activities for the entire country. The Donate Blood Service was established as an autonomous institution and commissioned in May 2021 by a Board of Directors. It operates within the framework of the National Health Policy (NHP) and the Health Sector Strategic Plan HSSP).
+                            The Donate Blood Service is a centrally coordinated department in the Ministry of Health with efficient central coordination sufficiently decentralized to render service to all regions of the country. The headquarters at Nairobi Blood Bank acts as a reference centre for the regional blood banks and other public and private hospitals. The blood collection depends on healthy volunteer donors with least risk for Transfusion Transmissible Infections (TTIs).
+                            It has grown from a service supplying blood in countrywide. At the start blood collection was mainly replacement donation and hardly any Voluntary Non-Remunerated Blood Donors (VNRBD). The percentage of VNRBD has been increasing gradually.
 
                         </p>
+                        <h4>Our Vision</h4>
+                        An effective, efficient and sustainable Blood Transfusion Service in Uganda
+
+                        <h4>Our Mission</h4>
+                        To provide sufficient and efficacious blood and blood components through voluntary donations for appropriate use in health care service delivery.
+                        <h4>Our Core Values</h4>
+                        Proffessionalism, Altruism, Accountable, Excellence
                     </div>
                 </div>
 
             </div>
-        </section><!-- End About Us Section -->
-        <!-- ======= Counts Section ======= -->
+        </section>
+        <!-- ======= End About Us Section ======= -->
+
+        <!-- ======= Start Counts Section ======= -->
         <section id="counts" class="counts">
             <div class="container" data-aos="fade-up">
                 <div class="section-title">
@@ -194,7 +191,7 @@
                     <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
                             <i class="icofont-users"></i>
-                            <span data-toggle="counter-up">85</span>
+                            <span data-toggle="counter-up">{{ $donors->count() }}</span>
                             <p><strong>Happy Donors</strong></p>
                         </div>
                     </div>
@@ -202,7 +199,7 @@
                     <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
                             <i class="icofont-institution"></i>
-                            <span data-toggle="counter-up">18</span>
+                            <span data-toggle="counter-up">{{ $banks->count() }}</span>
                             <p><strong>Blood Banks</strong></p>
                         </div>
                     </div>
@@ -210,7 +207,7 @@
                     <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
                             <i class="icofont-laboratory"></i>
-                            <span data-toggle="counter-up">18</span>
+                            <span data-toggle="counter-up">{{ $banks->count() }}</span>
                             <p><strong>Test Labs</strong></p>
                         </div>
                     </div>
@@ -226,9 +223,10 @@
                 </div>
 
             </div>
-        </section><!-- End Counts Section -->
+        </section>
+        <!-- ======= End Counts Section ======= -->
 
-        <!-- ======= Why Section ======= -->
+        <!-- ======= Start Why Section ======= -->
     <section id="why" class="why section-bg">
         <div class="container" data-aos="fade-up">
 
@@ -261,7 +259,8 @@
 
 
         </div>
-      </section><!-- End Why Section -->
+      </section>
+      <!-- ======= Start Why Section ======= -->
 
         {{-- <!-- ======= Appointment Section ======= -->
     <section id="appointment" class="appointment section-bg">
@@ -335,7 +334,7 @@
         </div>
       </section><!-- End Appointment Section --> --}}
 
-      <!-- ======= Drives Section ======= -->
+      <!-- ======= Start Drives Section ======= -->
     <section id="drives" class="drives section-bg">
         <div class="container" data-aos="fade-up">
 
@@ -343,9 +342,6 @@
             <h2>Blood Drives</h2>
             <p>You can also visit us at our drives organized at different places on set days and time.</p>
           </div>
-          {{-- <div class="row">
-              <p>No drives posted yet.</p>
-          </div> --}}
           <div class="row">
             <table class="table">
                 <tr>
@@ -372,9 +368,10 @@
 
 
         </div>
-      </section><!-- End Drives Section -->
+      </section>
+      <!-- ======= Start Drives Section ======= -->
 
-        <!-- Donation Process Start -->
+        <!-- ======= Start Donation Process ======= -->
         <section id="donation" class="donation donation">
             <div class="container" data-aos="fade-up">
 
@@ -418,9 +415,9 @@
 
             </div>
         </section>
-        <!-- Donation Process End -->
+         <!-- ======= End Donation Process ======= -->
 
-        <!-- ======= Departments Section ======= -->
+        <!-- ======= Start Departments Section ======= -->
         <section id="departments" class="departments">
             <div class="container" data-aos="fade-up">
 
@@ -489,7 +486,8 @@
                 </div>
 
             </div>
-        </section><!-- End Departments Section -->
+        </section>
+        <!-- ======= End Departments Section ======= -->
 
         <!-- Testimonials Start -->
         {{-- <section class="testimonials" id="testimonials">
@@ -540,7 +538,7 @@
         </section> --}}
         <!-- Testimonials End -->
 
-        <!-- ======= Contact Section ======= -->
+        <!-- ======= Start Contact Section ======= -->
         <section id="contact" class="contact">
             <div class="container">
 
@@ -611,10 +609,11 @@
                 </div>
 
             </div>
-        </section><!-- End Contact Section -->
+        </section>
+        <!-- ======= Start Contact Section ======= -->
     </main>
 
-    <!-- Footer Start -->
+    <!-- ======= Start Footer ======= -->
     <section class="footer">
         <div class="section-title">
         </div>
@@ -626,7 +625,8 @@
             </div>
         </div>
     </section>
-    <!-- Footer End -->
+    <!-- ======= End Footer ======= -->
+
     <div id="preloader"></div>
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
     <!-- JS -->
@@ -641,5 +641,6 @@
     <script src="aos/aos.js"></script> --}}
 
 </body>
+<!-- ======= Start Body ======= -->
 
 </html>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.donor-app')
 
 @section('content')
 <div class="container">
@@ -120,6 +120,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+                                <a href="{{ route('login')}}">Already have an account?</a>
                             </div>
                         </div>
                     </form>

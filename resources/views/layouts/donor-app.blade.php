@@ -5,10 +5,11 @@
     <meta charset="utf-8" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>BBMS - Donor-portal</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Favicons -->
+    <link href="{{ asset('site/img/logo.png') }}" rel="icon">
     {{-- <link href="img/logo.png" rel="icon">
     <!-- CSS -->
     <link rel="stylesheet" href="css/all.css" />

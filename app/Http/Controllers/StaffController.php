@@ -161,7 +161,7 @@ class StaffController extends Controller
             'birth_date' => $request['birth_date'],
             'address' => $request['address'],
             'phone' => $request['phone'],
-            'blood_group' => $request['blood_group'],
+            'group_id' => $request['blood_group'],
             'county' => $request['county'],
         ];
         $this->validate($request, $constraints);

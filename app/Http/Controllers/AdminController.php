@@ -18,6 +18,7 @@ use App\Models\DiscardedPlasma;
 use App\Models\DiscardedBlood;
 use App\Models\DiscardedRbc;
 use App\Models\Hospital;
+use App\Models\Donation;
 use App\Models\Blood;
 use App\Models\Bank;
 use App\Models\Admin;
@@ -390,6 +391,15 @@ class AdminController extends Controller
     //     return view('test_table',compact('users'));
     // }
 
+    /******************** ADMIN DONATION - MANAGEMENT *****************************/
+    public function all_donations()
+    {
+        $donations = Donation::all();
+            // ->whereNull('processed_at')
+            // ->whereNull('stored_at')->get();
+        return view('admin.donations.index', compact('donations'));
+    }
+
     /******************** ADMIN STOCK- MANAGEMENT *****************************/
     public function banks_stock()
     {
@@ -522,6 +532,12 @@ class AdminController extends Controller
         $pdf = PDF::loadView('reports.staff', compact('staff'));
         return $pdf->stream();
     }
+    public function donations_pdf()
+    {
+        $donations = Donation::all();
+        $pdf = PDF::loadView('reports.donations', compact('donations'));
+        return $pdf->stream();
+    }
     public function plasma_pdf(Request $request)
     {
         $plasma = Plasma::all();
@@ -601,7 +617,7 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            // 'filter_days' => 30,
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
@@ -633,7 +649,7 @@ class AdminController extends Controller
             'chart_type' => 'bar',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            // 'filter_days' => 30,
+            'filter_days' => 30,
         ];
 
         $chart1 = new LaravelChart($chart_options);
@@ -650,8 +666,42 @@ class AdminController extends Controller
         ];
 
         $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
 
-        return view('admin.charts.staff', compact('chart1', 'chart2'));
+        return view('admin.charts.staff', compact('chart1', 'chart2', 'banks'));
+    }
+
+    public function donations_charts()
+    {
+        $chart_options = [
+            'chart_title' => 'Donations collected by Month',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\Donation',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_days' => 30,
+        ];
+
+        $chart1 = new LaravelChart($chart_options);
+
+        $chart_options = [
+            'chart_title' => 'Donations collected by banks',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\Donation',
+            'group_by_field' => 'bank_id',
+            'chart_type' => 'pie',
+            'chart_height' => '100px',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month',
+        ];
+
+        $chart2 = new LaravelChart($chart_options);
+        $banks = Bank::all();
+
+        return view('admin.charts.donations', compact('chart1', 'chart2', 'banks'));
     }
 
     public function blood_charts()
@@ -684,7 +734,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.blood', compact('chart1', 'chart2'));
+        return view('admin.charts.blood', compact('chart1', 'chart2', 'banks'));
     }
 
     public function plasma_charts()
@@ -717,7 +767,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.plasma', compact('chart1', 'chart2'));
+        return view('admin.charts.plasma', compact('chart1', 'chart2', 'banks'));
     }
 
     public function platelets_charts()
@@ -750,7 +800,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.platelets', compact('chart1', 'chart2'));
+        return view('admin.charts.platelets', compact('chart1', 'chart2', 'banks'));
     }
 
     public function rbc_charts()
@@ -783,7 +833,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.rbc', compact('chart1', 'chart2'));
+        return view('admin.charts.rbc', compact('chart1', 'chart2', 'banks'));
     }
 
     public function issued_plasma_charts()
@@ -816,7 +866,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $hospitals = Hospital::all();
 
-        return view('admin.charts.issued_plasma', compact('chart1', 'chart2'));
+        return view('admin.charts.issued_plasma', compact('chart1', 'chart2', 'hospitals'));
     }
 
     public function issued_platelets_charts()
@@ -849,7 +899,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $hospitals = Hospital::all();
 
-        return view('admin.charts.issued_platelets', compact('chart1', 'chart2'));
+        return view('admin.charts.issued_platelets', compact('chart1', 'chart2', 'hospitals'));
     }
 
     public function issued_rbc_charts()
@@ -882,7 +932,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $hospitals = Hospital::all();
 
-        return view('admin.charts.issued_rbc', compact('chart1', 'chart2'));
+        return view('admin.charts.issued_rbc', compact('chart1', 'chart2', 'hospitals'));
     }
 
     public function issued_blood_charts()
@@ -948,7 +998,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.discarded_plasma', compact('chart1', 'chart2'));
+        return view('admin.charts.discarded_plasma', compact('chart1', 'chart2', 'banks'));
     }
 
     public function discarded_platelets_charts()
@@ -981,7 +1031,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.discarded_platelets', compact('chart1', 'chart2'));
+        return view('admin.charts.discarded_platelets', compact('chart1', 'chart2', 'banks'));
     }
 
     public function discarded_rbc_charts()
@@ -1047,7 +1097,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.discarded_blood', compact('chart1', 'chart2'));
+        return view('admin.charts.discarded_blood', compact('chart1', 'chart2', 'banks'));
     }
 
     /********************ADMIN BBMS-SITE - MANAGEMENT *****************************/

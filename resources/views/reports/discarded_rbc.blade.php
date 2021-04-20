@@ -40,7 +40,6 @@
     </div>
 <h3 style="color: red">Red Blood Cells Discarded</h3>
 <table class="table">
-
     <tr>
         <th>#Id</th>
         <th>Bank</th>
@@ -51,8 +50,6 @@
         <th>Donation</th>
         <th>Expiry</th>
         <th>Days Remaining</th>
-
-
     </tr>
 
     @forelse($rbc as $rbc)
@@ -65,21 +62,14 @@
         <td>{{ $rbc->group->name }}</td>
         <td>{{ $rbc->donation_date }}</td>
         <td>{{ $rbc->expiry_date }}</td>
-        @if ($rbc->expiry_date == Carbon\Carbon::today()|$rbc->expiry_date < Carbon\Carbon::today())
-            <td>
-                <a href="" class="btn btn-warning">EXPIRED</a>
-            </td>
-
-        @else
-            <td>{{ Carbon\Carbon::create($rbc->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
-
-        @endif
+        <td>{{ Carbon\Carbon::create($rbc->expiry_date)->diffInDays($plasma->donation_date)}}</td>
     </tr>
+
     @empty
     <tr>
         <td colspan="4">No red blood cells discarded.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

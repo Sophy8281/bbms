@@ -59,9 +59,7 @@
         {{-- <td>{{ date('F d, Y h:m A', strtotime($staff->updated_at)) }}</td> --}}
       </tr>
     @endforeach
-  </tbody>
 </table>
-{{-- {{ $users->render() }} --}}
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">
         <tr>

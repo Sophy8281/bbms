@@ -68,7 +68,6 @@
             {{-- <td>{{ date('F d, Y h:m A', strtotime($user->updated_at)) }}</td> --}}
         </tr>
         @endforeach
-    </tbody>
     </table>
     {{-- {{ $users->render() }} --}}
     <div class="information" style="position: absolute; bottom: 0;">

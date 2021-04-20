@@ -45,7 +45,7 @@
             <th>#Id</th>
             <th>Donor</th>
             <th>Bank</th>
-            <th>Bag_Serial_No.</th>
+            <th>Bag_SNo.</th>
             <th>B_Group</th>
             <th>status</th>
             <th>Created_on</th>
@@ -56,12 +56,11 @@
             <td>{{ $donation->donor->name }}</td>
             <td>{{ $donation->bank->name }}</td>
             <td>{{ $donation->bag_serial_number }}</td>
-            <td>{{ $donation->blood_group }}</td>
+            <td>{{ $donation->group->name }}</td>
             <td>{{ $donation->status  }}</td>
             <td>{{ date('F d, Y', strtotime($donation->created_at)) }}</td>
         </tr>
         @endforeach
-    </tbody>
     </table>
     <div class="information" style="position: absolute; bottom: 0;">
         <table width="100%">

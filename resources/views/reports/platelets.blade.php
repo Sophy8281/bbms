@@ -81,7 +81,7 @@
     <tr>
         <td colspan="4">No Platelets found.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

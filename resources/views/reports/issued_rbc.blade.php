@@ -52,8 +52,6 @@
         <th>Expiry</th>
         <th>Issued To</th>
         <th>Days Remaining</th>
-
-
     </tr>
 
     @forelse($rbc as $rbc)
@@ -67,21 +65,14 @@
         <td>{{ $rbc->donation_date }}</td>
         <td>{{ $rbc->expiry_date }}</td>
         <td>{{ $rbc->hospital->name }}</td>
-        @if ($rbc->expiry_date == Carbon\Carbon::today()|$rbc->expiry_date < Carbon\Carbon::today())
-            <td>
-                <a href="" class="btn btn-warning">EXPIRED</a>
-            </td>
-
-        @else
-            <td>{{ Carbon\Carbon::create($rbc->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
-
-        @endif
+        <td>{{ Carbon\Carbon::create($rbc->expiry_date)->diffInDays($rbc->donation_date)}}</td>
     </tr>
+
     @empty
     <tr>
         <td colspan="4">No Red Blood Cells issued.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

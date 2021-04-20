@@ -52,8 +52,6 @@
         <th>Expiry</th>
         <th>Issued To</th>
         <th>Days Remaining</th>
-
-
     </tr>
 
     @forelse($plasma as $plasma)
@@ -67,22 +65,14 @@
         <td>{{ $plasma->donation_date }}</td>
         <td>{{ $plasma->expiry_date }}</td>
         <td>{{ $plasma->hospital->name }}</td>
-        @if ($plasma->expiry_date == Carbon\Carbon::today()|$plasma->expiry_date < Carbon\Carbon::today())
-            <td>
-                <a href="" class="btn btn-warning"> EXPIRED</a>
-            </td>
-
-            @else
-            <td>{{ Carbon\Carbon::create($plasma->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
-
-        @endif
+        <td>{{ Carbon\Carbon::create($plasma->expiry_date)->diffInDays($plasma->donation_date)}}</td>
     </tr>
 
     @empty
     <tr>
         <td colspan="4">No Plasma issued.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

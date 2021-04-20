@@ -51,8 +51,6 @@
         <th>Donation</th>
         <th>Expiry</th>
         <th>Days Remaining</th>
-
-
     </tr>
 
     @forelse($plasma as $plasma)
@@ -80,7 +78,7 @@
     <tr>
         <td colspan="4">No Plasma found.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

@@ -51,9 +51,6 @@
         <th>Donation</th>
         <th>Expiry</th>
         <th>Days Remaining</th>
-
-
-
     </tr>
 
     @forelse($platelets as $platelet)
@@ -66,22 +63,14 @@
         <td>{{ $platelet->group->name }}</td>
         <td>{{ $platelet->donation_date }}</td>
         <td>{{ $platelet->expiry_date }}</td>
-        @if ($platelet->expiry_date == Carbon\Carbon::today()|$platelet->expiry_date < Carbon\Carbon::today())
-            <td>
-                <a href="" class="btn btn-warning"> EXPIRED</a>
-            </td>
-
-        @else
-            <td>{{ Carbon\Carbon::create($platelet->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
-
-
-        @endif
+        <td>{{ Carbon\Carbon::create($platelet->expiry_date)->diffInDays($plasma->donation_date)}}</td>
     </tr>
+    
     @empty
     <tr>
         <td colspan="4">No platelets discarded.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

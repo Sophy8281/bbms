@@ -52,8 +52,6 @@
         <th>Donation Date</th>
         <th>Expiry</th>
         <th>Days Remaining</th>
-
-
     </tr>
 
     @forelse($blood as $blood)
@@ -81,7 +79,7 @@
     <tr>
         <td colspan="4">No Whole Blood found.</td>
     </tr>
-@endforelse
+    @endforelse
 </table>
 <div class="information" style="position: absolute; bottom: 0;">
     <table width="100%">

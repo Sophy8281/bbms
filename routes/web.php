@@ -267,6 +267,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/unapproved-drives', 'App\Http\Controllers\AdminController@unapproved_drives');
     Route::get('/drive/approve/{id}', 'App\Http\Controllers\AdminController@approve_drive');
 
+    // Donations view routes
+    Route::get('/donations', 'App\Http\Controllers\AdminController@all_donations');
+
     // Stock view routes
     Route::get('/stock', 'App\Http\Controllers\AdminController@banks_stock');
     Route::get('/stock/show/{id}', 'App\Http\Controllers\AdminController@bank_stock');
@@ -286,6 +289,7 @@ Route::prefix('admin')->group(function () {
     // Report management routes
     Route::get('/reports/donors', 'App\Http\Controllers\AdminController@donors_pdf');
     Route::get('/reports/staff', 'App\Http\Controllers\AdminController@staff_pdf');
+    Route::get('/reports/donations', 'App\Http\Controllers\AdminController@donations_pdf');
     Route::get('/reports/plasma', 'App\Http\Controllers\AdminController@plasma_pdf');
     Route::get('/reports/platelets', 'App\Http\Controllers\AdminController@platelets_pdf');
     Route::get('/reports/rbc', 'App\Http\Controllers\AdminController@rbc_pdf');
@@ -303,6 +307,8 @@ Route::prefix('admin')->group(function () {
     // Chart management routes
     Route::get('/charts/donors', 'App\Http\Controllers\AdminController@donors_charts');
     Route::get('/charts/staff', 'App\Http\Controllers\AdminController@staff_charts');
+
+    Route::get('/charts/donations', 'App\Http\Controllers\AdminController@donations_charts');
 
     Route::get('/charts/plasma', 'App\Http\Controllers\AdminController@plasma_charts');
     Route::get('/charts/platelets', 'App\Http\Controllers\AdminController@platelets_charts');

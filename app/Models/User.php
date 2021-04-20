@@ -29,10 +29,9 @@ class User extends Authenticatable
         'birth_date',
         'address',
         'phone',
-        'blood_group',
+        'group_id',
         'county',
         'password',
-
     ];
 
     public $sortable = [
@@ -62,6 +61,11 @@ class User extends Authenticatable
     public function routeNotificationForNexmo($notification)
     {
         return $this->phone;
+    }
+
+    public function group()
+    {
+       return $this->belongsTo(Group::class);
     }
 
     public function donations()

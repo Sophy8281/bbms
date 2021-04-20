@@ -17,6 +17,11 @@ class Group extends Model
         'name',
     ];
 
+    public function donor()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function donations()
     {
         return $this->hasMany(Donation::class);

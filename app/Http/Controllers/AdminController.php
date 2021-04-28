@@ -30,6 +30,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Notifications\DonorNewDriveNotification;
 use DB;
+use App\Models\Faq;
 
 class AdminController extends Controller
 {
@@ -1101,4 +1102,33 @@ class AdminController extends Controller
     }
 
     /********************ADMIN BBMS-SITE - MANAGEMENT *****************************/
+    public function faqs()
+    {
+        $faqs = Faq::all();
+        return view('admin.site.faq.index', compact('faqs'));
+    }
+
+
+    public function store_faq(Request $request)
+    {
+        $request->validate([
+            'question' => ['required', 'string', 'max:255'],
+            'answer' => ['required', 'string', 'max:255'],
+        ]);
+
+        Faq::create([
+            'question' => $request['question'],
+            'answer' => $request['answer'],
+        ]);
+        return redirect('admin/faqs/')->with('success','Faq Created Successfully!');
+    }
+
+    public function update_faq_status(Request $request)
+    {
+        $faq = Faq::find($request->faq_id);
+        $faq->status = $request->status;
+        $faq->save();
+
+        return response()->json(['success'=>'Status changed successfully!']);
+    }
 }

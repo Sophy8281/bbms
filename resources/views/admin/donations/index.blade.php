@@ -49,13 +49,20 @@
                         @else
                         <td>Pending</td>
                         @endif
-                        @if ( $donation->status  == "Safe")
-                        <td><p class="btn btn-success">{{ $donation->status  }}
-                            <i class="fas fa-thumbs-up"></i>
-                            </p>
-                        </td>
+                        @if ( $donation->status)
+                            @if ( $donation->status  == "Safe")
+                            <td><p class="btn btn-success">{{ $donation->status  }}
+                                <i class="fas fa-thumbs-up"></i>
+                                </p>
+                            </td>
+                            @else
+                            <td><p class="btn btn-danger">{{ $donation->status  }}
+                                <i class="fas fa-thumbs-down"></i>
+                                </p>
+                            </td>
+                            @endif
                         @else
-                        <td>{{ $donation->status  }}<i class="fas fa-thumbs-down"></i></td>
+                        <td>Pending</td>
                         @endif
                         <td>{{ $donation->created_at }}</td>
                         <td>{{ $donation->processed_at }}</td>

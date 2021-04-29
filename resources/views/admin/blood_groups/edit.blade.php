@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Edit Blood Group
+@endsection
 @section('content')
 <div class="panel panel-default">
     <div class="panel-heading">

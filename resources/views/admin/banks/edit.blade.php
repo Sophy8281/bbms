@@ -1,4 +1,7 @@
 @extends('layouts.admin_dashboard')
+@section('breadcrumb')
+Edit Bank
+@endsection
 @section('content')
 <div class="panel panel-default">
     <div class="panel-heading">

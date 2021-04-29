@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+New Refrigerator
+@endsection
 @section('content')
 <div>
     <a href="{{ URL::to('staff/all-refrigerators')  }}" class="btn btn-success">

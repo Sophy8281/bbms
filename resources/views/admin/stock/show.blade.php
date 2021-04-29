@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Bank Stock
+@endsection
 @section('content')
 @include('flash-message')
 
@@ -16,7 +18,7 @@
                 <div class="card-body">
 
 
-                    <table class="table">
+                    <table class="table table-responsive table-hover">
 
                         <tr>
                             <th>#Id</th>
@@ -28,9 +30,6 @@
                             <th>Donation Date</th>
                             <th>Expiry Date</th>
                             <th>Days Remaining</th>
-
-
-
                         </tr>
 
                         @forelse($platelets as $platelet)
@@ -72,7 +71,7 @@
                 <div class="card-header bg-primary text-light">Plasma</div>
                 <div class="card-body">
 
-                    <table class="table">
+                    <table class="table table-responsive table-hover">
 
                         <tr>
                             <th>#Id</th>
@@ -84,8 +83,6 @@
                             <th>Donation Date</th>
                             <th>Expiry Date</th>
                             <th>Days Remaining</th>
-
-
                         </tr>
 
                         @forelse($plasma as $plasma)
@@ -126,7 +123,7 @@
             <div class="card-header bg-primary text-light">Red Blood cells</div>
             <div class="card-body">
 
-                <table class="table">
+                <table class="table table-responsive table-hover">
 
                     <tr>
                         <th>#Id</th>

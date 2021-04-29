@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+New Blood Group
+@endsection
 @section('content')
 <div>
     <a href="{{ URL::to('admin/all-blood-groups')  }}" class="btn btn-success">

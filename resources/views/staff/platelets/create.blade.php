@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Store Platelets
+@endsection
 @section('content')
 {{-- <div>
     <a href="{{ URL::to('staff/platelets')  }}" class="btn btn-success">

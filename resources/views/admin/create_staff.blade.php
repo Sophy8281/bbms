@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+New Staff
+@endsection
 @section('content')
 <div class="container" style="margin-top: 25px;">
     <div class="row justify-content-center">

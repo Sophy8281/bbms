@@ -1,33 +1,22 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+New Agitator
+@endsection
 @section('content')
 <div>
     <a href="{{ URL::to('staff/all-agitators')  }}" class="btn btn-success">
-        <i class=""></i>   All Agitatorrs</a>
+        <i class="fa fa-archive"></i>
+        All Agitators
+    </a>
 </div>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Add New Agitator') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ url('staff/add-agitator') }}" aria-label="{{ __('Add New Agitator') }}">
                         @csrf
-
-                        {{-- <div class="form-group row">
-                            <label for="blood_group" class="col-md-4 col-form-label text-md-right">{{ __('Blood Group') }}</label>
-
-                            <div class="col-md-6">
-
-                                <select  id="blood_group" type="text"  name="blood_group">
-                                    @foreach ($blood_groups as $blood_group)
-                                        <option value="{{ $blood_group->name }}">{{ $blood_group->name }}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-                        </div> --}}
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

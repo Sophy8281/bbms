@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Store Plasma
+@endsection
 @section('content')
 {{-- <div>
     <a href="{{ URL::to('staff/plasma')  }}" class="btn btn-success">

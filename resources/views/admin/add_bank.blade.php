@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+New Bank
+@endsection
 @section('content')
 <div>
     <a href="{{ URL::to('admin/all-banks')  }}" class="btn btn-success">

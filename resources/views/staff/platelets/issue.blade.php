@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Issue platelets
+@endsection
 @section('content')
 
 <div class="panel panel-default">

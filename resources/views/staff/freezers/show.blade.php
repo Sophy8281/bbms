@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Show Freezer
+@endsection
 @section('content')
 
 <div class="container">

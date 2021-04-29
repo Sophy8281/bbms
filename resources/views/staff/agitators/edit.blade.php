@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Edit Agitator
+@endsection
 @section('content')
 
 <div class="panel panel-default">

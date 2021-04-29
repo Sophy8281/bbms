@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+New Hospital
+@endsection
 @section('content')
 <div>
     <a href="{{ URL::to('admin/hospitals')  }}" class="btn btn-success">

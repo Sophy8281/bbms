@@ -20,6 +20,7 @@ use App\Models\DiscardedRbc;
 use App\Models\Hospital;
 use App\Models\Donation;
 use App\Models\Blood;
+use App\Models\About;
 use App\Models\Bank;
 use App\Models\Admin;
 use App\Models\Group;
@@ -115,7 +116,7 @@ class AdminController extends Controller
         $this->validate($request, $constraints);
         Bank::where('id', $id)
             ->update($input);
-        return redirect('admin/all-banks/')->with('success', 'Bank updated successfully');
+        return redirect('admin/all-banks/')->with('success', 'Bank updated successfully!');
     }
 
     public function delete_bank($id)
@@ -1130,5 +1131,29 @@ class AdminController extends Controller
         $faq->save();
 
         return response()->json(['success'=>'Status changed successfully!']);
+    }
+
+    public function edit_about()
+    {
+        $about = About::find(1);
+        return view('admin.site.about.index', compact('about'));
+    }
+
+    public function update_about(Request $request)
+    {
+         $constraints = [
+            'history' => 'required',
+         ];
+        $input = [
+            'history' => $request['history'],
+            'vision' => $request['vision'],
+            'mission' => $request['mission'],
+            'values' => $request['values'],
+            'objectives' => $request['objectives'],
+        ];
+        $this->validate($request, $constraints);
+        About::find(1)
+            ->update($input);
+        return redirect('admin/about/')->with('success', 'About updated successfully!');
     }
 }

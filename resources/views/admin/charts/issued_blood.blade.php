@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Issued Blood
+@endsection
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md">

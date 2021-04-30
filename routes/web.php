@@ -324,6 +324,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/charts/discarded-rbc', 'App\Http\Controllers\AdminController@discarded_rbc_charts');
     Route::get('/charts/discarded-blood', 'App\Http\Controllers\AdminController@discarded_blood_charts');
 
+    // Site management routes
+    Route::get('/faqs', 'App\Http\Controllers\AdminController@faqs');
+    Route::post('/faqs', 'App\Http\Controllers\AdminController@store_faq');
+    Route::get('/faqs/change', 'App\Http\Controllers\AdminController@update_faq_status');
+    Route::get('/about', 'App\Http\Controllers\AdminController@edit_about');
+    Route::post('/about', 'App\Http\Controllers\AdminController@update_about');
+
 });
 
 

@@ -15,7 +15,7 @@ Unapproved Drives
                             </div>
                         @endif
 
-                        <table class="table">
+                        <table class="table table-responsive table-hover">
                             <tr>
                                 <th>#Id</th>
                                 <th>Bank</th>

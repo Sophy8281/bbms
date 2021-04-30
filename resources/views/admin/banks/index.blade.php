@@ -11,8 +11,7 @@ Banks
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-group"></i> Banks</div>
     <div class="panel-body">
-
-        <table class="table">
+        <table class="table table-responsive table-hover">
             <tr>
                 <th>#Id</th>
                 <th>Admin</th>

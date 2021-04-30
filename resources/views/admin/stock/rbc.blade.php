@@ -8,7 +8,7 @@ RBC
     <div class="panel-heading"><i class="fa fa-group"></i> Red Blood Cells in Stock</div>
     <div class="panel-body">
        <div class="col-md">
-            <table id="example" class="table table-bordered table-hover">
+            <table id="example" class="table table-responsive table-hover">
                 <hr>
                 <thead>
                     <tr>

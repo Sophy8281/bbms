@@ -12,7 +12,7 @@ Blood Groups
     <div class="panel-heading"><i class="fa fa-group"></i> Blood Groups </div>
     <div class="panel-body">
 
-        <table class="table">
+        <table class="table table-responsive table-hover">
             <tr>
                 <th>Bank ID</th>
                 <th>Admin ID</th>

@@ -24,8 +24,7 @@ Donors
         </div> --}}
     </div>
 </form>
-<div class="col-lg-11">
-    <table id="example" class="table table-bordered table-hover">
+    <table id="example" class="table table-responsive table-hover">
         <thead>
             <tr>
                 <th>#Id</th>

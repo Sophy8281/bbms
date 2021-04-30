@@ -8,7 +8,7 @@ Processing
     <div class="panel-heading"><h5>Safe Blood </h5></div>
     <div class="panel-body">
         <div class="col-md">
-            <table id="example" class="table table-bordered table-hover">
+            <table id="example" class="table table-responsive table-hover">
                 <thead>
                     <tr>
                         <th>#Id</th>

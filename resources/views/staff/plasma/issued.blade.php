@@ -10,7 +10,7 @@ Issued Plasma
     <div class="panel-body">
 
         <div class="col-md">
-           <table id="example" class="table table-bordered table-hover">
+           <table id="example" class="table table-responsive table-hoverr">
                <thead>
                    <tr>
                         <th>#Id</th>

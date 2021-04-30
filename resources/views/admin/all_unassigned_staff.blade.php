@@ -17,7 +17,7 @@ Unapproved Staff
                             </div>
                         @endif
 
-                        <table class="table">
+                        <table class="table table-responsive table-hover">
                             <tr>
                                 <th>Staff name</th>
                                 <th>Email</th>

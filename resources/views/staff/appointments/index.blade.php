@@ -13,14 +13,7 @@ Appointments
                     <div class="card-header bg-warning text-light">Pending Appointments</div>
 
                     <div class="card-body">
-
-                        @if (session('message'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-
-                        <table class="table">
+                    <table class="table table-responsive table-hover">
                             <tr>
                                 <th>#Id</th>
                                 <th>Name</th>

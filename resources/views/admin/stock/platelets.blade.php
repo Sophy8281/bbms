@@ -8,7 +8,7 @@ Platelets
     <div class="panel-heading"><i class="fa fa-group"></i> Platelets in Stock</div>
     <div class="panel-body">
        <div class="col-md">
-           <table id="example" class="table table-bordered table-hover">
+           <table id="example" class="table table-responsive table-hover">
                <thead>
                    <tr>
                         <th>#Id</th>

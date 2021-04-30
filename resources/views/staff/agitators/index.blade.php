@@ -14,9 +14,7 @@ Agitators
 <div class="panel panel-default"></div>
     <div class="panel-heading"><i class="fa fa-group"></i> Agitators(Store Platelets) </div>
     <div class="panel-body">
-
-        <table class="table">
-
+        <table class="table table-responsive table-hover">
             <tr>
                 <th>#Id</th>
                 {{-- <th>Bank</th>

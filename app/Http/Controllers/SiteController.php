@@ -10,8 +10,10 @@ use App\Models\Bank;
 use App\Models\Appointment;
 use App\Models\Group;
 use App\Models\Drive;
+use App\Models\About;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Faq;
 
 class SiteController extends Controller
 {
@@ -32,8 +34,10 @@ class SiteController extends Controller
         $banks = Bank::all();
         $donors = User::all();
         $blood_groups = Group::all();
+        $faqs = Faq::where('status','=','1')->get();
+        $about = About::find(1);
         $drives = Drive::whereNotNull('approved_at')->where('date','>',$today )->get();
-        return view('site', compact('banks','donors','blood_groups','drives'));
+        return view('site', compact('banks','donors','blood_groups','faqs','about','drives'));
     }
 
     /**

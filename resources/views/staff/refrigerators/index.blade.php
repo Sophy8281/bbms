@@ -7,12 +7,14 @@ Refrigerators
 
 <div>
     <a href="{{ URL::to('staff/add-refrigerator')  }}" class="btn btn-success">
-        <i class="fa fa-plus-circle"></i>   New Refrigerator</a>
-        <a href="{{ URL::to('staff/rbc/add')  }}" class="btn btn-success float-right">
-            <i class="fa fa-plus-circle"></i>   Add RBC to Stock</a>
+        <i class="fa fa-plus-circle"></i>   New Refrigerator
+    </a>
+    <a href="{{ URL::to('staff/rbc/add')  }}" class="btn btn-success float-right">
+        <i class="fa fa-plus-circle"></i>   Add RBC to Stock
+    </a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Refrigerators(Store RBC) </div>
+    <div class="panel-heading">Refrigerators(Store RBC) </div>
     <div class="panel-body">
         <table class="table table-responsive table-hover">
             <tr>
@@ -22,7 +24,6 @@ Refrigerators
                 <th>Bags Count</th>
                 <th>Actions</th>
             </tr>
-
             @foreach($refrigerators as $refrigerator)
             <tr>
                 <td>{{ $refrigerator->id }}</td>

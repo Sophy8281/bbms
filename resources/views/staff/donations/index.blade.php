@@ -6,10 +6,12 @@ Donations
 @include('flash-message')
 <div>
     <a href="{{ URL::to('staff/add-donation')  }}" class="btn btn-success">
-        <i class="fa fa-plus-circle"></i>   New Donation</a>
+        <i class="fa fa-plus-circle"></i>
+        New Donation
+    </a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Donations </div>
+    <div class="panel-heading">Donations</div>
     <div class="panel-body">
         <form  action="{{ url('staff/all-donations') }}" method ="POST">
             @csrf
@@ -41,12 +43,10 @@ Donations
                         <th>Blood Group</th>
                         <th>status</th>
                         <th>Created_on</th>
-                        {{-- <th>Store/ Process/ Discard</th> --}}
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     @forelse($donations as $donation)
                     <tr>
                         <td>{{ $donation->id }}</td>
@@ -77,9 +77,9 @@ Donations
                         @endif
                         <td>{{ date('F d, Y', strtotime($donation->created_at)) }}</td>
                         <td>
-                            <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
                             @if ($donation->status  == "Unsafe")
-                            <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Discard</a>
+                            <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i>Discard</a>
                             @endif
                         </td>
                     </tr>
@@ -99,31 +99,28 @@ Donations
 @section('javascript')
 <!-- export Scripts -->
 <script>
-    $(document).ready(function(){
-        $('#example').DataTable({
-            pageLength: 25,
-            responsive: true,
-            paging:true,
-            // searching:false,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-                {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
-                {extend: 'csv', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
-                {extend: 'excel', title: 'Donors', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
-                {extend: 'pdf', title: 'Donors',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
-                {extend: 'print', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
-                    customize: function (win){
-                    $(win.document.body).addClass('white-bg');
-                    $(win.document.body).css('font-size', '10px');
+$(document).ready(function(){
+$('#example').DataTable({
+    pageLength: 25,
+    paging:true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [
+        {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
+        {extend: 'csv', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
+        {extend: 'excel', title: 'Donors', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
+        {extend: 'pdf', title: 'Donors',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
+        {extend: 'print', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
+            customize: function (win){
+            $(win.document.body).addClass('white-bg');
+            $(win.document.body).css('font-size', '10px');
 
-                    $(win.document.body).find('table')
-                    .addClass('compact')
-                    .css('font-size', 'inherit');
-                }
-                }
-            ]
-        });
-    });
-
+            $(win.document.body).find('table')
+            .addClass('compact')
+            .css('font-size', 'inherit');
+            }
+        }
+    ]
+});
+});
 </script>
 @endsection

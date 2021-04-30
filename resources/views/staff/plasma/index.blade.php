@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Plasma
+@endsection
 @section('content')
 @include('flash-message')
 

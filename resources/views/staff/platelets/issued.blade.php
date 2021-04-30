@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Issued Platelets
+@endsection
 @section('content')
 @include('flash-message')
 

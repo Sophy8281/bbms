@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Banks Stock
+@endsection
 @section('content')
 @include('flash-message')
 

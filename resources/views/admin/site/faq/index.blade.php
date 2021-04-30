@@ -1,4 +1,7 @@
 @extends('layouts.admin_dashboard')
+@section('breadcrumb')
+Faq's
+@endsection
 @section('content')
 @include('flash-message')
 

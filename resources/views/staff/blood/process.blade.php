@@ -1,4 +1,7 @@
 @extends('layouts.staff_dashboard')
+@section('breadcrumb')
+Processing
+@endsection
 @section('content')
 @include('flash-message')
 <div class="panel panel-default">

@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Blood Groups
+@endsection
 @section('content')
 @include('flash-message')
 <div>

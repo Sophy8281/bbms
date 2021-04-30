@@ -1,5 +1,7 @@
 @extends('layouts.staff_dashboard')
-
+@section('breadcrumb')
+Issued RBC
+@endsection
 @section('content')
 @include('flash-message')
 

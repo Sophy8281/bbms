@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Donations
+@endsection
 @section('content')
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-group"></i> Donations </div>

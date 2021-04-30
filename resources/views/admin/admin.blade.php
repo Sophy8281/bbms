@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Home
+@endsection
 @section('content')
     <div class="container">
         <div class="row justify-content-center">

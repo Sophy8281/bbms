@@ -1,5 +1,7 @@
 @extends('layouts.admin_dashboard')
-
+@section('breadcrumb')
+Issued RBC
+@endsection
 @section('content')
 
 <div class="panel panel-default">

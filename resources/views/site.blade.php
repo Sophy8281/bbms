@@ -148,29 +148,21 @@
                     <div class="col-lg-6" data-aos="fade-right">
                         <img src="{{asset('site/img/about-us.jpg')}}" class="img-fluid" alt="about us">
                             <h4>Our Objectives</h4>
-                            To expand blood transfusion Infrastructure to operate adequately within a decentralized healthcare delivery system. To increase the annual blood collection necessary to meet the transfusion needs for all patients in the country. To operate an active nationwide quality assurance program that ensures blood safety. To promote appropriate clinical use of blood. To strengthen the organizational capacity of UBTS to enable efficient and effective service delivery.
-
-
+                            {{ $about->objectives}}
                     </div>
                     <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
                         <h3>History & Background</h3>
-                        <p class="font-italic">
-                            We exist to serve the community
-                        </p>
+                        <p class="font-italic">We exist to serve the community </p>
+                        <p>{{ $about->history}}</p>
 
-                        <p>
-                            The Donate Blood Service is the National Blood Service responsible for all blood donation and safety activities for the entire country. The Donate Blood Service was established as an autonomous institution and commissioned in May 2021 by a Board of Directors. It operates within the framework of the National Health Policy (NHP) and the Health Sector Strategic Plan HSSP).
-                            The Donate Blood Service is a centrally coordinated department in the Ministry of Health with efficient central coordination sufficiently decentralized to render service to all regions of the country. The headquarters at Nairobi Blood Bank acts as a reference centre for the regional blood banks and other public and private hospitals. The blood collection depends on healthy volunteer donors with least risk for Transfusion Transmissible Infections (TTIs).
-                            It has grown from a service supplying blood in countrywide. At the start blood collection was mainly replacement donation and hardly any Voluntary Non-Remunerated Blood Donors (VNRBD). The percentage of VNRBD has been increasing gradually.
-
-                        </p>
                         <h4>Our Vision</h4>
-                        An effective, efficient and sustainable Blood Transfusion Service in Uganda
+                        {{ $about->vision}}
 
                         <h4>Our Mission</h4>
-                        To provide sufficient and efficacious blood and blood components through voluntary donations for appropriate use in health care service delivery.
+                        {{ $about->mission}}
+                        
                         <h4>Our Core Values</h4>
-                        Proffessionalism, Altruism, Accountable, Excellence
+                        {{ $about->values}}
                     </div>
                 </div>
 
@@ -538,6 +530,30 @@
         </section> --}}
         <!-- Testimonials End -->
 
+        <!-- ======= Start FAQ's  Section ======= -->
+        <section id="faq" class="faq section-bg">
+            <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Frequently Asked Questioins</h2>
+                <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            </div>
+
+            <ul>
+                @foreach ($faqs as $faq)
+                <button class="accordion">{{ $faq->question }}</button>
+                <div class="panel">
+                <p>{{ $faq->answer }}</p>
+                </div>
+                @endforeach
+
+
+            </ul>
+
+            </div>
+        </section>
+        <!-- ======= End FAQ's Section ======= -->
+
         <!-- ======= Start Contact Section ======= -->
         <section id="contact" class="contact">
             <div class="container">
@@ -639,6 +655,22 @@
     <script src="js/main.js"></script>
     <script src="venobox/venobox.min.js"></script>
     <script src="aos/aos.js"></script> --}}
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+              panel.style.maxHeight = null;
+            } else {
+              panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+          });
+        }
+        </script>
 
 </body>
 <!-- ======= Start Body ======= -->

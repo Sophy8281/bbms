@@ -24,7 +24,6 @@ Blood
                     </tr>
                 </thead>
                 <tbody>
-
                     @forelse($bloods as $blood)
                     <tr>
                         <td>{{ $blood->id }}</td>
@@ -47,7 +46,6 @@ Blood
                         {{-- <td>
                             <a href="{{ url('staff/blood/issue/'.$blood->id) }}" class="btn btn-success"> Issue</a>
                         </td> --}}
-
                     @endif
                     </tr>
                     @empty
@@ -65,31 +63,28 @@ Blood
 @section('javascript')
 <!-- export Scripts -->
 <script>
-    $(document).ready(function(){
-        $('#example').DataTable({
-            pageLength: 25,
-            responsive: true,
-            paging:true,
-            // searching:false,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-                {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
-                {extend: 'csv', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
-                {extend: 'excel', title: 'Donors', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
-                {extend: 'pdf', title: 'Donors',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
-                {extend: 'print', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
-                    customize: function (win){
-                    $(win.document.body).addClass('white-bg');
-                    $(win.document.body).css('font-size', '10px');
+$(document).ready(function(){
+    $('#example').DataTable({
+        pageLength: 25,
+        paging:true,
+        dom: '<"html5buttons"B>lTfgitp',
+        buttons: [
+            {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
+            {extend: 'csv', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
+            {extend: 'excel', title: 'Donors', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
+            {extend: 'pdf', title: 'Donors',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
+            {extend: 'print', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
+                customize: function (win){
+                $(win.document.body).addClass('white-bg');
+                $(win.document.body).css('font-size', '10px');
 
-                    $(win.document.body).find('table')
-                    .addClass('compact')
-                    .css('font-size', 'inherit');
+                $(win.document.body).find('table')
+                .addClass('compact')
+                .css('font-size', 'inherit');
                 }
-                }
-            ]
-        });
+            }
+        ]
     });
-
+});
 </script>
 @endsection

@@ -9,7 +9,7 @@ Banks
         <i class="fa fa-plus-circle"></i>   New Bank</a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Banks</div>
+    <div class="panel-heading">Banks</div>
     <div class="panel-body">
         <table class="table table-responsive table-hover">
             <tr>
@@ -23,7 +23,6 @@ Banks
                 <th>Updated On</th>
                 <th>Actions</th>
             </tr>
-
             @foreach($banks as $bank)
             <tr>
                 <td>{{ $bank->id }}</td>
@@ -40,17 +39,8 @@ Banks
                 </td>
             </tr>
             @endforeach
-
-
-
-
         </table>
-
-
         {{ $banks->render() }}
-
     </div>
-
 </div>
-
 @stop

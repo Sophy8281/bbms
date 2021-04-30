@@ -19,7 +19,6 @@ Hospitals
                 <th>Updated On</th>
                 <th>Actions</th>
             </tr>
-
             @foreach($hospitals as $hospital)
             <tr>
                 <td>{{ $hospital->id }}</td>
@@ -32,17 +31,8 @@ Hospitals
                 </td>
             </tr>
             @endforeach
-
-
-
-
         </table>
-
-
         {{ $hospitals->render() }}
-
     </div>
-
 </div>
-
 @stop

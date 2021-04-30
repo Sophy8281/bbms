@@ -4,7 +4,7 @@ Donations
 @endsection
 @section('content')
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Donations </div>
+    <div class="panel-heading">Donations </div>
     <div class="panel-body">
         <form  action="{{ url('admin/donations') }}" method ="POST">
             @csrf
@@ -80,7 +80,6 @@ Donations
         </div>
     </div>
 </div>
-
 @stop
 
 @section('javascript')
@@ -89,9 +88,7 @@ Donations
     $(document).ready(function(){
         $('#example').DataTable({
             pageLength: 25,
-            responsive: true,
             paging:true,
-            // searching:false,
             dom: '<"html5buttons"B>lTfgitp',
             buttons: [
                 {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },

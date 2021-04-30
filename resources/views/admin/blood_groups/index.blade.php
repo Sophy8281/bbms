@@ -6,10 +6,11 @@ Blood Groups
 @include('flash-message')
 <div>
     <a href="{{ URL::to('admin/add-blood-group')  }}" class="btn btn-success">
-        <i class="fa fa-plus-circle"></i>   New Blood Group</a>
+        <i class="fa fa-plus-circle"></i>New Blood Group
+    </a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Blood Groups </div>
+    <div class="panel-heading">Blood Groups </div>
     <div class="panel-body">
         <table class="table table-responsive table-hover">
             <tr>
@@ -20,8 +21,6 @@ Blood Groups
                 <th>Updated On</th>
                 <th>Actions</th>
             </tr>
-
-
             @foreach($blood_groups as $blood_group)
             <tr>
                 <td>{{ $blood_group->id }}</td>
@@ -35,13 +34,8 @@ Blood Groups
                 </td>
             </tr>
             @endforeach
-
         </table>
-
         {{ $blood_groups->render() }}
-
     </div>
-
 </div>
-
 @stop

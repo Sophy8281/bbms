@@ -46,7 +46,6 @@
         <th>Donation Id</th>
         <th>Bank</th>
         <th>Stored By</th>
-        <th>Refrigerator</th>
         <th>Bag SNo.</th>
         <th>Blood Group</th>
         <th>Donation Date</th>
@@ -60,7 +59,6 @@
         <td>{{ $blood->donation_id }}</td>
         <td>{{ $blood->bank->name }}</td>
         <td>{{ $blood->staff->name }}</td>
-        <td>{{ $blood->refrigerator->name}}</td>
         <td>{{ $blood->bag_serial_number }}</td>
         <td>{{ $blood->group->name }}</td>
         <td>{{ $blood->donation_date }}</td>

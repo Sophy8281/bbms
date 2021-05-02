@@ -31,13 +31,13 @@ Show Refrigerator
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                              <div class="form-group">
-                                 <strong>Bank ID:</strong>
+                                 <strong>Bank:</strong>
                                  {{ $refrigerator->bank->name }}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <strong>Staff ID:</strong>
+                                    <strong>Added by:</strong>
                                     {{ $refrigerator->staff->name }}
                                 </div>
                             </div>

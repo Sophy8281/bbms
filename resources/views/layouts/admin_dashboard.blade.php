@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!-- Favicons -->
+  <link href="{{ asset('site/img/logo.png') }}" rel="icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('frontend/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Ionicons -->
@@ -36,7 +38,6 @@
 
    <!-- Chart Scripts -->
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
 
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -632,6 +633,12 @@
                   <p>Donation Process</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/faqs') }}" class="nav-link">
+                  <i class=""></i>
+                  <p>FAQs</p>
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -652,8 +659,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Admin Dashboard</li>
+              <li class="breadcrumb-item"><a href="{{ URL::to('admin/') }}">Admin Dashboard</a></li>
+              <li class="breadcrumb-item active">@yield('breadcrumb')</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -742,8 +749,6 @@
 </script>
 <script>
     const url = window.location;
-    /*remove all active and menu open classes(collapse)*/
-//    $('ul.nav-sidebar a').removeClass('active').parent().siblings().removeClass('menu-open');
     /*find active element add active class ,if it is inside treeview element, expand its elements and select treeview*/
     $('ul.nav-sidebar a').filter(function () {
         return this.href == url;

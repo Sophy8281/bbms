@@ -14,10 +14,10 @@ Issued Plasma
                    <tr>
                         <th>#Id</th>
                         <th>Plasma ID</th>
-                        <th>Bank ID</th>
+                        <th>Bank</th>
                         <th>Issued_By</th>
                         <th>Freezer</th>
-                        <th>Bag Serial No.</th>
+                        <th>Bag SNo.</th>
                         <th>Blood Group</th>
                         <th>Issued_To</th>
                     </tr>
@@ -26,8 +26,8 @@ Issued Plasma
                 <tr>
                     <td>{{ $plasma->id }}</td>
                     <td>{{ $plasma->plasma_id }}</td>
-                    <td>{{ $plasma->bank_id }}</td>
-                    <td>{{ $plasma->staff_id }}</td>
+                    <td>{{ $plasma->bank->name }}</td>
+                    <td>{{ $plasma->staff->name }}</td>
                     <td>{{ $plasma->freezer->name}}</td>
                     <td>{{ $plasma->bag_serial_number }}</td>
                     <td>{{ $plasma->group->name }}</td>

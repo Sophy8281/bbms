@@ -47,7 +47,7 @@ Freezers
             </tr>
             @endforeach
         </table>
-        
+
     </div>
 </div>
 @stop
@@ -60,11 +60,11 @@ $(document).ready(function(){
         paging:true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-            {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
-            {extend: 'csv', title: 'Freezers', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
-            {extend: 'excel', title: 'Freezers', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
-            {extend: 'pdf', title: 'Freezers',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
-            {extend: 'print', title: 'Freezers', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
+            {extend: 'copy', exportOptions: { columns: [0,1,2,3] }, className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
+            {extend: 'csv', exportOptions: { columns: [0,1,2,3] }, title: 'Freezers', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
+            {extend: 'excel', exportOptions: { columns: [0,1,2,3] }, title: 'Freezers', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
+            {extend: 'pdf', exportOptions: { columns: [0,1,2,3] }, title: 'Freezers',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
+            {extend: 'print', exportOptions: { columns: [0,1,2,3] }, title: 'Freezers', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
                 customize: function (win){
                 $(win.document.body).addClass('white-bg');
                 $(win.document.body).css('font-size', '10px');

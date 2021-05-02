@@ -14,10 +14,10 @@ Issued RBC
                    <tr>
                     <th>#Id</th>
                     <th>Rbc ID</th>
-                    <th>Bank ID</th>
+                    <th>Bank</th>
                     <th>Issued_By</th>
                     <th>Refrigerator</th>
-                    <th>Bag Serial No.</th>
+                    <th>Bag SNo.</th>
                     <th>Blood Group</th>
                     <th>Issued_To</th>
                     </tr>
@@ -26,8 +26,8 @@ Issued RBC
                 <tr>
                     <td>{{ $rbc->id }}</td>
                     <td>{{ $rbc->rbc_id }}</td>
-                    <td>{{ $rbc->bank_id }}</td>
-                    <td>{{ $rbc->staff_id }}</td>
+                    <td>{{ $rbc->bank->name }}</td>
+                    <td>{{ $rbc->staff->name }}</td>
                     <td>{{ $rbc->refrigerator->name}}</td>
                     <td>{{ $rbc->bag_serial_number }}</td>
                     <td>{{ $rbc->group->name }}</td>

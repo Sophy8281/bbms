@@ -105,11 +105,11 @@ $('#example').DataTable({
     paging:true,
     dom: '<"html5buttons"B>lTfgitp',
     buttons: [
-        {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
-        {extend: 'csv', title: 'Donations', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
-        {extend: 'excel', title: 'Donations', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
-        {extend: 'pdf', title: 'Donations',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
-        {extend: 'print', title: 'Donations', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
+        {extend: 'copy', exportOptions: { columns: [0,1,2,3,4,5,6] }, className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
+        {extend: 'csv', exportOptions: { columns: [0,1,2,3,4,5,6] }, title: 'Donations', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
+        {extend: 'excel', exportOptions: { columns: [0,1,2,3,4,5,6] }, title: 'Donations', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
+        {extend: 'pdf', exportOptions: { columns: [0,1,2,3,4,5,6] }, title: 'Donations',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
+        {extend: 'print', exportOptions: { columns: [0,1,2,3,4,5,6] }, title: 'Donations', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
             customize: function (win){
             $(win.document.body).addClass('white-bg');
             $(win.document.body).css('font-size', '10px');

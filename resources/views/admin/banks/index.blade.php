@@ -37,7 +37,7 @@ Banks
                 <td>{{ date('F d, Y h:m A', strtotime($bank->updated_at)) }}</td>
                 <td>
                     <a href="{{ url('admin/bank/edit/'.$bank->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('admin/bank/delete/'.$bank->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('admin/bank/delete/'.$bank->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $bank->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

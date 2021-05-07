@@ -44,7 +44,7 @@ RBC
                             <a href="" class="btn btn-warning">EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/rbc/discard/'.$rbc->id) }}" class="btn btn-warning">Discard</a>
+                            <a href="{{ url('staff/rbc/discard/'.$rbc->id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to discard this bag-{{ $rbc->bag_serial_number }}?')">Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($rbc->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

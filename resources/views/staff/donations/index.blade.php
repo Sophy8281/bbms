@@ -79,7 +79,7 @@ Donations
                         <td>
                             <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
                             @if ($donation->status  == "Unsafe")
-                            <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i>Discard</a>
+                            <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to discard this bag-{{ $donation->bag_serial_number }}?')"><i class="fa fa-trash"></i>Discard</a>
                             @endif
                         </td>
                     </tr>

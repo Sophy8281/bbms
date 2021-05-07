@@ -39,7 +39,7 @@ Cold Room
                             <a href="" class="btn btn-warning"> EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/blood/discard/'.$blood->id) }}" class="btn btn-warning"> Discard</a>
+                            <a href="{{ url('staff/blood/discard/'.$blood->id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to delete {{ $blood->bag_serial_number }}?')"> Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($blood->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

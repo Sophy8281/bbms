@@ -32,7 +32,7 @@ Blood Groups
                 <td>{{ date('F d, Y h:m A', strtotime($blood_group->updated_at)) }}</td>
                 <td>
                     <a href="{{ url('admin/group/edit/'.$blood_group->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('admin/group/delete/'.$blood_group->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('admin/group/delete/'.$blood_group->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $blood_group->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

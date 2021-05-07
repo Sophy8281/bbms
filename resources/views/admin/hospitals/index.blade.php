@@ -35,7 +35,7 @@ Hospitals
                 <td>{{ date('F d, Y h:m A', strtotime($hospital->updated_at)) }}</td>
                 <td>
                     <a href="{{ url('admin/hospital/edit/'.$hospital->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('admin/hospital/delete/'.$hospital->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('admin/hospital/delete/'.$hospital->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $hospital->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach
@@ -70,6 +70,5 @@ Hospitals
             ]
         });
     });
-
 </script>
 @endsection

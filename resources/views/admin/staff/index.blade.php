@@ -33,7 +33,7 @@ Staff
 
                 <td>
                     <a href="{{ url('admin/staff/edit/'.$staff->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('admin/staff/delete/'.$staff->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('admin/staff/delete/'.$staff->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $staff->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @empty

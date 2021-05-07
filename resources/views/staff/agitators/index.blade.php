@@ -42,7 +42,7 @@ Agitators
                 <td>
                     <a href="{{ url('staff/agitator/'.$agitator->id) }}" class="btn btn-success"><i class="fa fa-eye"></i> Open</a></a>
                     <a href="{{ url('staff/agitator/edit/'.$agitator->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('staff/agitator/delete/'.$agitator->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('staff/agitator/delete/'.$agitator->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $agitator->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

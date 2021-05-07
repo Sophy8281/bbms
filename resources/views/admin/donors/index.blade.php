@@ -54,7 +54,7 @@ Donors
         <td>{{ date('F d, Y h:m A', strtotime($user->created_at)) }}</td>
         <td>
             <a href="{{ url('admin/donor/edit/'.$user->id) }}" class=""><i class="fa fa-edit"></i> Edit</a>
-            <a href="{{ url('admin/donor/delete/'.$user->id) }}" class=""><i class="fa fa-trash"></i> Delete</a>
+            <a href="{{ url('admin/donor/delete/'.$user->id) }}" class=""><i class="fa fa-trash" onclick="return confirm('Are you sure you want to delete {{ $user->name }}?')"></i> Delete</a>
         </td>
     </tr>
     @endforeach

@@ -42,7 +42,7 @@ Freezers
                 <td>
                     <a href="{{ url('staff/freezer/'.$freezer->id) }}" class="btn btn-success"><i class="fa fa-eye"></i> Open</a>
                     <a href="{{ url('staff/freezer/edit/'.$freezer->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('staff/freezer/delete/'.$freezer->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('staff/freezer/delete/'.$freezer->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $freezer->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

@@ -75,6 +75,11 @@ class Bank extends Model
         return $this->hasMany(Drive::class);
     }
 
+    public function hosted_drives()
+    {
+        return $this->hasMany(HostDrive::class);
+    }
+
     public function appointments()
     {
         return $this->hasMany(Appointment::class);

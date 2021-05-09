@@ -22,6 +22,8 @@ Route::get('/dashboard2', function () {
 Route::get('/', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/appointment', 'App\Http\Controllers\SiteController@create_appointment');
 Route::post('/appointment', 'App\Http\Controllers\SiteController@store_appointment');
+Route::get('/host', 'App\Http\Controllers\SiteController@create_drive');
+Route::post('/host', 'App\Http\Controllers\SiteController@store_drive');
 
 // Auth::routes(['verify' => true]);
 Auth::routes();
@@ -125,6 +127,7 @@ Route::prefix('staff')->group(function () {
         Route::get('/process', 'App\Http\Controllers\BloodController@all_safe');
         Route::get('/process/store/{id}', 'App\Http\Controllers\BloodController@store_blood');
         Route::get('/process/process/{id}', 'App\Http\Controllers\BloodController@process_blood');
+        Route::get('/processed', 'App\Http\Controllers\BloodController@processed_blood');
 
         // whole blood stock management routes
         Route::get('/cold-room', 'App\Http\Controllers\BloodController@whole_blood');
@@ -183,6 +186,7 @@ Route::prefix('staff')->group(function () {
         Route::get('/drive/edit/{id}', 'App\Http\Controllers\StaffController@edit_drive');
         Route::post('/drive/edit/{id}', 'App\Http\Controllers\StaffController@update_drive');
         Route::get('/drive/delete/{id}', 'App\Http\Controllers\StaffController@destroy_drive');
+        Route::get('/hosted', 'App\Http\Controllers\StaffController@hosted_drives');
 
         // Appointments management routes
         Route::get('/appointments', 'App\Http\Controllers\StaffController@appointments');
@@ -241,9 +245,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/hospitals', 'App\Http\Controllers\HospitalController@index');
     Route::get('/hospital/add', 'App\Http\Controllers\HospitalController@create');
     Route::post('/hospital/add', 'App\Http\Controllers\HospitalController@store');
-    // Route::get('/bank/edit/{id}', 'App\Http\Controllers\HospitalController@edit_bank');
-    // Route::post('/bank/edit/{id}', 'App\Http\Controllers\HospitalController@update_bank');
-    // Route::get('/bank/delete/{id}', 'App\Http\Controllers\HospitalController@delete_bank');
+    Route::get('/hospital/edit/{id}', 'App\Http\Controllers\HospitalController@edit');
+    Route::post('/hospital/edit/{id}', 'App\Http\Controllers\HospitalController@update');
+    Route::get('/hospital/delete/{id}', 'App\Http\Controllers\HospitalController@destroy');
 
     // Staff management routes
     Route::get('/all-staff', 'App\Http\Controllers\AdminController@all_staff');

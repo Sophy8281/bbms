@@ -25,6 +25,7 @@ class CreateAppointmentsTable extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade');
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->foreign('staff_id')->references('id')->on('staff')->onUpdate('cascade');
+            $table->dateTime('accepted_at')->nullable();
             $table->dateTime('done_at')->nullable();
             $table->timestamps();
         });

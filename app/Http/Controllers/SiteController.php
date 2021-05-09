@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Bank;
 use App\Models\Appointment;
+use App\Models\HostDrive;
 use App\Models\Group;
 use App\Models\Drive;
 use App\Models\About;
@@ -83,6 +84,52 @@ class SiteController extends Controller
         // return redirect('appointment/')->withMessage(' Created Successfully!');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_drive()
+    {
+        $banks = Bank::all();
+        return view('donor.host_drive', compact('banks'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_drive(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'organization' => ['required', 'string', 'max:255'],
+            'population' => ['required', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'phone' => ['required','string',],
+            'location' => ['required', 'string', 'max:255'],
+            'date' => ['required','after:today'],
+            'bank_id' => ['required'],
+            // 'comment' => ['text'],
+        ]);
+
+        $data = new HostDrive();
+        $data['name']=$request->name;
+        $data['organization']=$request->organization;
+        $data['population']=$request->population;
+        $data['email']=$request->email;
+        $data['phone']=$request->phone;
+        $data['location']=$request->location;
+        $data['date']=$request->date;
+        $data['bank_id']=$request->bank_id;
+        $data['comment']=$request->comment;
+
+        // dd($data);
+        $data->save();
+        return redirect('host/')->with('success',' Request Sent Successfully!');
+    }
     /**
      * Display the specified resource.
      *

@@ -78,6 +78,12 @@ class AdminController extends Controller
 
     public function storeBank(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:banks'],
+            'phone' => ['required'],
+            'county' => ['required', 'string', 'max:255'],
+        ]);
         $data = new Bank();
         $data->admin_id=Auth::user()->id;
         $data['name']=$request->name;
@@ -91,7 +97,7 @@ class AdminController extends Controller
 
     public function allBanks()
     {
-        $banks = Bank::paginate(2);
+        $banks = Bank::all();
         return view('admin.banks.index', compact('banks'));
     }
 
@@ -105,7 +111,10 @@ class AdminController extends Controller
     {
         $bank = Bank::findOrFail($id);
          $constraints = [
-            'name' => 'required',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'phone' => ['required'],
+            'county' => ['required', 'string', 'max:255'],
          ];
         $input = [
             'name' => $request['name'],
@@ -120,11 +129,11 @@ class AdminController extends Controller
     }
 
     public function delete_bank($id)
-     {
-         $bank = Bank::findOrFail($id);
-         $bank->delete();
-         return redirect('admin/all-banks/')->with('success','Bank deleted Successfully!');
-     }
+    {
+        $bank = Bank::findOrFail($id);
+        $bank->delete();
+        return redirect('admin/all-banks/')->with('success','Bank deleted Successfully!');
+    }
 
     /******************** ADMIN BlOOD-GROUP - MANAGEMENT *****************************/
     public function add_blood_group()
@@ -134,6 +143,9 @@ class AdminController extends Controller
 
     public function store_blood_group(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
         $data = new Group();
         $data->admin_id=Auth::user()->id;
         $data['name']=$request->name;
@@ -144,7 +156,7 @@ class AdminController extends Controller
 
     public function all_blood_groups()
      {
-         $blood_groups = Group::paginate(5);
+         $blood_groups = Group::all();
          return view('admin.blood_groups.index', compact('blood_groups'));
      }
 
@@ -397,8 +409,6 @@ class AdminController extends Controller
     public function all_donations()
     {
         $donations = Donation::all();
-            // ->whereNull('processed_at')
-            // ->whereNull('stored_at')->get();
         return view('admin.donations.index', compact('donations'));
     }
 
@@ -1108,7 +1118,6 @@ class AdminController extends Controller
         $faqs = Faq::all();
         return view('admin.site.faq.index', compact('faqs'));
     }
-
 
     public function store_faq(Request $request)
     {

@@ -25,7 +25,7 @@ class HospitalController extends Controller
      */
     public function index()
     {
-        $hospitals = Hospital::paginate(10);
+        $hospitals = Hospital::all();
         return view('admin.hospitals.index', compact('hospitals'));
     }
 
@@ -47,12 +47,20 @@ class HospitalController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Hospital();
-        $data['name']=$request->name;
-        $data['email']=$request->name;
-        $data['phone']=$request->name;
-        $data['county']=$request->name;
-        $data->save();
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:hospitals'],
+            'phone' => ['required'],
+            'county' => ['required', 'string', 'max:255'],
+        ]);
+
+        Hospital::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'county' => $request['county'],
+        ]);
+
         return redirect('admin/hospitals/')->with('success','Hospital Created Successfully!');
     }
 
@@ -75,7 +83,8 @@ class HospitalController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hospital = Hospital::findOrFail($id);
+        return view('admin.hospitals.edit', compact('hospital'));
     }
 
     /**
@@ -87,7 +96,23 @@ class HospitalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $hospital = Hospital::findOrFail($id);
+        $constraints = [
+           'name' => ['required', 'string', 'max:255'],
+           'email' => ['required', 'string', 'email', 'max:255'],
+           'phone' => ['required'],
+           'county' => ['required', 'string', 'max:255'],
+        ];
+       $input = [
+           'name' => $request['name'],
+           'email' => $request['email'],
+           'phone' => $request['phone'],
+           'county' => $request['county'],
+       ];
+       $this->validate($request, $constraints);
+       Hospital::where('id', $id)
+           ->update($input);
+       return redirect('admin/hospitals/')->with('success', 'Hospital updated successfully!');
     }
 
     /**
@@ -98,6 +123,8 @@ class HospitalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hospital = Hospital::findOrFail($id);
+        $hospital->delete();
+        return redirect('admin/hospitals/')->with('success','Hospital deleted Successfully!');
     }
 }

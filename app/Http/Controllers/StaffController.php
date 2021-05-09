@@ -9,6 +9,7 @@ use App\Notifications\NewDonationNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use App\Models\DiscardedBlood;
+use App\Models\HostDrive;
 use App\Models\Refrigerator;
 use App\Models\Appointment;
 use App\Models\Donation;
@@ -194,7 +195,8 @@ class StaffController extends Controller
         $toDate   = $request->input('toDate');
 
         $bank_id=Auth::user()->bank_id;
-        $donations = Donation::where('bank_id',$bank_id)->whereNotNull('blood_group')
+        // $donations = Donation::where('bank_id',$bank_id)->whereNotNull('blood_group')
+        $donations = Donation::where('bank_id',$bank_id)
             ->where('created_at', '>=', $fromDate)
             ->where('created_at', '<=', $toDate)
             ->get();
@@ -306,14 +308,13 @@ class StaffController extends Controller
         $donations = Donation::whereNull('group_id')->where('bank_id',$bank_id)->get();
         //  $donations = Donation::paginate(10);
          return view('staff.unscreened_donations', compact('donations'));
-     }
+    }
 
     public function add_blood_results(Request $request ,$id)
     {
         $donations = Donation::findOrFail($id);
         $blood_groups =Group::all();
         return view('staff.add_blood_results',compact('donations','blood_groups'));
-
     }
 
     public function store_blood_results(Request $request, $id)
@@ -644,12 +645,19 @@ class StaffController extends Controller
     }
 
     public function destroy_drive($id)
-     {
-         $unapproved_drive = Drive::findOrFail($id);
-         $unapproved_drive->delete();
+    {
+        $unapproved_drive = Drive::findOrFail($id);
+        $unapproved_drive->delete();
 
-         return redirect('staff/drives/')->with('success','Drive deleted Successfully!');
-     }
+        return redirect('staff/drives/')->with('success','Drive deleted Successfully!');
+    }
+
+    public function hosted_drives()
+    {
+        $bank_id=Auth::user()->bank_id;
+        $hosted_drives = HostDrive::get()->where('bank_id',$bank_id);
+        return view('staff.drives.hosted', compact('hosted_drives'));
+    }
 
      /******************** STAFF APPOINTMENT - MANAGEMENT *****************************/
     public function appointments()

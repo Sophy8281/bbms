@@ -193,6 +193,11 @@ class BloodController extends Controller
             ->with('success', 'Blood Processed successfully!');
     }
 
+    public function processed_blood()
+    {
+        $processed_blood = Donation::whereNotNull('processed_at')->get();
+        return view('staff.blood.processed',compact('processed_blood'));
+    }
 
     /**
      * Update the specified resource in storage.

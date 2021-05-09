@@ -62,17 +62,17 @@
             <!--  Start nav-menu -->
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li class="active"><a href="">Home</a></li>
+                    <li class="active"><a href="#hero">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#why">Why Donate</a></li>
                     <li><a href="#donation">Donation Process</a></li>
                     <li><a href="#departments">Departments</a></li>
                     <li><a href="#drives">Blood Drives</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    {{-- <li><a href="#contact">Contact</a></li> --}}
 
                     <li><a href="{{ url('appointment/') }}" class="" target="_blank">Book an Appointment</a></li>
                     <li><a href="{{ route('register')}}" target="_blank">Become a Donor</a></li>
-
+                    <li><a href="{{ url('host/') }}" class="" target="_blank">Host a Drive</a></li>
 
                 </ul>
             </nav>
@@ -160,7 +160,7 @@
 
                         <h4>Our Mission</h4>
                         {{ $about->mission}}
-                        
+
                         <h4>Our Core Values</h4>
                         {{ $about->values}}
                     </div>
@@ -555,7 +555,7 @@
         <!-- ======= End FAQ's Section ======= -->
 
         <!-- ======= Start Contact Section ======= -->
-        <section id="contact" class="contact">
+        {{-- <section id="contact" class="contact">
             <div class="container">
 
                 <div class="section-title">
@@ -625,7 +625,7 @@
                 </div>
 
             </div>
-        </section>
+        </section> --}}
         <!-- ======= Start Contact Section ======= -->
     </main>
 

@@ -11,7 +11,7 @@ Donations
     </a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading">Donations</div>
+    <div class="panel-heading"><h5>Donations</h5></div>
     <div class="panel-body">
         <form  action="{{ url('staff/all-donations') }}" method ="POST">
             @csrf

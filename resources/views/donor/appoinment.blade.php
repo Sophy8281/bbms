@@ -50,20 +50,30 @@
             @enderror
           </div>
           <div class="col-md-4 form-group">
-            <select  id="bank_id" type="text" name="bank_id" class="form-control">
+            <select  id="bank_id" type="text" name="bank_id" class="form-control @error('bank_id') is-invalid @enderror" required>
                 <option value="">Select Bank</option>
                 @foreach ($banks as $bank)
                     <option value="{{ $bank->id }}">{{ $bank->name }}</option>
                 @endforeach
-                </select>
+              </select>
+              @error('bank_id')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
           </div>
           <div class="col-md-4 form-group">
-            <select  id="group_id" type="text" name="group_id" class="form-control">
+            <select  id="group_id" type="text" name="group_id" class="form-control @error('group_id') is-invalid @enderror"required>
                 <option value="">Select Blood Group</option>
                 @foreach ($blood_groups as $blood_group)
                     <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
                 @endforeach
                 </select>
+                @error('group_id')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
 
         </div>
 

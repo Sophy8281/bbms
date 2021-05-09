@@ -295,6 +295,12 @@
                   <p>Process/Store</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('/staff/processed') }}" class="nav-link">
+                  <i class="fa fa-hourglass"></i>
+                  <p>Processed</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -383,12 +389,12 @@
                   <p>Drives</p>
                 </a>
               </li>
-              {{-- <li class="nav-item">
-                <a href="{{ URL::to('staff/drives')  }}" class="nav-link">
-                  <i class="fa fa-minus-square nav-icon"></i>
-                  <p>Drives</p>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/hosted')  }}" class="nav-link">
+                  <i class="fa fa-ambulance"></i>
+                  <p>Hosted Drives</p>
                 </a>
-              </li> --}}
+              </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">

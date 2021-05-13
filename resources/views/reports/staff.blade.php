@@ -54,7 +54,11 @@
         <td>{{ $staff->id }}</td>
         <td>{{ $staff->name }}</td>
         <td>{{ $staff->email }}</td>
+        @if ($staff->bank_id)
         <td>{{ $staff->bank->name }}</td>
+        @else
+        <td></td>
+        @endif
         <td>{{ date('F d, Y h:mA', strtotime($staff->created_at)) }}</td>
         {{-- <td>{{ date('F d, Y h:m A', strtotime($staff->updated_at)) }}</td> --}}
       </tr>

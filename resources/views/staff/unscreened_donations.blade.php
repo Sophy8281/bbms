@@ -4,10 +4,9 @@ Screening
 @endsection
 @section('content')
 @include('flash-message')
-@section('content')
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">Unscreened  Donations</div>
+        <div class="panel-heading"><h5>Blood Screening</h5></div>
         <div class="panel-body">
             <div class="col-md">
                 <table id="example" class="table table-responsive table-hover">
@@ -19,6 +18,8 @@ Screening
                             <th>Bag SNo.</th>
                             <th>Blood Group</th>
                             <th>Status</th>
+                            {{-- <th>Action</th> --}}
+                            <th>Discard</th>
                         </tr>
                     </thead>
                     @forelse ($donations as $donation)
@@ -27,13 +28,43 @@ Screening
                         <td>{{ $donation->donor->name }}</td>
                         <td>{{ $donation->bank->name }}</td>
                         <td>{{ $donation->bag_serial_number }}</td>
-                        <td> <a class="btn btn-success" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->blood_group }}
+                        @if ($donation->group_id )
+                        <td> <p class="btn btn-success">{{ $donation->group->name }}
+                            <i class="fas fa-heart"></i>
+                            </p>
+                        </td>
+                        @else
+                        <td> <a class="btn btn-danger" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->group_id }}
                             <i class="fas fa-heart">Pending</i>
                             </a>
                         </td>
-                        <td> <a class="btn btn-success" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->status }}
-                            <i class="fas fa-thumbs-up">Pending</i>
+                        @endif
+                        @if ($donation->status)
+                        @if ($donation->status  == "Safe")
+                        <td> <p class="btn btn-success">{{ $donation->status }}
+                            <i class="fas fa-thumbs-up"></i>
+                            </p>
+                        </td>
+                        @endif
+                        @if ($donation->status  == "Unsafe")
+                        <td> <p class="btn btn-danger">{{ $donation->status }}
+                            <i class="fas fa-thumbs-down"></i>
+                            </p>
+                        </td>
+                        @endif
+                        @else
+                        <td> <a class="btn btn-danger" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->status }}
+                            <i class="fas fa-thumbs-down">Pending</i>
                             </a>
+                        </td>
+                        @endif
+                        {{-- <td>
+                            <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
+                        </td> --}}
+                        <td>
+                            @if ($donation->status  == "Unsafe")
+                            <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to discard this bag-{{ $donation->bag_serial_number }}?')"><i class="fa fa-trash"></i>Discard</a>
+                            @endif
                         </td>
                     </tr>
                     @empty

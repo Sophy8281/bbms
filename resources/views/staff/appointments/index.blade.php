@@ -19,6 +19,8 @@ Appointments
                             <th>Date</th>
                             <th>Bank</th>
                             <th>Group</th>
+                            <th>Accepted_At</th>
+                            <th>Mark</th>
                             <th>Action</th>
                         </tr>
                         @forelse ($pending_appointments as $pending_appointment)
@@ -30,8 +32,14 @@ Appointments
                             <td>{{ $pending_appointment->date }}</td>
                             <td>{{ $pending_appointment->bank->name }}</td>
                             <td>{{ $pending_appointment->group->name }}</td>
+                            <td>{{ $pending_appointment->accepted_at }}</td>
                             <td>
                                 <a href="{{ url('staff/appointment/mark/'.$pending_appointment->id) }}" class="">Mark as Done</a>
+                            </td>
+                            <td>
+                                @if ($pending_appointment->accepted_at == '')
+                                <a href="{{ url('staff/appointment/accept/'.$pending_appointment->id) }}" class="btn btn-success"  onclick="return confirm('Are you sure you want to approve appointment requested by {{ $pending_appointment->name }}?')">APPROVE</a>
+                                @endif
                             </td>
                         </tr>
                         @empty
@@ -50,7 +58,7 @@ Appointments
             <div class="card">
                 <div class="card-header bg-primary text-light">Done Appointments</div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-responsive table-hover">
                         <tr>
                             <th>#Id</th>
                             <th>Name</th>

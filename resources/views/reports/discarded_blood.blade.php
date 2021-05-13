@@ -57,13 +57,15 @@
     <tr>
         <td>{{ $blood->id }}</td>
         <td>{{ $blood->donation_id }}</td>
+        @if ($blood->bank_id)
         <td>{{ $blood->bank->name }}</td>
+        @endif
         <td>{{ $blood->staff->name }}</td>
         <td>{{ $blood->bag_serial_number }}</td>
         <td>{{ $blood->group->name }}</td>
         <td>{{ $blood->donation_date }}</td>
         <td>{{ $blood->expiry_date }}</td>
-        <td>{{ Carbon\Carbon::create($plasma->expiry_date)->diffInDays($blood->donation_date)}}</td>
+        <td>{{ Carbon\Carbon::create($blood->expiry_date)->diffInDays($blood->donation_date)}}</td>
     </tr>
 
     @empty

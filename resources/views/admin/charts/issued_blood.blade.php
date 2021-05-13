@@ -18,7 +18,7 @@ Issued Blood
                     <h1>{{ $chart2->options['chart_title'] }}</h1>
                     <h3>Key</h3>
                     @foreach ($hospitals as $hospital)
-                    {{$hospital->id}}-{{$hospital->name}}
+                    {{$hospital->id}}-{{$hospital->name}}<br>
                     @endforeach
                     {!! $chart2->renderHtml() !!}
                 </div>

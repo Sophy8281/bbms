@@ -37,12 +37,6 @@ Show Agitator
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <strong>Added by:</strong>
-                                    {{ $agitator->staff->name }}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
                                     <strong>Date Created:</strong>
                                     {{ date('F d, Y h:m A', strtotime($agitator->created_at)) }}
                                     {{-- {{ date_format($agitator->created_at, 'jS M Y') }} --}}

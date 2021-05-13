@@ -6,9 +6,6 @@ Refrigerators
 @include('flash-message')
 
 <div>
-    <a href="{{ URL::to('staff/add-refrigerator')  }}" class="btn btn-success">
-        <i class="fa fa-plus-circle"></i>   New Refrigerator
-    </a>
     <a href="{{ URL::to('staff/rbc/add')  }}" class="btn btn-success float-right">
         <i class="fa fa-plus-circle"></i>   Add RBC to Stock
     </a>
@@ -39,8 +36,6 @@ Refrigerators
                 @endif
                 <td>
                     <a href="{{ url('staff/refrigerator/'.$refrigerator->id) }}" class="btn btn-success"><i class="fa fa-eye"></i> Open</a>
-                    <a href="{{ url('staff/refrigerator/edit/'.$refrigerator->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('staff/refrigerator/delete/'.$refrigerator->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $refrigerator->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

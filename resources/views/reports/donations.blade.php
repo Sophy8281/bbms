@@ -56,7 +56,11 @@
             <td>{{ $donation->donor->name }}</td>
             <td>{{ $donation->bank->name }}</td>
             <td>{{ $donation->bag_serial_number }}</td>
-            <td>{{ $donation->group->name }}</td>
+            @if ($donation->donation_id)
+            <td>{{ $donation->donation->name }}</td>
+            @else
+            <td></td>
+            @endif
             <td>{{ $donation->status  }}</td>
             <td>{{ date('F d, Y', strtotime($donation->created_at)) }}</td>
         </tr>

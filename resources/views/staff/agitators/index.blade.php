@@ -9,10 +9,6 @@ Agitators
         <i class="fa fa-plus-circle"></i>
         Add Platelets to Stock
     </a>
-    <a href="{{ URL::to('staff/add-agitator')  }}" class="btn btn-success">
-        <i class="fa fa-plus-circle"></i>
-        New Agitator
-    </a>
 </div>
 <div class="panel panel-default"></div>
     <div class="panel-heading">Agitators(Store Platelets) </div>
@@ -41,8 +37,6 @@ Agitators
                 @endif
                 <td>
                     <a href="{{ url('staff/agitator/'.$agitator->id) }}" class="btn btn-success"><i class="fa fa-eye"></i> Open</a></a>
-                    <a href="{{ url('staff/agitator/edit/'.$agitator->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('staff/agitator/delete/'.$agitator->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $agitator->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

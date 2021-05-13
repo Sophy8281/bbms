@@ -43,9 +43,9 @@
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
+                  {{-- <img class="profile-user-img img-fluid img-circle"
                        src="{{asset('frontend/dist/img/user4-128x128.jpg')}}"
-                       alt="User profile picture">
+                       alt="User profile picture"> --}}
                 </div>
                 {{-- <a href="{{ url('profile/'.$user->id) }}"class="btn btn-info"><i class="fa fa-edit"></i> Edit Profile</i></a> --}}
 

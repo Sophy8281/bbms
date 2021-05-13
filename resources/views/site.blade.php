@@ -191,7 +191,7 @@
                     <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
                             <i class="icofont-institution"></i>
-                            <span data-toggle="counter-up">{{ $banks->count() }}</span>
+                            <span>{{ $banks->count() }}</span>
                             <p><strong>Blood Banks</strong></p>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                     <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
                             <i class="icofont-laboratory"></i>
-                            <span data-toggle="counter-up">{{ $banks->count() }}</span>
+                            <span>{{ $banks->count() }}</span>
                             <p><strong>Test Labs</strong></p>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                     <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
                         <div class="count-box">
                             <i class="icofont-award"></i>
-                            <span data-toggle="counter-up">150</span>
+                            <span>150</span>
                             <p><strong>Awards</strong></p>
                         </div>
                     </div>

@@ -54,25 +54,25 @@ Donations
                         <td>{{ $donation->bank->name }}</td>
                         <td>{{ $donation->bag_serial_number }}</td>
                         @if ($donation->group_id)
-                        <td> <a class="btn btn-success" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->group->name }}
+                        <td> <p class="btn btn-success">{{ $donation->group->name }}
                             <i class="fas fa-heart"></i>
-                            </a>
+                            </p>
                         </td>
                         @else
-                        <td> <a class="btn btn-success" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">
+                        <td> <p class="btn btn-success">
                             <i class="fas fa-heart"></i>
-                            </a>
+                            </p>
                         </td>
                         @endif
                         @if ( $donation->status  == "Safe")
-                        <td> <a class="btn btn-success" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->status  }}
+                        <td> <p class="btn btn-success">{{ $donation->status  }}
                             <i class="fas fa-thumbs-up"></i>
-                            </a>
+                            </p>
                         </td>
                         @else
-                        <td> <a class="btn btn-danger" href="{{ URL::to('staff/add-blood-results/'.$donation->id) }}">{{ $donation->status  }}
+                        <td> <p class="btn btn-danger">{{ $donation->status  }}
                             <i class="fas fa-thumbs-down"></i>
-                            </a>
+                            </p>
                         </td>
                         @endif
                         <td>{{ date('F d, Y', strtotime($donation->created_at)) }}</td>

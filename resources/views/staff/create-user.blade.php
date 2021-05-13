@@ -93,16 +93,6 @@ New Donor
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="blood_group" class="col-md-4 col-form-label text-md-right">{{ __('Blood Group') }}</label>
-                            <div class="col-md-6">
-                                <select id="blood_group" type="text"  class="form-control" name="blood_group">
-                                    @foreach ($blood_groups as $blood_group)
-                                        <option>{{ $blood_group->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="county" class="col-md-4 col-form-label text-md-right">{{ __('County of Residence') }}</label>
                             <div class="col-md-6">
                                 <input id="county" type="text" class="form-control @error('county') is-invalid @enderror" name="county" value="{{ old('county') }}" required autocomplete="county">

@@ -53,7 +53,7 @@ class HomeController extends Controller
             'name' => 'required|max:255',
             'gender' => 'required|max:255',
             'unique_no' => 'required|max:255',
-            'birth_date' => 'required|before_or_equal:today|max:255',
+            'birth_date' => 'required|before:today|max:255',
             'phone' => 'required|max:255',
             'address' => 'max:255',
             // 'blood_group'=> 'required|max:255',

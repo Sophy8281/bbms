@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\NewDonationNotification;
+use App\Notifications\HostDriveAcceptanceNotification;
+use App\Notifications\AppointmentApprovalNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use App\Models\DiscardedBlood;
@@ -29,6 +31,7 @@ use App\models\SendSms;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Mail;
 use App\DataTables\UsersDataTable;
+use App\Models\HospitalRequest;
 use PDF;
 use Carbon\Carbon;
 
@@ -112,7 +115,7 @@ class StaffController extends Controller
             'birth_date' => 'required|max:255|before:today',
             'address' => ['max:255'],
             'phone' => ['required', 'max:255'],
-            'blood_group' => ['string', 'max:255'],
+            // 'blood_group' => ['string', 'max:255'],
             'county' => ['required', 'string', 'max:255'],
         ]);
         // dd($request);
@@ -124,7 +127,7 @@ class StaffController extends Controller
             'birth_date' => $request['birth_date'],
             'address' => $request['address'],
             'phone' => $request['phone'],
-            'blood_group' => $request['blood_group'],
+            // 'blood_group' => $request['blood_group'],
             'county' => $request['county'],
             'password' => bcrypt($password),
         ]);
@@ -162,7 +165,7 @@ class StaffController extends Controller
             'birth_date' => $request['birth_date'],
             'address' => $request['address'],
             'phone' => $request['phone'],
-            'group_id' => $request['blood_group'],
+            'blood_group' => $request['blood_group'],
             'county' => $request['county'],
         ];
         $this->validate($request, $constraints);
@@ -183,9 +186,9 @@ class StaffController extends Controller
     public function all_donations()
     {
         $bank_id=Auth::user()->bank_id;
-        $donations = Donation::where('bank_id',$bank_id)
-            ->whereNull('processed_at')
-            ->whereNull('stored_at')->get();
+        $donations = Donation::where('bank_id',$bank_id)->get();
+            // ->whereNull('processed_at')
+            // ->whereNull('stored_at')->get();
         return view('staff.donations.index', compact('donations'));
     }
 
@@ -213,6 +216,7 @@ class StaffController extends Controller
     public function save_donation(Request $request )
     {
         $request->validate([
+            'donor_id' => ['required','string'],
             'bag_serial_number' => ['required', 'unique:donations'],
         ]);
         $data = new Donation();
@@ -226,7 +230,8 @@ class StaffController extends Controller
         $data->save();
         $donor = User::get()->where('id',$data['donor_id']);
         // dd($donor);
-        Notification::send( $donor, new NewDonationNotification($data));
+       // Notification::send( $donor, new NewDonationNotification($data));
+
         // $phone = DB::table('users')
         //     ->where('id',$data['donor_id'])
         //     ->select('phone')
@@ -236,7 +241,7 @@ class StaffController extends Controller
         // if($phone){
         //     SendSms::sendsms($phone);
         // }
-        return redirect('staff/all-donations/')->with('success','Donation Added Successfully!');
+        return redirect('staff/add-donation/')->with('success','Donation Added Successfully!');
     }
 
     public function edit_donation($id)
@@ -305,8 +310,8 @@ class StaffController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         // $donations = Donation::where('bank_id',$bank_id)->paginate(10);
-        $donations = Donation::whereNull('group_id')->where('bank_id',$bank_id)->get();
-        //  $donations = Donation::paginate(10);
+        // $donations = Donation::whereNull('group_id')->where('bank_id',$bank_id)->get();
+        $donations = Donation::where('bank_id',$bank_id)->get();
          return view('staff.unscreened_donations', compact('donations'));
     }
 
@@ -327,7 +332,7 @@ class StaffController extends Controller
         ->where('id', $id)
         ->update($data);
 
-        return Redirect::to('staff/all-donations/')->with('success','Results Added Successfully!');
+        return Redirect::to('staff/unscreened-donations')->with('success','Results Added Successfully!');
     }
 
     /******************** STAFF STORAGE-FACILITY - MANAGEMENT *****************************/
@@ -406,7 +411,7 @@ class StaffController extends Controller
     public function all_freezers()
     {
         $bank_id=Auth::user()->bank_id;
-        $freezers = Freezer::where('bank_id',$bank_id)->paginate(1);
+        $freezers = Freezer::where('bank_id',$bank_id)->get();
         // $count = Plasma::where('bank_id',$bank_id)
         // ->whereNull('hospital_id')->whereNull('issued_at');
         return view('staff.freezers.index', compact('freezers'));
@@ -659,6 +664,28 @@ class StaffController extends Controller
         return view('staff.drives.hosted', compact('hosted_drives'));
     }
 
+    public function accept_hosted_drive($id)
+    {
+        $hosted_drive = HostDrive::findOrFail($id);
+
+        $staff_id=Auth::user()->id;
+        $accepted_at = Carbon::now();
+
+        $input = [
+            'staff_id' => $staff_id,
+            'accepted_at' => $accepted_at,
+        ];
+
+        // dd($input);
+        HostDrive::where('id', $id)
+            ->update($input);
+
+        $host = HostDrive::where('id', $id)->get();
+        Notification::send( $host, new HostDriveAcceptanceNotification($hosted_drive));
+
+        return redirect('staff/hosted')->with('success','Drive Request Accepted successfully!');
+    }
+
      /******************** STAFF APPOINTMENT - MANAGEMENT *****************************/
     public function appointments()
     {
@@ -667,7 +694,26 @@ class StaffController extends Controller
         $appointments = Appointment::get()->where('bank_id',$bank_id)->whereNotNull('done_at');
 
         return view('staff.appointments.index', compact('pending_appointments','appointments'));
+    }
 
+    public function approve_appointment($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+
+        $accepted_at = Carbon::now();
+
+        $input = [
+            'accepted_at' => $accepted_at,
+        ];
+
+        // dd($input);
+        Appointment::where('id', $id)
+            ->update($input);
+
+        $donor = Appointment::where('id', $id)->get();
+        Notification::send( $donor, new AppointmentApprovalNotification($appointment));
+
+        return redirect('staff/appointments')->with('success','Appointment approved successfully!');
     }
     public function mark_appointment($id)
     {
@@ -685,6 +731,14 @@ class StaffController extends Controller
             ->update($input);
 
         return redirect('staff/appointments/')->with('success','Appointment Marked Successfully!');
+    }
+
+    /******************** STAFF REQUESTS - MANAGEMENT *****************************/
+    public function hospital_requests()
+    {
+        $requests = HospitalRequest::all();
+
+        return view('staff.requests.index', compact('requests'));
     }
 
     /******************** STAFF REPORTS- MANAGEMENT *****************************/

@@ -642,7 +642,7 @@ class AdminController extends Controller
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month',
+            // 'filter_period' => 'year',
         ];
 
         $chart2 = new LaravelChart($chart_options);
@@ -707,7 +707,7 @@ class AdminController extends Controller
             'chart_type' => 'pie',
             'chart_height' => '100px',
             'filter_field' => 'created_at',
-            'filter_period' => 'month',
+            // 'filter_period' => 'month',
         ];
 
         $chart2 = new LaravelChart($chart_options);

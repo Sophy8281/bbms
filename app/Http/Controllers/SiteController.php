@@ -80,7 +80,8 @@ class SiteController extends Controller
 
         // dd($data);
         $data->save();
-        return redirect('appointment/')->with('success',' Appointment Sent Successfully!');
+        return redirect('appointment/')
+            ->with('success',' Appointment Request Sent Successfully! We will get to you soon.');
         // return redirect('appointment/')->withMessage(' Created Successfully!');
     }
 
@@ -128,7 +129,7 @@ class SiteController extends Controller
 
         // dd($data);
         $data->save();
-        return redirect('host/')->with('success',' Request Sent Successfully!');
+        return redirect('host/')->with('success',' Request Sent Successfully! We will get to you soon.');
     }
     /**
      * Display the specified resource.

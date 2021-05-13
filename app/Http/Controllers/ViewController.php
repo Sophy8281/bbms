@@ -8,9 +8,17 @@ use App\Exports\UsersExport;
 use DB;
 use PDF;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Donation;
 
 class ViewController extends Controller
 {
+    public function test()
+    {
+        // $donations = Donation::select('bag_serial_number','group_id')->distinct('group_id')->get();
+        $donations = Donation::all()->unique('group_id');
+        return view('test', compact('donations'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +45,7 @@ class ViewController extends Controller
                 $pdf = PDF::loadView('reports.PDF_report', ['PDFReport' => $PDFReport])->setPaper('a4', 'landscape');
                 return $pdf->download('PDF-report.pdf');
 
-                
+
             }
 
 

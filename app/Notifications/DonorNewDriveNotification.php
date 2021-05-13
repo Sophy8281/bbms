@@ -32,7 +32,7 @@ class DonorNewDriveNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','nexmo'];
+        return ['mail'];
     }
 
     /**
@@ -74,21 +74,21 @@ class DonorNewDriveNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\NexmoMessage
      */
-    public function toNexmo($notifiable)
-    {
-          Nexmo::message()->send([
-            'to' => '+254'.(int) $phone,
-            'from' => 'BBMS',
-            'text' => 'Thank you for your blood donation. It means a lot to us and people in need of blood.',
-        ]);
-        // return (new NexmoMessage)
-        //             // ->content('Your SMS message content');
-        //             ->from('BBMS')
-        //             ->content('We are glad to inform you that we have scheduled a new Blood Drive.')
-        //             ->content('VENUE:' . $this->new_drive->location)
-        //             ->content('DATE:' . $this->new_drive->date)
-        //             ->content('TIME:' .  $this->new_drive->time)
-        //             ->content('Thank you  and see you there, then!');
-        //             // ->content('New Blood Drive Scheduled at' . $this->new_drive->location .'on'. $this->new_drive->date . 'from'. $this->new_drive->time);
-    }
+    // public function toNexmo($notifiable)
+    // {
+    //       Nexmo::message()->send([
+    //         'to' => '+254'.(int) $phone,
+    //         'from' => 'BBMS',
+    //         'text' => 'Thank you for your blood donation. It means a lot to us and people in need of blood.',
+    //     ]);
+    //     // return (new NexmoMessage)
+    //     //             // ->content('Your SMS message content');
+    //     //             ->from('BBMS')
+    //     //             ->content('We are glad to inform you that we have scheduled a new Blood Drive.')
+    //     //             ->content('VENUE:' . $this->new_drive->location)
+    //     //             ->content('DATE:' . $this->new_drive->date)
+    //     //             ->content('TIME:' .  $this->new_drive->time)
+    //     //             ->content('Thank you  and see you there, then!');
+    //     //             // ->content('New Blood Drive Scheduled at' . $this->new_drive->location .'on'. $this->new_drive->date . 'from'. $this->new_drive->time);
+    // }
 }

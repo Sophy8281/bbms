@@ -123,11 +123,28 @@ Route::prefix('staff')->group(function () {
         Route::post('/refrigerator/edit/{id}', 'App\Http\Controllers\StaffController@update_refrigerator');
         Route::get('/refrigerator/delete/{id}', 'App\Http\Controllers\StaffController@delete_refrigerator');
 
-        //Blood Processing Management
-        Route::get('/process', 'App\Http\Controllers\BloodController@all_safe');
-        Route::get('/process/store/{id}', 'App\Http\Controllers\BloodController@store_blood');
-        Route::get('/process/process/{id}', 'App\Http\Controllers\BloodController@process_blood');
-        Route::get('/processed', 'App\Http\Controllers\BloodController@processed_blood');
+        // Blood Processing Management
+        Route::get('/process', 'App\Http\Controllers\ProcessingController@index');
+        Route::get('/process/{id}', 'App\Http\Controllers\ProcessingController@edit');
+        Route::post('/process/{id}', 'App\Http\Controllers\ProcessingController@update');
+
+        // Route::get('/process', 'App\Http\Controllers\BloodController@all_safe');
+        // Route::get('/process/store/{id}', 'App\Http\Controllers\BloodController@store_blood');
+        // Route::get('/process/process/{id}', 'App\Http\Controllers\BloodController@process_blood');
+        Route::get('/processed', 'App\Http\Controllers\ProcessingController@processed_blood');
+
+        // Blood Storage Management
+        Route::get('/blood', 'App\Http\Controllers\StorageController@blood_index');
+        Route::get('/blood/store/{id}', 'App\Http\Controllers\StorageController@store_blood');
+        Route::get('/plasma', 'App\Http\Controllers\StorageController@plasma_index');
+        Route::get('/plasma/store/{id}', 'App\Http\Controllers\StorageController@plasma_store_view');
+        Route::post('/plasma/store/{id}', 'App\Http\Controllers\StorageController@store_plasma');
+        Route::get('/platelets', 'App\Http\Controllers\StorageController@platelets_index');
+        Route::get('/platelet/store/{id}', 'App\Http\Controllers\StorageController@platelets_store_view');
+        Route::post('/platelet/store/{id}', 'App\Http\Controllers\StorageController@store_platelets');
+        Route::get('/rbc', 'App\Http\Controllers\StorageController@rbc_index');
+        Route::get('/rbc/store/{id}', 'App\Http\Controllers\StorageController@rbc_store_view');
+        Route::post('/rbc/store/{id}', 'App\Http\Controllers\StorageController@store_rbc');
 
         // whole blood stock management routes
         Route::get('/cold-room', 'App\Http\Controllers\BloodController@whole_blood');
@@ -137,7 +154,7 @@ Route::prefix('staff')->group(function () {
 
         // Rbc stock management routes
         Route::get('/refrigerator/{id}', 'App\Http\Controllers\RbcController@index');
-        Route::get('/rbc', 'App\Http\Controllers\RbcController@index');
+        // Route::get('/rbc', 'App\Http\Controllers\RbcController@index');
         Route::get('/rbc/add', 'App\Http\Controllers\RbcController@create');
         Route::post('/rbc/add', 'App\Http\Controllers\RbcController@store');
         Route::get('/rbc/show/{id}', 'App\Http\Controllers\RbcController@show');
@@ -151,7 +168,7 @@ Route::prefix('staff')->group(function () {
 
         // Platelets stock management routes
         Route::get('/agitator/{id}', 'App\Http\Controllers\PlateletController@index');
-        Route::get('/platelets', 'App\Http\Controllers\PlateletController@index');
+        // Route::get('/platelets', 'App\Http\Controllers\PlateletController@index');
         Route::get('/platelets/add', 'App\Http\Controllers\PlateletController@create');
         Route::post('/platelets/add', 'App\Http\Controllers\PlateletController@store');
         Route::get('/platelet/issue/{id}', 'App\Http\Controllers\PlateletController@issue');
@@ -166,7 +183,7 @@ Route::prefix('staff')->group(function () {
 
         // Plasma stock management routes
         Route::get('/freezer/{id}', 'App\Http\Controllers\PlasmaController@index');
-        Route::get('/plasma', 'App\Http\Controllers\PlasmaController@index');
+        // Route::get('/plasma', 'App\Http\Controllers\PlasmaController@index');
         Route::get('/plasma/add', 'App\Http\Controllers\PlasmaController@create');
         Route::post('/plasma/add', 'App\Http\Controllers\PlasmaController@store');
         Route::get('/plasma/show/{id}', 'App\Http\Controllers\PlasmaController@show');
@@ -187,10 +204,16 @@ Route::prefix('staff')->group(function () {
         Route::post('/drive/edit/{id}', 'App\Http\Controllers\StaffController@update_drive');
         Route::get('/drive/delete/{id}', 'App\Http\Controllers\StaffController@destroy_drive');
         Route::get('/hosted', 'App\Http\Controllers\StaffController@hosted_drives');
+        Route::get('/hosted/accept/{id}', 'App\Http\Controllers\StaffController@accept_hosted_drive');
 
         // Appointments management routes
         Route::get('/appointments', 'App\Http\Controllers\StaffController@appointments');
         Route::get('/appointment/mark/{id}', 'App\Http\Controllers\StaffController@mark_appointment');
+        Route::get('/appointment/accept/{id}', 'App\Http\Controllers\StaffController@approve_appointment');
+
+        // Requests management routes
+        Route::get('/requests', 'App\Http\Controllers\StaffController@hospital_requests');
+
 
         // Report management routes
         Route::get('/reports/donors', 'App\Http\Controllers\StaffController@donors_pdf');
@@ -249,6 +272,32 @@ Route::prefix('admin')->group(function () {
     Route::post('/hospital/edit/{id}', 'App\Http\Controllers\HospitalController@update');
     Route::get('/hospital/delete/{id}', 'App\Http\Controllers\HospitalController@destroy');
 
+    // Agitators management routes
+    Route::get('/all-agitators', 'App\Http\Controllers\AgitatorController@index');
+    Route::get('/add-agitator', 'App\Http\Controllers\AgitatorController@create');
+    Route::post('/add-agitator', 'App\Http\Controllers\AgitatorController@store');
+    Route::get('/agitator/edit/{id}', 'App\Http\Controllers\AgitatorController@edit');
+    Route::post('/agitator/edit/{id}', 'App\Http\Controllers\AgitatorController@update');
+    Route::get('/agitator/delete/{id}', 'App\Http\Controllers\AgitatorController@destroy');
+
+    // Freezers management routes
+    Route::get('/all-freezers', 'App\Http\Controllers\FreezerController@index');
+    Route::get('/add-freezer', 'App\Http\Controllers\FreezerController@create');
+    Route::post('/add-freezer', 'App\Http\Controllers\FreezerController@store');
+    Route::get('/freezer/show/{id}', 'App\Http\Controllers\FreezerController@show');
+    Route::get('/freezer/edit/{id}', 'App\Http\Controllers\FreezerController@edit');
+    Route::post('/freezer/edit/{id}', 'App\Http\Controllers\FreezerController@update');
+    Route::get('/freezer/delete/{id}', 'App\Http\Controllers\FreezerController@destroy');
+
+    // Refrigerators management routes
+    Route::get('/all-refrigerators', 'App\Http\Controllers\RefrigeratorController@index');
+    Route::get('/add-refrigerator', 'App\Http\Controllers\RefrigeratorController@create');
+    Route::post('/add-refrigerator', 'App\Http\Controllers\RefrigeratorController@store');
+    Route::get('/refrigerator/show/{id}', 'App\Http\Controllers\RefrigeratorController@show');
+    Route::get('/refrigerator/edit/{id}', 'App\Http\Controllers\RefrigeratorController@edit');
+    Route::post('/refrigerator/edit/{id}', 'App\Http\Controllers\RefrigeratorController@update');
+    Route::get('/refrigerator/delete/{id}', 'App\Http\Controllers\RefrigeratorController@delete');
+
     // Staff management routes
     Route::get('/all-staff', 'App\Http\Controllers\AdminController@all_staff');
     Route::get('/add-staff', 'App\Http\Controllers\AdminController@create_staff');
@@ -299,7 +348,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/reports/rbc', 'App\Http\Controllers\AdminController@rbc_pdf');
 
     Route::get('/reports/issued-plasma', 'App\Http\Controllers\AdminController@issued_plasma_pdf');
-    Route::get('/reports/issuded-platelets', 'App\Http\Controllers\AdminController@issued_platelets_pdf');
+    Route::get('/reports/issued-platelets', 'App\Http\Controllers\AdminController@issued_platelets_pdf');
     Route::get('/reports/issued-rbc', 'App\Http\Controllers\AdminController@issued_rbc_pdf');
     Route::get('/reports/issued-blood', 'App\Http\Controllers\AdminController@issued_blood_pdf');
 
@@ -342,7 +391,7 @@ Route::prefix('admin')->group(function () {
 Route::get('/chart', 'App\Http\Controllers\ChartController@index');
 Route::get('/users', 'App\Http\Controllers\StaffController@users_datatable');
 //View Page
-Route::get('ViewPages', 'App\Http\Controllers\ViewController@index');
+Route::get('ViewPages', 'App\Http\Controllers\ViewController@test');
 Route::post('ViewPages', 'App\Http\Controllers\ViewController@index');
 
 Route::get('/all-donors', 'App\Http\Controllers\AdminController@all_donors')->name('donorpdf');

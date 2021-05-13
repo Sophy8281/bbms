@@ -17,10 +17,8 @@ class CreateAgitatorsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('bank_id');
             $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('staff_id');
-            $table->foreign('staff_id')->references('id')->on('staff')->onUpdate('cascade');
-            // $table->string('blood_group');
-            // $table->foreign('blood_group_id')->references('id')->on('groups')->onUpdate('cascade');
+            $table->unsignedBigInteger('admin_id');
+            $table->foreign('admin_id')->references('id')->on('admins')->onUpdate('cascade');
             $table->string('name');
             $table->unsignedBigInteger('capacity');
             $table->timestamps();

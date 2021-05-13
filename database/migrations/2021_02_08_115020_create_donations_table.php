@@ -24,11 +24,15 @@ class CreateDonationsTable extends Migration
             $table->string('bag_serial_number')->unique();
             $table->unsignedBigInteger('group_id')->nullable();
             $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade');
-            // $table->string('blood_group')->nullable();
             $table->string('status')->nullable();
             $table->dateTime('processed_at')->nullable();
+            $table->string('plasma_bag_no')->nullable();
+            $table->string('platelet_bag_no')->nullable();
+            $table->string('rbc_bag_no')->nullable();
             $table->dateTime('stored_at')->nullable();
-
+            $table->string('plasma_stored_at')->nullable();
+            $table->string('platelet_stored_at')->nullable();
+            $table->string('rbc_stored_at')->nullable();
             $table->timestamps();
         });
     }

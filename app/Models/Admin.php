@@ -56,5 +56,20 @@ class Admin extends Authenticatable
         return $this->hasMany(Drive::class);
     }
 
+    public function agitators()
+    {
+        return $this->hasMany(Agitator::class);
+    }
+
+    public function freezers()
+    {
+        return $this->hasMany(Freezer::class);
+    }
+
+    public function refrigerators()
+    {
+        return $this->hasMany(Refrigerator::class);
+    }
+
 
 }

@@ -18,19 +18,20 @@ class Donation extends Model
     //protected $primaryKey ="donation_id";
 
     protected $fillable = [
-
-       // 'donation_id',
         'donor_id',
         'bag_serial_number',
         'blood_group',
         'status',
+        'plasma_bag_no',
+        'platelet_bag_no',
+        'rbc_bag_no',
     ];
 
     public function donor()
     {
        return $this->belongsTo(User::class);
     }
-    
+
     public function staff()
     {
        return $this->belongsTo(Staff::class);

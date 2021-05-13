@@ -61,4 +61,9 @@ class Group extends Model
     {
        return $this->belongsTo(Admin::class);
     }
+
+    public function requests()
+    {
+        return $this->hasMany(HospitalRequest::class);
+    }
 }

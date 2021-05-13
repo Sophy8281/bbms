@@ -12,7 +12,7 @@ class Agitator extends Model
     protected $table="agitators";
 
     protected $fillable = [
-        'blood_group',
+        'bank_id',
         'name',
         'capacity',
     ];
@@ -27,7 +27,12 @@ class Agitator extends Model
         return $this->hasMany(IssuedPlatelet::class);
     }
 
-     public function staff()
+    public function admin()
+    {
+       return $this->belongsTo(Admin::class);
+    }
+
+    public function staff()
     {
        return $this->belongsTo(Staff::class);
     }

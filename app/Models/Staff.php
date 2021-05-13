@@ -76,6 +76,11 @@ class Staff extends Authenticatable
         return $this->hasMany(Appointment::class);
     }
 
+    public function requests()
+    {
+        return $this->hasMany(HospitalRequest::class);
+    }
+
     // public static function generatePassword()
     // {
     //   // Generate random string and encrypt it.

@@ -12,7 +12,7 @@ class Refrigerator extends Model
     protected $table="refrigerators";
 
     protected $fillable = [
-        'blood_group',
+        'bank_id',
         'name',
         'capacity',
     ];
@@ -28,7 +28,12 @@ class Refrigerator extends Model
         return $this->hasMany(IssuedRbc::class);
     }
 
-      public function staff()
+    public function admin()
+    {
+       return $this->belongsTo(Admin::class);
+    }
+
+    public function staff()
     {
        return $this->belongsTo(Staff::class);
     }

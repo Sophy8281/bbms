@@ -25,6 +25,8 @@ class CreateBloodsTable extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade');
             $table->date('donation_date');
             $table->date('expiry_date');
+            $table->dateTime('issued_at')->nullable();
+            $table->dateTime('discarded_at')->nullable();
             $table->timestamps();
         });
     }

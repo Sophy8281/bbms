@@ -28,7 +28,8 @@ class CreatePlasmasTable extends Migration
             $table->date('expiry_date');
             // $table->unsignedBigInteger('hospital_id')->nullable();
             // $table->foreign('hospital_id')->references('id')->on('hospitals');
-            // $table->dateTime('issued_at')->nullable();
+            $table->dateTime('issued_at')->nullable();
+            $table->dateTime('discarded_at')->nullable();
             $table->timestamps();
         });
     }

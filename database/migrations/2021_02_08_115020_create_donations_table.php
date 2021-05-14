@@ -30,9 +30,10 @@ class CreateDonationsTable extends Migration
             $table->string('platelet_bag_no')->nullable();
             $table->string('rbc_bag_no')->nullable();
             $table->dateTime('stored_at')->nullable();
-            $table->string('plasma_stored_at')->nullable();
-            $table->string('platelet_stored_at')->nullable();
-            $table->string('rbc_stored_at')->nullable();
+            $table->dateTime('plasma_stored_at')->nullable();
+            $table->dateTime('platelet_stored_at')->nullable();
+            $table->dateTime('rbc_stored_at')->nullable();
+            $table->dateTime('discarded_at')->nullable();
             $table->timestamps();
         });
     }

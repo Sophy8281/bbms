@@ -18,8 +18,8 @@ Screening
                             <th>Bag SNo.</th>
                             <th>Blood Group</th>
                             <th>Status</th>
-                            {{-- <th>Action</th> --}}
-                            <th>Discard</th>
+                            <th>Action</th>
+                            {{-- <th>Discard</th> --}}
                         </tr>
                     </thead>
                     @forelse ($donations as $donation)
@@ -62,6 +62,7 @@ Screening
                             <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
                         </td> --}}
                         <td>
+                            <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
                             @if ($donation->status  == "Unsafe")
                             <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to discard this bag-{{ $donation->bag_serial_number }}?')"><i class="fa fa-trash"></i>Discard</a>
                             @endif

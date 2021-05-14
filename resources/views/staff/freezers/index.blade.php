@@ -30,8 +30,8 @@ Freezers
                      <a style="text-decoration:underline;color:blue" href="{{ url('staff/freezer/show/'.$freezer->id) }}">{{ $freezer->name }}</a>
                 </td>
                 <td>{{ $freezer->capacity }}</td>
-                @if ($freezer->plasma->count() < $freezer->capacity && $freezer->plasma->count() != $freezer->capacity)
-                    <td>{{ $freezer->plasma->count() }}</td>
+                @if ($freezer->plasma->whereNull('issued_at')->whereNull('discarded_at')->count() < $freezer->capacity && $freezer->plasma->whereNull('issued_at')->whereNull('discarded_at')->count() != $freezer->capacity)
+                    <td>{{ $freezer->plasma->whereNull('issued_at')->whereNull('discarded_at')->count() }}</td>
                 @else
                  <td>Full</td>
                 @endif

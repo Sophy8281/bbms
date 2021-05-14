@@ -11,7 +11,7 @@
 
                 <div class="card-body">
 
-                    <form action="{{ url('profile/'.$user->id) }}" method="POST" aria-label="{{ __('Profile') }}"">
+                    <form action="{{ url('donor/profile/'.$user->id) }}" method="POST" aria-label="{{ __('Profile') }}"">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -92,7 +92,7 @@
                             </p>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="{{ url('home/') }}" class="btn btn-primary"><i class=""></i> Back</a>
+                        <a href="{{ url('donor/') }}" class="btn btn-primary"><i class=""></i> Back</a>
                     </form>
             </div>
         </div>

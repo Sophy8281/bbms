@@ -11,7 +11,7 @@ Donations
     </a>
 </div>
 <div class="panel panel-default">
-    <div class="panel-heading"><h5>Donations</h5></div>
+    <div class="panel-heading"><h5>Donations List</h5></div>
     <div class="panel-body">
         <form  action="{{ url('staff/all-donations') }}" method ="POST">
             @csrf
@@ -43,7 +43,7 @@ Donations
                         <th>Blood Group</th>
                         <th>status</th>
                         <th>Created_on</th>
-                        <th>Actions</th>
+                        {{-- <th>Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -76,12 +76,12 @@ Donations
                         </td>
                         @endif
                         <td>{{ date('F d, Y', strtotime($donation->created_at)) }}</td>
-                        <td>
+                        {{-- <td>
                             <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
                             @if ($donation->status  == "Unsafe")
                             <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to discard this bag-{{ $donation->bag_serial_number }}?')"><i class="fa fa-trash"></i>Discard</a>
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                     @empty
                     <tr>

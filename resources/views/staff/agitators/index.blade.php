@@ -30,8 +30,8 @@ Agitators
                     <a style="text-decoration:underline;color:blue" href="{{ url('staff/agitator/show/'.$agitator->id) }}">{{ $agitator->name }}</a>
                 </td>
                 <td>{{ $agitator->capacity }}</td>
-                @if ($agitator->platelets->count() < $agitator->capacity && $agitator->platelets->count() != $agitator->capacity)
-                    <td>{{ $agitator->platelets->count() }}</td>
+                @if ($agitator->platelets->whereNull('issued_at')->whereNull('discarded_at')->count() < $agitator->capacity && $agitator->platelets->whereNull('issued_at')->whereNull('discarded_at')->count() != $agitator->capacity)
+                    <td>{{ $agitator->platelets->whereNull('issued_at')->whereNull('discarded_at')->count() }}</td>
                 @else
                  <td>Full</td>
                 @endif

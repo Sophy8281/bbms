@@ -37,7 +37,7 @@ Processing
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8">No unprocessed/unstored blood.</td>
+                        <td colspan="8">There are no unprocessed and unstored blood bags that have not yet been stored.</td>
                     </tr>
                     @endforelse
                 </tbody>

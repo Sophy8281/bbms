@@ -216,7 +216,24 @@
                     </a>
                 </li>
                 </ul>
-              </li>
+            </li>
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fa fa-calendar"></i>
+                  <p>
+                    Hospital Requests
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/requests') }}" class="nav-link">
+                      <i class="fa fa-calendar"></i>
+                      <p>Hospital Requests</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="fa fa-users"></i>
@@ -292,13 +309,13 @@
               <li class="nav-item">
                 <a href="{{ URL::to('/staff/process') }}" class="nav-link">
                   <i class="fa fa-hourglass"></i>
-                  <p>Process/Store</p>
+                  <p>Process</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ URL::to('/staff/processed') }}" class="nav-link">
                   <i class="fa fa-hourglass"></i>
-                  <p>Processed</p>
+                  <p>All Processed</p>
                 </a>
               </li>
             </ul>
@@ -312,6 +329,30 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/blood')  }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Store Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/plasma')  }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Store Plasma</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/platelets')  }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Store Platelets</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/rbc')  }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Store RBC</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{ URL::to('staff/all-agitators')  }}" class="nav-link">
                   <i class="fa fa-archive"></i>
@@ -392,7 +433,7 @@
               <li class="nav-item">
                 <a href="{{ URL::to('staff/hosted')  }}" class="nav-link">
                   <i class="fa fa-ambulance"></i>
-                  <p>Hosted Drives</p>
+                  <p>Hosting Requests</p>
                 </a>
               </li>
             </ul>

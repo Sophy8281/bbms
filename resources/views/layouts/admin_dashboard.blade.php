@@ -62,7 +62,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -118,9 +118,9 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-      </li>
+      </li> --}}
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
@@ -145,7 +145,7 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-      </li>
+      </li> --}}
       <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
@@ -324,7 +324,36 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="fa fa-heart"></i>
+              <i class="fa fa-archive"></i>
+              <p>
+                Storage Facilities
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/all-agitators') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Agitators</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/all-freezers') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Freezers</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/all-refrigerators') }}" class="nav-link">
+                  <i class="fa fa-archive"></i>
+                  <p>Refrigerators</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fa fa-handshake"></i>
               <p>
                 Donations
                 <i class="right fas fa-angle-left"></i>
@@ -627,16 +656,51 @@
                   <p>About</p>
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ URL::to('admin/donation-process') }}" class="nav-link">
                   <i class=""></i>
                   <p>Donation Process</p>
                 </a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="{{ URL::to('admin/faqs') }}" class="nav-link">
                   <i class=""></i>
                   <p>FAQs</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="ion ion-stats-bars"></i>
+              <p>
+                Trends
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/blood-trends') }}" class="nav-link">
+                  <i class="ion ion-stats-bars"></i>
+                  <p>Blood Trends</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/plasma-trends') }}" class="nav-link">
+                  <i class="ion ion-stats-bars"></i>
+                  <p>Plasma Trends</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/platelets-trends') }}" class="nav-link">
+                  <i class="ion ion-stats-bars"></i>
+                  <p>Platelets Trends</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/rbc-trends') }}" class="nav-link">
+                  <i class="ion ion-stats-bars"></i>
+                  <p>RBC Trends</p>
                 </a>
               </li>
             </ul>

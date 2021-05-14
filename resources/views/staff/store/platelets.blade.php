@@ -37,7 +37,7 @@ Processing
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8">No processed platelets at the moment.</td>
+                        <td colspan="8">There are no processed platelets bag that have not yet been stored.</td>
                     </tr>
                     @endforelse
                 </tbody>

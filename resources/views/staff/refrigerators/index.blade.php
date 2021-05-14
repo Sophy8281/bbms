@@ -29,8 +29,8 @@ Refrigerators
                 <td>
                     <a style="text-decoration:underline;color:blue" href="{{ url('staff/refrigerator/show/'.$refrigerator->id) }}">{{ $refrigerator->name }}</a></td>
                 <td>{{ $refrigerator->capacity }}</td>
-                @if ($refrigerator->rbc->count() < $refrigerator->capacity && $refrigerator->rbc->count() != $refrigerator->capacity)
-                    <td>{{ $refrigerator->rbc->count() }}</td>
+                @if ($refrigerator->rbc->whereNull('issued_at')->whereNull('discarded_at')->count() < $refrigerator->capacity && $refrigerator->rbc->whereNull('issued_at')->whereNull('discarded_at')->count() != $refrigerator->capacity)
+                    <td>{{ $refrigerator->rbc->whereNull('issued_at')->whereNull('discarded_at')->count() }}</td>
                 @else
                  <td>Full</td>
                 @endif

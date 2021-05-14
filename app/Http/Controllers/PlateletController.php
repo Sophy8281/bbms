@@ -33,7 +33,10 @@ class PlateletController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         $agitator = Agitator::findOrFail($id);
-        $platelets = Platelet::get()->where('bank_id',$bank_id)->where('agitator_id',$id);
+        $platelets = Platelet::get()->where('bank_id',$bank_id)
+            ->where('agitator_id',$id)
+            ->whereNull('issued_at')
+            ->whereNull('discarded_at');
         return view('staff.platelets.index', compact('agitator','platelets'));
 
         // $bank_id=Auth::user()->bank_id;
@@ -147,7 +150,15 @@ class PlateletController extends Controller
 
         // dd($issued_platelet);
         $issued_platelet->save();
-        $platelet->delete();
+        // $platelet->delete();
+
+        $input = [
+            'issued_at' => $issued_at,
+        ];
+
+        // dd($input);
+        Platelet::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-agitators')
@@ -265,7 +276,15 @@ class PlateletController extends Controller
 
         // dd($discarded_platelet);
         $discarded_platelet->save();
-        $platelet->delete();
+        // $platelet->delete();
+
+        $input = [
+            'discarded_at' => $discarded_at,
+        ];
+
+        // dd($input);
+        Platelet::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-agitators')

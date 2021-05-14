@@ -36,8 +36,10 @@ class PlasmaController extends Controller
         // $plasma = Plasma::where('bank_id',$bank_id)->where('freezer_id',$id)
         // ->whereNull('hospital_id')
         // ->whereNull('issued_at')->paginate(1);
-        $plasma = Plasma::get()->where('bank_id',$bank_id)->where('freezer_id',$id);
-        // ->whereNull('hospital_id');
+        $plasma = Plasma::get()->where('bank_id',$bank_id)
+            ->where('freezer_id',$id)
+            ->whereNull('issued_at')
+            ->whereNull('discarded_at');
         return view('staff.plasma.index', compact('freezer','plasma'));
     }
 
@@ -129,7 +131,16 @@ class PlasmaController extends Controller
 
         $issued_plasma['issued_at']=$issued_at;//carbon
         $issued_plasma->save();
-        $plasma->delete();
+        // $plasma->delete();
+
+        $input = [
+            'issued_at' => $issued_at,
+        ];
+
+        // dd($input);
+        Plasma::where('id', $id)
+            ->update($input);
+
         // dd($issued_plasma);
         //then return to your view or whatever you want to do
         return redirect('staff/all-freezers')
@@ -220,7 +231,15 @@ class PlasmaController extends Controller
 
         // dd($discarded_plasma);
         $discarded_plasma->save();
-        $plasma->delete();
+        // $plasma->delete();
+
+        $input = [
+            'discarded_at' => $discarded_at,
+        ];
+
+        // dd($input);
+        Plasma::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-freezers')

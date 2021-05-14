@@ -261,7 +261,7 @@ class StorageController extends Controller
         $rbc->group_id = $group_id;//from donation
         $rbc->donation_date = $donation_date;//from donation
         $carbonone = new Carbon($donation_date);
-        $carbontwo = $carbonone->copy()->addDays(5);
+        $carbontwo = $carbonone->copy()->addDays(42);
         $rbc->expiry_date=$carbontwo;
 
         $input = [

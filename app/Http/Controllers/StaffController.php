@@ -66,9 +66,9 @@ class StaffController extends Controller
     {
         $donors = User::all()->count();
         $bank_id=Auth::user()->bank_id;
-        $platelets = Platelet::where('bank_id',$bank_id)->count();
-        $plasma = Plasma::where('bank_id',$bank_id)->count();
-        $rbc = Rbc::where('bank_id',$bank_id)->count();
+        $platelets = Platelet::where('bank_id',$bank_id)->whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
+        $plasma = Plasma::where('bank_id',$bank_id)->whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
+        $rbc = Rbc::where('bank_id',$bank_id)->whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
 
         return view('staff.staff', compact('donors','platelets','plasma','rbc'));
     }
@@ -95,7 +95,6 @@ class StaffController extends Controller
     public function createUser()
     {
         $blood_groups = Group::all();
-
         return view('staff.create-user', compact('blood_groups'));
     }
 
@@ -115,7 +114,6 @@ class StaffController extends Controller
             'birth_date' => 'required|max:255|before:today',
             'address' => ['max:255'],
             'phone' => ['required', 'max:255'],
-            // 'blood_group' => ['string', 'max:255'],
             'county' => ['required', 'string', 'max:255'],
         ]);
         // dd($request);
@@ -127,7 +125,6 @@ class StaffController extends Controller
             'birth_date' => $request['birth_date'],
             'address' => $request['address'],
             'phone' => $request['phone'],
-            // 'blood_group' => $request['blood_group'],
             'county' => $request['county'],
             'password' => bcrypt($password),
         ]);
@@ -299,10 +296,17 @@ class StaffController extends Controller
 
         // dd($discarded_plasma);
         $discarded_donation->save();
-        $donation->delete();
+        // $donation->delete();
+        $input = [
+            'discarded_at' => $discarded_at,
+        ];
+
+        // dd($input);
+        Donation::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
-        return redirect('staff/all-donations/')->with('success','Donation discarded Successfully!');
+        return redirect('staff/unscreened-donations/')->with('success','Donation discarded Successfully!');
     }
 
     /******************** STAFF BLOOD-RESULTS - MANAGEMENT *****************************/
@@ -311,7 +315,10 @@ class StaffController extends Controller
         $bank_id=Auth::user()->bank_id;
         // $donations = Donation::where('bank_id',$bank_id)->paginate(10);
         // $donations = Donation::whereNull('group_id')->where('bank_id',$bank_id)->get();
-        $donations = Donation::where('bank_id',$bank_id)->get();
+        $donations = Donation::where('bank_id',$bank_id)
+            ->whereNull('discarded_at')
+            ->whereNull('processed_at')
+            ->whereNull('stored_at')->get();
          return view('staff.unscreened_donations', compact('donations'));
     }
 
@@ -470,11 +477,11 @@ class StaffController extends Controller
     }
 
     public function delete_freezer($id)
-     {
-         $freezer = Freezer::findOrFail($id);
-         $freezer->delete();
-         return redirect('staff/all-freezers/')->with('success','Freezer deleted Successfully!');
-     }
+    {
+        $freezer = Freezer::findOrFail($id);
+        $freezer->delete();
+        return redirect('staff/all-freezers/')->with('success','Freezer deleted Successfully!');
+    }
 
     // Refrigerators
     public function all_refrigerators()
@@ -493,7 +500,6 @@ class StaffController extends Controller
      */
     public function add_refrigerator()
     {
-        // $blood_groups = Group::all();
         return view('staff.refrigerators.create');
     }
 
@@ -699,7 +705,6 @@ class StaffController extends Controller
     public function approve_appointment($id)
     {
         $appointment = Appointment::findOrFail($id);
-
         $accepted_at = Carbon::now();
 
         $input = [
@@ -736,9 +741,14 @@ class StaffController extends Controller
     /******************** STAFF REQUESTS - MANAGEMENT *****************************/
     public function hospital_requests()
     {
-        $requests = HospitalRequest::all();
-
-        return view('staff.requests.index', compact('requests'));
+        $today = Carbon::today();
+        $requests = HospitalRequest::select('*')->orderBy('created_at')->get();
+        $bank_id=Auth::user()->bank_id;
+        $whole_blood = Blood::where('bank_id',$bank_id)->where('expiry_date', '>', $today)->get();
+        $plasma = Plasma::where('bank_id',$bank_id)->where('expiry_date', '>', $today)->get();
+        $platelets = Platelet::where('bank_id',$bank_id)->where('expiry_date', '>', $today)->get();
+        $rbc = Rbc::where('bank_id',$bank_id)->where('expiry_date', '>', $today)->get();
+        return view('staff.requests.index', compact('requests','whole_blood','plasma','platelets','rbc'));
     }
 
     /******************** STAFF REPORTS- MANAGEMENT *****************************/

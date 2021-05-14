@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use App\Models\Appointment;
 use App\Models\Donation;
 use App\Models\Group;
+use App\Models\Bank;
 use App\Models\User;
 
 
@@ -56,7 +58,6 @@ class HomeController extends Controller
             'birth_date' => 'required|before:today|max:255',
             'phone' => 'required|max:255',
             'address' => 'max:255',
-            // 'blood_group'=> 'required|max:255',
             'county'=> 'required|max:255',
 
         ];
@@ -67,7 +68,6 @@ class HomeController extends Controller
             'birth_date' => $request['birth_date'],
             'phone' => $request['phone'],
             'address' => $request['address'],
-           // 'blood_group' => $request['blood_group'],
             'county' => $request['county'],
 
         ];
@@ -75,6 +75,46 @@ class HomeController extends Controller
         User::where('id', $id)
             ->update($input);
 
-         return redirect('/home')->with('success','Profile Updated Successfully!');
+         return redirect('/donor')->with('success','Profile Updated Successfully!');
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_appointment()
+    {
+        $banks = Bank::all();
+        $blood_groups = Group::all();
+        return view('donor.donor_appointment', compact('banks','blood_groups'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_appointment(Request $request)
+    {
+        $request->validate([
+            'date' => ['required','after_or_equal:today'],
+            'bank_id' => ['required'],
+        ]);
+
+        $data = new Appointment();
+        $data->user_id=Auth::user()->id;
+        $data->name=Auth::user()->name;
+        $data->email=Auth::user()->email;
+        $data->phone=Auth::user()->phone;
+        $data['date']=$request->date;
+        $data['bank_id']=$request->bank_id;
+        $data->group_id=Auth::user()->group_id;
+
+        // dd($data);
+        $data->save();
+        return redirect('donor/appointment/')
+            ->with('success',' Appointment Request Sent Successfully! We will get to you soon.');
     }
 }

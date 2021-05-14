@@ -32,6 +32,8 @@ use Carbon\Carbon;
 use App\Notifications\DonorNewDriveNotification;
 use DB;
 use App\Models\Faq;
+use App\Models\HospitalRequest;
+use LarapexChart;
 
 class AdminController extends Controller
 {
@@ -53,9 +55,9 @@ class AdminController extends Controller
     public function index()
     {
         $donors = User::all()->count();
-        $platelets = Platelet::all()->count();
-        $plasma = Plasma::all()->count();
-        $rbc = Rbc::all()->count();
+        $platelets = Platelet::whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
+        $plasma = Plasma::whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
+        $rbc = Rbc::whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
         return view('admin.admin', compact('donors','platelets','plasma','rbc'));
     }
 
@@ -1112,6 +1114,44 @@ class AdminController extends Controller
         return view('admin.charts.discarded_blood', compact('chart1', 'chart2', 'banks'));
     }
 
+    public function statistics()
+    {
+        $chart = LarapexChart::setTitle('Users')
+            ->setDataset([HospitalRequest::where('id', '<=', 10)->count(), User::where('id', '>', 5)->count()])
+            ->setColors(['#ffc63b', '#ff6384'])
+            ->setLabels(['HospitalRequest', 'User']);
+        return view('chart', compact('chart'));
+    }
+    public function highchart()
+    {
+        $viewer = Donation::select(\DB::raw("COUNT(*) as count"))
+                    ->whereYear('created_at', date('Y'))
+                    ->groupBy(\DB::raw("Month(created_at)"))
+                    ->pluck('count');
+
+        $click = HospitalRequest::select(\DB::raw("SUM(quantity) as count"))
+                    ->whereYear('created_at', date('Y'))
+                    ->groupBy(\DB::raw("Month(created_at)"))
+                    ->pluck('count');
+
+        return view('highchart',compact('viewer','click'));
+    }
+
+    // public function plasma_highchart()
+    // {
+    //     $plasma = Plasma::select(\DB::raw("COUNT(*) as count"))
+    //                 ->whereYear('created_at', date('Y'))
+    //                 ->groupBy(\DB::raw("Month(created_at)"))
+    //                 ->pluck('count');
+
+    //     $plasma_requests = HospitalRequest::select(\DB::raw("SUM(quantity) as count"))
+    //                 ->where('product', '=', 'plasma')
+    //                 ->whereYear('created_at', date('Y'))
+    //                 ->groupBy(\DB::raw("Month(created_at)"))
+    //                 ->pluck('count');
+
+    //     return view('plasma_highchart',compact('plasma','plasma_requests'));
+    // }
     /********************ADMIN BBMS-SITE - MANAGEMENT *****************************/
     public function faqs()
     {

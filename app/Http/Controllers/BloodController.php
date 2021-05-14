@@ -29,7 +29,9 @@ class BloodController extends Controller
     public function all_safe()
     {
         $safe = 'Safe';
+        $bank_id=Auth::user()->bank_id;
         $safe_blood = Donation::where('status', $safe)
+        ->where('bank_id',$bank_id)
         ->whereNull('processed_at')
         ->whereNull('stored_at')
         ->get();
@@ -38,7 +40,11 @@ class BloodController extends Controller
 
     public function whole_blood()
     {
-        $blood = Blood::all();
+        $bank_id=Auth::user()->bank_id;
+        $blood = Blood::get()
+            ->where('bank_id',$bank_id)
+            ->whereNull('issued_at')
+            ->whereNull('discarded_at');
         return view('staff.blood.index',compact('blood'));
     }
 
@@ -80,7 +86,14 @@ class BloodController extends Controller
 
         $issued_blood['issued_at']=$issued_at;//carbon
         $issued_blood->save();
-        $blood->delete();
+        // $blood->delete();
+        $input = [
+            'issued_at' => $issued_at,
+        ];
+
+        // dd($input);
+        Blood::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/cold-room')
@@ -91,10 +104,8 @@ class BloodController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         $blood = IssuedBlood::get()->where('bank_id',$bank_id);
-
         return view('staff.blood.issued', compact('blood'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -244,7 +255,15 @@ class BloodController extends Controller
 
         // dd($discarded_plasma);
         $discarded_blood->save();
-        $blood->delete();
+        // $blood->delete();
+
+        $input = [
+            'discarded_at' => $discarded_at,
+        ];
+
+        // dd($input);
+        Blood::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/cold-room')

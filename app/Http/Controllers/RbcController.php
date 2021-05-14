@@ -32,7 +32,10 @@ class RbcController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         $refrigerator = Refrigerator::findOrFail($id);
-        $rbcs = Rbc::get()->where('bank_id',$bank_id)->where('refrigerator_id',$id);
+        $rbcs = Rbc::get()->where('bank_id',$bank_id)
+            ->where('refrigerator_id',$id)
+            ->whereNull('issued_at')
+            ->whereNull('discarded_at');
         return view('staff.rbc.index', compact('refrigerator','rbcs'));
     }
 
@@ -121,7 +124,15 @@ class RbcController extends Controller
 
         $issued_rbc['issued_at']=$issued_at;//carbon
         $issued_rbc->save();
-        $rbc->delete();
+        // $rbc->delete();
+
+        $input = [
+            'issued_at' => $issued_at,
+        ];
+
+        // dd($input);
+        Rbc::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-refrigerators')
@@ -235,7 +246,15 @@ class RbcController extends Controller
 
         $discarded_rbc['discarded_at']=$discarded_at;//carbon
         $discarded_rbc->save();
-        $rbc->delete();
+        // $rbc->delete();
+
+        $input = [
+            'discarded_at' => $discarded_at,
+        ];
+
+        // dd($input);
+        Rbc::where('id', $id)
+            ->update($input);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-refrigerators')

@@ -29,9 +29,11 @@ Route::post('/host', 'App\Http\Controllers\SiteController@store_drive');
 Auth::routes();
 
 //**********************************DONOR ROUTES*************************************************
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/profile/{id}', 'App\Http\Controllers\HomeController@edit_profile');
-Route::post('/profile/{id}', 'App\Http\Controllers\HomeController@update_profile');
+Route::get('/donor', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/donor/profile/{id}', 'App\Http\Controllers\HomeController@edit_profile');
+Route::post('/donor/profile/{id}', 'App\Http\Controllers\HomeController@update_profile');
+Route::get('/donor/appointment', 'App\Http\Controllers\HomeController@create_appointment');
+Route::post('/donor/appointment', 'App\Http\Controllers\HomeController@store_appointment');
 
 //Custom logout for user so that all sessions may not be destroyed
 Route::post('/user/logout', 'App\Http\Controllers\Auth\LoginController@userLogout')->name('user.logout');
@@ -376,6 +378,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/charts/discarded-platelets', 'App\Http\Controllers\AdminController@discarded_platelets_charts');
     Route::get('/charts/discarded-rbc', 'App\Http\Controllers\AdminController@discarded_rbc_charts');
     Route::get('/charts/discarded-blood', 'App\Http\Controllers\AdminController@discarded_blood_charts');
+
+    Route::get('/chart', 'App\Http\Controllers\AdminController@statistics');
+    Route::get('/highchart', 'App\Http\Controllers\AdminController@highchart');
+    Route::get('/blood-trends', 'App\Http\Controllers\StatisticsController@blood_highchart');
+    Route::get('/plasma-trends', 'App\Http\Controllers\StatisticsController@plasma_highchart');
+    Route::get('/platelets-trends', 'App\Http\Controllers\StatisticsController@platelets_highchart');
+    Route::get('/rbc-trends', 'App\Http\Controllers\StatisticsController@rbc_highchart');
+
 
     // Site management routes
     Route::get('/faqs', 'App\Http\Controllers\AdminController@faqs');

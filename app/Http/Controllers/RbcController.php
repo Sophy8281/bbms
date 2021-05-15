@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Refrigerator;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\HospitalRequest;
 use App\Models\Hospital;
 use App\Models\Bank;
 use App\Models\Group;
 use App\Models\Staff;
 use App\Models\IssuedRbc;
+use App\Models\DiscardedRbc;
 use App\Models\Rbc;
 use Carbon\Carbon;
 
@@ -85,8 +87,12 @@ class RbcController extends Controller
 
     public function issue($id)
     {
-        $hospitals = Hospital::all();
         $rbc = Rbc::findOrFail($id);
+        $group_id = $rbc->group_id;
+        $product = 'red blood cells';
+        $hospitals = HospitalRequest::where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->get()->unique('hospital_id');
+
         return view('staff.rbc.issue', compact('hospitals','rbc'));
     }
 
@@ -103,6 +109,7 @@ class RbcController extends Controller
         $donation_date = $rbc->donation_date;
         $expiry_date = $rbc->expiry_date;
 
+        //validate input to issued rbc
         $request->validate([
             'bag_serial_number' => ['unique:issued_rbcs'],
             'hospital_id' => ['required'],
@@ -126,13 +133,50 @@ class RbcController extends Controller
         $issued_rbc->save();
         // $rbc->delete();
 
-        $input = [
+        //validate input to rbc
+        $input_to_update_rbc = [
             'issued_at' => $issued_at,
         ];
 
+        //variables for updating request
+        $satisfied_at = Carbon::today();
+        $group_id = $rbc->group_id;
+        $product = 'red blood cells';
+        $hospital_request = HospitalRequest::where('hospital_id', $issued_rbc['hospital_id'])
+            ->where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->first();
+
+        $hospital_request_id =  $hospital_request->id;
+        $hospital_request_remaining =  $hospital_request->remaining;
+        $new_remaining = $hospital_request_remaining -1;
+
+        // dd($hospital_request);
+        // dd($hospital_request_id);
+        // dd($hospital_request_remaining);
+        // dd($new_remaining);
+
+        //check if new remaining will be greater than 0
+        if($new_remaining > 0)
+        {
+            $input_to_update_request = [
+                'remaining' => $new_remaining,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }else{
+            $input_to_update_request = [
+                'remaining' => $new_remaining,
+                'satisfied_at' => $satisfied_at,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }
+
+        // dd($input_to_update_request);
+
         // dd($input);
         Rbc::where('id', $id)
-            ->update($input);
+            ->update($input_to_update_rbc);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-refrigerators')
@@ -143,7 +187,6 @@ class RbcController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         $rbcs = IssuedRbc::get()->where('bank_id',$bank_id);
-
         return view('staff.rbc.issued', compact('rbcs'));
     }
 
@@ -259,5 +302,12 @@ class RbcController extends Controller
         //then return to your view or whatever you want to do
         return redirect('staff/all-refrigerators')
             ->with('success', 'Rbc Bag Discarded successfully!');
+    }
+
+    public function discarded_rbc()
+    {
+        $bank_id=Auth::user()->bank_id;
+        $rbc = DiscardedRbc::get()->where('bank_id',$bank_id);
+        return view('staff.rbc.discarded', compact('rbc'));
     }
 }

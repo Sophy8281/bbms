@@ -9,6 +9,8 @@ use App\Models\Hospital;
 use App\Models\Freezer;
 use App\Models\Plasma;
 use App\Models\IssuedPlasma;
+use App\Models\DiscardedPlasma;
+use App\Models\HospitalRequest;
 use App\Models\Group;
 use App\Models\Staff;
 use App\Models\Bank;
@@ -88,18 +90,80 @@ class PlasmaController extends Controller
             ->with('success', 'Plasma Bag Stored successfully!');
     }
 
+    // public function issue($id)
+    // {
+    //     $hospitals = Hospital::all();
+    //     $plasma = Plasma::findOrFail($id);
+    //     return view('staff.plasma.issue', compact('hospitals','plasma'));
+    // }
+
+    // public function store_issued(Request $request, $id)
+    // {
+    //     $issued_at = Carbon::today();
+    //     $plasma = Plasma::findOrFail($id);
+    //     // $first = First::where('id', $id)->first(); //this will select the row with the given id
+
+    //     //now save the data in the variables;
+    //     $plasma_id = $plasma->id;
+    //     $freezer_id = $plasma->freezer_id;
+    //     $bag_serial_number = $plasma->bag_serial_number;
+    //     $group_id = $plasma->group_id;
+    //     $donation_date = $plasma->donation_date;
+    //     $expiry_date = $plasma->expiry_date;
+    //     // $plasma->delete();
+
+    //     $request->validate([
+    //         'bag_serial_number' => ['unique:issued_plasmas'],
+    //         'hospital_id' => ['required'],
+    //     ]);
+
+    //     $issued_plasma = new IssuedPlasma();
+    //     $issued_plasma->plasma_id = $plasma_id;//from plasma
+
+    //     $issued_plasma->bank_id=Auth::user()->bank_id;//in session
+    //     $issued_plasma->staff_id=Auth::user()->id;//in session
+
+    //     $issued_plasma->freezer_id = $freezer_id;//from plasma
+    //     $issued_plasma->bag_serial_number = $bag_serial_number;//from plasma
+    //     $issued_plasma->group_id = $group_id;//from plasma
+    //     $issued_plasma->donation_date = $donation_date;//from plasma
+    //     $issued_plasma->expiry_date = $expiry_date;//from plasma
+
+    //     $issued_plasma['hospital_id']=$request->hospital_id;//from form
+
+    //     $issued_plasma['issued_at']=$issued_at;//carbon
+    //     $issued_plasma->save();
+    //     // $plasma->delete();
+
+    //     $input = [
+    //         'issued_at' => $issued_at,
+    //     ];
+
+    //     // dd($input);
+    //     Plasma::where('id', $id)
+    //         ->update($input);
+
+    //     // dd($issued_plasma);
+    //     //then return to your view or whatever you want to do
+    //     return redirect('staff/all-freezers')
+    //         ->with('success', 'Plasma Bag issued successfully');
+    // }
+
     public function issue($id)
     {
-        $hospitals = Hospital::all();
         $plasma = Plasma::findOrFail($id);
-        return view('staff.plasma.issue', compact('hospitals','plasma'));
+        $group_id = $plasma->group_id;
+        $product = 'plasma';
+        $hospitals = HospitalRequest::where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->get()->unique('hospital_id');
+
+            return view('staff.plasma.issue', compact('hospitals','plasma'));
     }
 
     public function store_issued(Request $request, $id)
     {
         $issued_at = Carbon::today();
         $plasma = Plasma::findOrFail($id);
-        // $first = First::where('id', $id)->first(); //this will select the row with the given id
 
         //now save the data in the variables;
         $plasma_id = $plasma->id;
@@ -108,13 +172,14 @@ class PlasmaController extends Controller
         $group_id = $plasma->group_id;
         $donation_date = $plasma->donation_date;
         $expiry_date = $plasma->expiry_date;
-        // $plasma->delete();
 
+        //validate input to issued plasma
         $request->validate([
-            'bag_serial_number' => ['unique:issued_plasmas'],
             'hospital_id' => ['required'],
+            'bag_serial_number' => ['unique:issued_plasmas'],
         ]);
 
+        //new record to issued plasma
         $issued_plasma = new IssuedPlasma();
         $issued_plasma->plasma_id = $plasma_id;//from plasma
 
@@ -126,22 +191,54 @@ class PlasmaController extends Controller
         $issued_plasma->group_id = $group_id;//from plasma
         $issued_plasma->donation_date = $donation_date;//from plasma
         $issued_plasma->expiry_date = $expiry_date;//from plasma
-
         $issued_plasma['hospital_id']=$request->hospital_id;//from form
-
         $issued_plasma['issued_at']=$issued_at;//carbon
         $issued_plasma->save();
-        // $plasma->delete();
-
-        $input = [
+            // dd($issued_plasma);
+        //validate input to plasma
+        $input_to_update_plasma = [
             'issued_at' => $issued_at,
         ];
 
-        // dd($input);
-        Plasma::where('id', $id)
-            ->update($input);
+        //variables for updating request
+        $satisfied_at = Carbon::today();
+        $group_id = $plasma->group_id;
+        $product = 'plasma';
+        $hospital_request = HospitalRequest::where('hospital_id', $issued_plasma['hospital_id'])
+            ->where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->first();
 
-        // dd($issued_plasma);
+        $hospital_request_id =  $hospital_request->id;
+        $hospital_request_remaining =  $hospital_request->remaining;
+        $new_remaining = $hospital_request_remaining -1;
+
+        // dd($hospital_request);
+        // dd($hospital_request_id);
+        // dd($hospital_request_remaining);
+        // dd($new_remaining);
+
+        //check if new remaining will be greater than 0
+        if($new_remaining > 0)
+        {
+            $input_to_update_request = [
+                'remaining' => $new_remaining,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }else{
+            $input_to_update_request = [
+                'remaining' => $new_remaining,
+                'satisfied_at' => $satisfied_at,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }
+
+        // dd($input_to_update_request);
+
+        Plasma::where('id', $id)
+            ->update($input_to_update_plasma);
+
         //then return to your view or whatever you want to do
         return redirect('staff/all-freezers')
             ->with('success', 'Plasma Bag issued successfully');
@@ -151,10 +248,8 @@ class PlasmaController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         $plasma = IssuedPlasma::get()->where('bank_id',$bank_id);
-
         return view('staff.plasma.issued', compact('plasma'));
     }
-
 
     /**
      * Display the specified resource.
@@ -244,5 +339,12 @@ class PlasmaController extends Controller
         //then return to your view or whatever you want to do
         return redirect('staff/all-freezers')
             ->with('success', 'Plasma Bag Discarded successfully!');
+    }
+
+    public function discarded_plasma()
+    {
+        $bank_id=Auth::user()->bank_id;
+        $plasma = DiscardedPlasma::get()->where('bank_id',$bank_id);
+        return view('staff.plasma.discarded', compact('plasma'));
     }
 }

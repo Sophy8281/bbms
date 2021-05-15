@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Agitator;
 use App\Models\IssuedPlatelet;
 use App\Models\DiscardedPlatelet;
+use App\Models\HospitalRequest;
 use App\Models\Hospital;
 use App\Models\Platelet;
 use App\Models\Group;
@@ -109,8 +110,12 @@ class PlateletController extends Controller
 
     public function issue($id)
     {
-        $hospitals = Hospital::all();
         $platelet = Platelet::findOrFail($id);
+        $group_id = $platelet->group_id;
+        $product = 'platelets';
+        $hospitals = HospitalRequest::where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->get()->unique('hospital_id');
+
         return view('staff.platelets.issue', compact('hospitals','platelet'));
     }
 
@@ -127,11 +132,12 @@ class PlateletController extends Controller
         $donation_date = $platelet->donation_date;
         $expiry_date = $platelet->expiry_date;
 
+        //validate input to issued platelet
         $request->validate([
             'bag_serial_number' => ['unique:issued_platelets'],
             'hospital_id' => ['required'],
         ]);
-
+        //new record to issued platelet
         $issued_platelet = new IssuedPlatelet();
         $issued_platelet->platelet_id = $platelet_id;//from platelet
 
@@ -143,22 +149,56 @@ class PlateletController extends Controller
         $issued_platelet->group_id = $group_id;//from platelet
         $issued_platelet->donation_date = $donation_date;//from platelet
         $issued_platelet->expiry_date = $expiry_date;//from platelet
-
         $issued_platelet['hospital_id']=$request->hospital_id;//from form
-
         $issued_platelet['issued_at']=$issued_at;//carbon
 
         // dd($issued_platelet);
         $issued_platelet->save();
         // $platelet->delete();
 
-        $input = [
+        //validate input to platelet
+        $input_to_update_platelet = [
             'issued_at' => $issued_at,
         ];
 
-        // dd($input);
+        //variables for updating request
+        $satisfied_at = Carbon::today();
+        $group_id = $platelet->group_id;
+        $product = 'platelets';
+        $hospital_request = HospitalRequest::where('hospital_id', $issued_platelet['hospital_id'])
+            ->where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->first();
+
+        $hospital_request_id =  $hospital_request->id;
+        $hospital_request_remaining =  $hospital_request->remaining;
+        $new_remaining = $hospital_request_remaining -1;
+
+        // dd($hospital_request);
+        // dd($hospital_request_id);
+        // dd($hospital_request_remaining);
+        // dd($new_remaining);
+
+        //check if new remaining will be greater than 0
+        if($new_remaining > 0)
+        {
+            $input_to_update_request = [
+                'remaining' => $new_remaining,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }else{
+            $input_to_update_request = [
+                'remaining' => $new_remaining,
+                'satisfied_at' => $satisfied_at,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }
+
+        // dd($input_to_update_request);
+
         Platelet::where('id', $id)
-            ->update($input);
+            ->update($input_to_update_platelet);
 
         //then return to your view or whatever you want to do
         return redirect('staff/all-agitators')
@@ -169,7 +209,6 @@ class PlateletController extends Controller
     {
         $bank_id=Auth::user()->bank_id;
         $platelets = IssuedPlatelet::get()->where('bank_id',$bank_id);
-
         return view('staff.platelets.issued', compact('platelets'));
     }
 
@@ -289,6 +328,14 @@ class PlateletController extends Controller
         //then return to your view or whatever you want to do
         return redirect('staff/all-agitators')
             ->with('success', 'Platelet Bag issued successfully!');
+    }
+
+    public function discarded_platelets()
+    {
+        $bank_id=Auth::user()->bank_id;
+        $platelets = DiscardedPlatelet::get()->where('bank_id',$bank_id);
+
+        return view('staff.platelets.discarded', compact('platelets'));
     }
 
 }

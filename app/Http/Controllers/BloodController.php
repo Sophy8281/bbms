@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\HospitalRequest;
+use App\Models\DiscardedBlood;
 use App\Models\IssuedBlood;
 use App\Models\Donation;
 use App\Models\Hospital;
@@ -50,8 +52,12 @@ class BloodController extends Controller
 
     public function issue($id)
     {
-        $hospitals = Hospital::all();
         $blood = Blood::findOrFail($id);
+        $group_id = $blood->group_id;
+        $product = 'whole blood';
+        $hospitals = HospitalRequest::where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->get()->unique('hospital_id');
+
         return view('staff.blood.issue', compact('hospitals','blood'));
     }
 
@@ -67,33 +73,69 @@ class BloodController extends Controller
         $donation_date = $blood->donation_date;
         $expiry_date = $blood->expiry_date;
 
+        //validate input to issued blood
         $request->validate([
             'hospital_id' => ['required'],
         ]);
 
+        //new record to issued blood
         $issued_blood = new IssuedBlood();
         $issued_blood->donation_id = $donation_id;//from blood
-
         $issued_blood->bank_id=Auth::user()->bank_id;//in session
         $issued_blood->staff_id=Auth::user()->id;//in session
-
         $issued_blood->bag_serial_number = $bag_serial_number;//from blood
         $issued_blood->group_id = $group_id;//from blood
         $issued_blood->donation_date = $donation_date;//from blood
         $issued_blood->expiry_date = $expiry_date;//from blood
-
         $issued_blood['hospital_id']=$request->hospital_id;//from form
-
         $issued_blood['issued_at']=$issued_at;//carbon
         $issued_blood->save();
-        // $blood->delete();
-        $input = [
+
+        //validate input to blood
+        $input_to_update_blood = [
             'issued_at' => $issued_at,
         ];
 
-        // dd($input);
+        //variables for updating request
+        $satisfied_at = Carbon::today();
+        $group_id = $blood->group_id;
+        $product = 'whole blood';
+        $hospital_request = HospitalRequest::where('hospital_id', $issued_blood['hospital_id'])
+            ->where('group_id', $group_id)->where('product', $product)
+            ->where('remaining', '>', 0)->whereNull('satisfied_at')->first();
+
+        $hospital_request_id =  $hospital_request->id;
+        $hospital_request_remaining =  $hospital_request->remaining;
+        $new_remaining = $hospital_request_remaining -1;
+
+        // dd($hospital_request);
+        // dd($hospital_request_id);
+        // dd($hospital_request_remaining);
+        // dd($new_remaining);
+
+        //check if new remaining will be greater than 0
+        if($new_remaining > 0)
+        {
+            $input_to_update_request = [
+
+                'remaining' => $new_remaining,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }else{
+            $input_to_update_request = [
+
+                'remaining' => $new_remaining,
+                'satisfied_at' => $satisfied_at,
+            ];
+            HospitalRequest::where('id', $hospital_request_id)
+            ->update($input_to_update_request);
+        }
+
+        // dd($input_to_update_request);
+
         Blood::where('id', $id)
-            ->update($input);
+            ->update($input_to_update_blood);
 
         //then return to your view or whatever you want to do
         return redirect('staff/cold-room')
@@ -268,5 +310,12 @@ class BloodController extends Controller
         //then return to your view or whatever you want to do
         return redirect('staff/cold-room')
             ->with('success', 'Blood Bag Discarded successfully!');
+    }
+
+    public function discarded_blood()
+    {
+        $bank_id=Auth::user()->bank_id;
+        $blood = DiscardedBlood::get()->where('bank_id',$bank_id);
+        return view('staff.blood.discarded', compact('blood'));
     }
 }

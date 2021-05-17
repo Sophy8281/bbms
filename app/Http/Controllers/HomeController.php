@@ -33,11 +33,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$blood_groups = Group::all();
         $id = Auth::user()->id;
         $user = User::findOrFail($id);
-        $donations = Donation::where('donor_id',$id)->whereNotNull('status')->paginate(10);
-        // return view('home', compact('donations','user'));
+        $donations = Donation::where('donor_id',$id)->whereNotNull('status')->get();
         return view('home', compact('user','donations'));
     }
 
@@ -53,9 +51,9 @@ class HomeController extends Controller
         $user = User::findOrFail($id);
         $constraints = [
             'name' => 'required|max:255',
-            'gender' => 'required|max:255',
+            // 'gender' => 'required|max:255',
             'unique_no' => 'required|max:255',
-            'birth_date' => 'required|before:today|max:255',
+            // 'birth_date' => 'required|before:today|max:255',
             'phone' => 'required|max:255',
             'address' => 'max:255',
             'county'=> 'required|max:255',
@@ -75,7 +73,7 @@ class HomeController extends Controller
         User::where('id', $id)
             ->update($input);
 
-         return redirect('/donor')->with('success','Profile Updated Successfully!');
+         return redirect('/home')->with('success','Profile Updated Successfully!');
     }
 
      /**
@@ -110,11 +108,11 @@ class HomeController extends Controller
         $data->phone=Auth::user()->phone;
         $data['date']=$request->date;
         $data['bank_id']=$request->bank_id;
-        $data->group_id=Auth::user()->group_id;
+        $data->group_id=Auth::user()->blood_group;
 
         // dd($data);
         $data->save();
-        return redirect('donor/appointment/')
+        return redirect('home/appointment/')
             ->with('success',' Appointment Request Sent Successfully! We will get to you soon.');
     }
 }

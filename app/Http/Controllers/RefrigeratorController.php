@@ -18,7 +18,6 @@ class RefrigeratorController extends Controller
     {
         $this->middleware('auth:admin');
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +28,6 @@ class RefrigeratorController extends Controller
         $refrigerators = Refrigerator::all();
         return view('admin.refrigerators.index', compact('refrigerators'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +38,6 @@ class RefrigeratorController extends Controller
         $banks = Bank::all();
         return view('admin.refrigerators.create', compact('banks'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -60,22 +57,8 @@ class RefrigeratorController extends Controller
         $data['name']=$request->name;
         $data['capacity']=$request->capacity;
         $data->save();
-
        return redirect('admin/all-refrigerators/')->with('success', 'Refrigerator created successfully!');
     }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -109,7 +92,6 @@ class RefrigeratorController extends Controller
        $this->validate($request, $constraints);
        Refrigerator::where('id', $id)
            ->update($input);
-
        return redirect('admin/all-refrigerators/')->with('success', 'Refrigerator updated successfully!');
     }
 

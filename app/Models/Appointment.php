@@ -18,7 +18,7 @@ class Appointment extends Model
         'phone',
         'date',
         'bank_id',
-        'group_id',
+        'blood_group',
     ];
 
     public function bank()
@@ -26,10 +26,6 @@ class Appointment extends Model
        return $this->belongsTo(Bank::class);
     }
 
-    public function group()
-    {
-       return $this->belongsTo(Group::class);
-    }
     public function staff()
     {
        return $this->belongsTo(Staff::class);

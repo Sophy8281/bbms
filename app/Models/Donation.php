@@ -15,12 +15,11 @@ class Donation extends Model
      * @var array
      */
     protected $table="donations";
-    //protected $primaryKey ="donation_id";
 
     protected $fillable = [
         'donor_id',
         'bag_serial_number',
-        'blood_group',
+        'group_id',
         'status',
         'plasma_bag_no',
         'platelet_bag_no',

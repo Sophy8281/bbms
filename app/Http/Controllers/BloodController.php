@@ -32,22 +32,19 @@ class BloodController extends Controller
     {
         $safe = 'Safe';
         $bank_id=Auth::user()->bank_id;
-        $safe_blood = Donation::where('status', $safe)
-        ->where('bank_id',$bank_id)
-        ->whereNull('processed_at')
-        ->whereNull('stored_at')
-        ->get();
+        $safe_blood = Donation::where('status', $safe)->where('bank_id',$bank_id)
+            ->whereNull('processed_at')->whereNull('stored_at')->get();
         return view('staff.blood.process',compact('safe_blood'));
     }
 
     public function whole_blood()
     {
         $bank_id=Auth::user()->bank_id;
-        $blood = Blood::get()
-            ->where('bank_id',$bank_id)
-            ->whereNull('issued_at')
+        $blood = Blood::get()->where('bank_id',$bank_id)->whereNull('issued_at')
             ->whereNull('discarded_at');
-        return view('staff.blood.index',compact('blood'));
+        $expired_blood =  Blood::where('bank_id',$bank_id)->where('expiry_date', '<=', $today)
+            ->whereNull('issued_at')->whereNull('discarded_at')->count();
+        return view('staff.blood.index',compact('blood','expired_blood'));
     }
 
     public function issue($id)
@@ -57,7 +54,6 @@ class BloodController extends Controller
         $product = 'whole blood';
         $hospitals = HospitalRequest::where('group_id', $group_id)->where('product', $product)
             ->where('remaining', '>', 0)->whereNull('satisfied_at')->get()->unique('hospital_id');
-
         return view('staff.blood.issue', compact('hospitals','blood'));
     }
 
@@ -108,11 +104,6 @@ class BloodController extends Controller
         $hospital_request_remaining =  $hospital_request->remaining;
         $new_remaining = $hospital_request_remaining -1;
 
-        // dd($hospital_request);
-        // dd($hospital_request_id);
-        // dd($hospital_request_remaining);
-        // dd($new_remaining);
-
         //check if new remaining will be greater than 0
         if($new_remaining > 0)
         {
@@ -132,8 +123,6 @@ class BloodController extends Controller
             ->update($input_to_update_request);
         }
 
-        // dd($input_to_update_request);
-
         Blood::where('id', $id)
             ->update($input_to_update_blood);
 
@@ -148,39 +137,6 @@ class BloodController extends Controller
         $blood = IssuedBlood::get()->where('bank_id',$bank_id);
         return view('staff.blood.issued', compact('blood'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -197,7 +153,6 @@ class BloodController extends Controller
         $bag_serial_number = $donation->bag_serial_number;
         $group_id = $donation->group_id;
         $donation_date = $donation->created_at;
-        // $expiry_date = $donation->expiry_date;
 
         $blood = new Blood();
         $blood->donation_id = $donation_id;//from donation
@@ -211,17 +166,15 @@ class BloodController extends Controller
         $carbonone = new Carbon($donation_date);
         $carbontwo = $carbonone->copy()->addDays(42);
         $blood->expiry_date=$carbontwo;
-        // dd($blood);
+
         $input = [
             'stored_at' => $stored_at,
         ];
 
-        // dd($input);
         Donation::where('id', $id)
             ->update($input);
 
         $blood->save();
-
 
         //then return to your view or whatever you want to do
         return redirect('staff/process')
@@ -231,14 +184,12 @@ class BloodController extends Controller
     public function process_blood($id)
     {
         $donation = Donation::findOrFail($id);
-
         $processed_at = Carbon::now();
 
         $input = [
             'processed_at' => $processed_at,
         ];
 
-        // dd($input);
         Donation::where('id', $id)
             ->update($input);
 
@@ -251,19 +202,6 @@ class BloodController extends Controller
         $processed_blood = Donation::whereNotNull('processed_at')->get();
         return view('staff.blood.processed',compact('processed_blood'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -295,15 +233,12 @@ class BloodController extends Controller
 
         $discarded_blood['discarded_at']=$discarded_at;//carbon
 
-        // dd($discarded_plasma);
         $discarded_blood->save();
-        // $blood->delete();
 
         $input = [
             'discarded_at' => $discarded_at,
         ];
 
-        // dd($input);
         Blood::where('id', $id)
             ->update($input);
 

@@ -61,18 +61,12 @@ class AdminController extends Controller
         return view('admin.admin', compact('donors','platelets','plasma','rbc'));
     }
 
-    public function send_sms()
-    {
-        //
-    }
-
+    /******************** ADMIN BANK - MANAGEMENT *****************************/
     /**
     * Show the form for creating a new resource.
     *
     * @return Response
     */
-
-    /******************** ADMIN BANK - MANAGEMENT *****************************/
     public function addBank()
     {
         return view('admin.add_bank');
@@ -220,7 +214,6 @@ class AdminController extends Controller
             'password' => bcrypt($request['password']),
         ]);
         // dd($request);
-
        return redirect()->intended('/admin/all-staff')->with('success','Staff Created Successfully!');
     }
 
@@ -248,44 +241,42 @@ class AdminController extends Controller
         $this->validate($request, $constraints);
         Staff::where('id', $id)
             ->update($input);
-
         return redirect()->route('admin.staff.index')->withMessage('Staff Assigned Bank successfully!');
     }
 
     public function edit_staff($id)
-     {
+    {
         $banks =Bank::all();
         $staff = Staff::findOrFail($id);
         return view('admin.staff.edit', compact('banks','staff'));
-     }
+    }
 
-     public function update_staff(Request $request, $id)
-     {
-         $staff = Staff::findOrFail($id);
-         $constraints = [
-             'bank_id' => 'required|max:255',
-             'name' => 'required|max:255',
-             'email'=> 'required|max:255',
-
-         ];
-        $input = [
-            'bank_id' => $request['bank_id'],
-            'name' => $request['name'],
-            'email' => $request['email'],
+    public function update_staff(Request $request, $id)
+    {
+        $staff = Staff::findOrFail($id);
+        $constraints = [
+            'bank_id' => 'required|max:255',
+            'name' => 'required|max:255',
+            'email'=> 'required|max:255',
         ];
-        $this->validate($request, $constraints);
-        Staff::where('id', $id)
-            ->update($input);
-         return redirect('/admin/all-staff')->with('success','Staff Updated Successfully!');
-     }
+    $input = [
+        'bank_id' => $request['bank_id'],
+        'name' => $request['name'],
+        'email' => $request['email'],
+    ];
+    $this->validate($request, $constraints);
+    Staff::where('id', $id)
+        ->update($input);
+        return redirect('/admin/all-staff')->with('success','Staff Updated Successfully!');
+    }
 
     public function delete_staff($id)
-     {
-         $staff = Staff::findOrFail($id);
-         $staff->delete();
-         return redirect('/admin/all-staff')->with('success','Staff Deleted Successfully!');
+    {
+        $staff = Staff::findOrFail($id);
+        $staff->delete();
+        return redirect('/admin/all-staff')->with('success','Staff Deleted Successfully!');
 
-     }
+    }
 
     /******************** ADMIN DONOR - MANAGEMENT *****************************/
     public function all_donors(Request $request)
@@ -351,61 +342,6 @@ class AdminController extends Controller
         $user->delete();
         return redirect('/admin/all-donors')->with('success','Donor Deleted Successfully!');
     }
-    // public function all_donors(Request $request)
-    // {
-
-    //     $filter = $request->query('filter');
-
-    //     if (!empty($filter)){
-    //         $users = User::sortable()
-    //             ->where('name', 'like', '%'.$filter.'%')
-    //             ->orWhere('email', 'like', '%'.$filter.'%')
-    //             ->paginate(2);
-    //     }else{
-    //         $users = User::sortable()
-    //             ->paginate(2);
-    //     }
-    //     if($request->has('download')){
-    //         $users = User::all();
-    //         $pdf = PDF::loadView('reports.donors', compact('users'));
-    //         return $pdf->stream('donors_list.pdf');
-    //     }
-
-    //     return view('admin.donors.index', compact('users','filter'));
-    // }
-
-
-    public function test_table()
-    {
-        $users = User::all();
-        return view('test_table', compact('users'));
-    }
-
-    public function destroy()
-    {
-        //
-    }
-
-    //  public function search_donor(Request $request)
-    // {
-    //     $fromDate = $request->input('fromDate');
-    //     $toDate   = $request->input('toDate');
-    //     // $other    = $request->input('other');
-
-    //     $users = DB::table('users')->select()
-    //         ->where('created_at', '>=', $fromDate)
-    //         ->where('created_at', '<=', $toDate)
-    //         // ->where('name', 'LIKE','%' .$other.'%')
-    //         // ->orWhere('sex', 'LIKE','%' .$other.'%')
-    //         // ->orWhere('email', 'LIKE','%' .$other.'%')
-    //         // ->orWhere('phone', 'LIKE','%' .$other.'%')
-    //         // ->orWhere('job_position', 'LIKE','%' .$other.'%')
-    //         // ->orWhere('salary', 'LIKE','%' .$other.'%')
-    //         ->get();
-
-    //     // dd($query);
-    //     return view('test_table',compact('users'));
-    // }
 
     /******************** ADMIN DONATION - MANAGEMENT *****************************/
     public function all_donations()
@@ -550,6 +486,12 @@ class AdminController extends Controller
     {
         $donations = Donation::all();
         $pdf = PDF::loadView('reports.donations', compact('donations'));
+        return $pdf->stream();
+    }
+    public function blood_pdf(Request $request)
+    {
+        $blood = Blood::all();
+        $pdf = PDF::loadView('reports.blood', compact('blood'));
         return $pdf->stream();
     }
     public function plasma_pdf(Request $request)
@@ -1122,36 +1064,7 @@ class AdminController extends Controller
             ->setLabels(['HospitalRequest', 'User']);
         return view('chart', compact('chart'));
     }
-    public function highchart()
-    {
-        $viewer = Donation::select(\DB::raw("COUNT(*) as count"))
-                    ->whereYear('created_at', date('Y'))
-                    ->groupBy(\DB::raw("Month(created_at)"))
-                    ->pluck('count');
 
-        $click = HospitalRequest::select(\DB::raw("SUM(quantity) as count"))
-                    ->whereYear('created_at', date('Y'))
-                    ->groupBy(\DB::raw("Month(created_at)"))
-                    ->pluck('count');
-
-        return view('highchart',compact('viewer','click'));
-    }
-
-    // public function plasma_highchart()
-    // {
-    //     $plasma = Plasma::select(\DB::raw("COUNT(*) as count"))
-    //                 ->whereYear('created_at', date('Y'))
-    //                 ->groupBy(\DB::raw("Month(created_at)"))
-    //                 ->pluck('count');
-
-    //     $plasma_requests = HospitalRequest::select(\DB::raw("SUM(quantity) as count"))
-    //                 ->where('product', '=', 'plasma')
-    //                 ->whereYear('created_at', date('Y'))
-    //                 ->groupBy(\DB::raw("Month(created_at)"))
-    //                 ->pluck('count');
-
-    //     return view('plasma_highchart',compact('plasma','plasma_requests'));
-    // }
     /********************ADMIN BBMS-SITE - MANAGEMENT *****************************/
     public function faqs()
     {

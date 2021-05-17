@@ -27,9 +27,6 @@ Donations
                 <div class="col-sm">
                     <button type="submit" class="btn btn-primary" name="search" title="Search">Filter Range</button>
                 </div>
-                {{-- <div class="col-sm">
-                    <a class="btn btn-primary" href="{{ url('staff/reports/donations') }}" target="_blank">Export All</a>
-                </div> --}}
             </div>
         </form>
         <div class="col-md">
@@ -43,7 +40,6 @@ Donations
                         <th>Blood Group</th>
                         <th>status</th>
                         <th>Created_on</th>
-                        {{-- <th>Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +55,7 @@ Donations
                             </p>
                         </td>
                         @else
-                        <td> <p class="btn btn-success">
+                        <td> <p class="btn btn-danger">Pending
                             <i class="fas fa-heart"></i>
                             </p>
                         </td>
@@ -69,19 +65,18 @@ Donations
                             <i class="fas fa-thumbs-up"></i>
                             </p>
                         </td>
-                        @else
+                        @elseif( $donation->status  == "Unsafe")
                         <td> <p class="btn btn-danger">{{ $donation->status  }}
+                            <i class="fas fa-thumbs-down"></i>
+                            </p>
+                        </td>
+                        @else
+                        <td> <p class="btn btn-danger">Pending
                             <i class="fas fa-thumbs-down"></i>
                             </p>
                         </td>
                         @endif
                         <td>{{ date('F d, Y', strtotime($donation->created_at)) }}</td>
-                        {{-- <td>
-                            <a href="{{ url('staff/donation/edit/'.$donation->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
-                            @if ($donation->status  == "Unsafe")
-                            <a href="{{ url('staff/donation/delete/'.$donation->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to discard this bag-{{ $donation->bag_serial_number }}?')"><i class="fa fa-trash"></i>Discard</a>
-                            @endif
-                        </td> --}}
                     </tr>
                     @empty
                     <tr>

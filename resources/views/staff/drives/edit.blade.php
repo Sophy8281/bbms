@@ -30,7 +30,7 @@ Edit Drive
                             <label for="date" class="col-md-4 col-form-label text-md-right">{{ __('Date of Drive') }}</label>
 
                             <div class="col-md-6">
-                                <input id="date" type="date" class="form-control datepicker @error('date') is-invalid @enderror" name="date">
+                                <input id="date" type="date" class="form-control datepicker @error('date') is-invalid @enderror" name="date" value="{{ $unapproved_drive->date }}">
                                 @error('date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

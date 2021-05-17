@@ -7,7 +7,7 @@ Store Platelets
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add Platelets to Stock') }}</div>
+                <div class="card-header">{{ __('Add Platelets to Stock Form') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ url('staff/platelet/store/'.$processed_platelets->id) }}" aria-label="{{ __('Add Platelets to Stock') }}">

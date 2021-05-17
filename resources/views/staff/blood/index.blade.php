@@ -5,8 +5,11 @@ Cold Room
 @section('content')
 @include('flash-message')
 <div class="panel panel-default">
-    <div class="panel-heading"><h5>Whole Blood in Stock </h5></div>
+    <div class="panel-heading"><h5>Cold Room(Whole Blood)</h5></div>
     <div class="panel-body">
+        @if ($expired_blood > 0)
+        <div><script>alert('You have an expired blood bag(s) in stock!!');</script></div>
+        @endif
         <div class="col-md">
             <table id="example" class="table table-responsive table-hover">
                 <thead>

@@ -6,7 +6,7 @@ Platelets
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading">Platelets in Stock</div>
+    <div class="panel-heading"><h5>Platelets in Stock</h5></div>
     <div class="panel-body">
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ url('staff/all-agitators') }}" title="Go back"> <i
@@ -43,7 +43,7 @@ Platelets
                             <a href="" class="btn btn-warning"> EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/platelet/discard/'.$platelet->id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to discard this bag-{{ $platelet->bag_serial_number }}?')"> Discard</a>
+                            <a href="{{ url('staff/platelet/discard/'.$platelet->id) }}" class="btn btn-success" onclick="return confirm('Are you sure you want to discard this bag-{{ $platelet->bag_serial_number }}?')"> Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($platelet->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

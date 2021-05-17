@@ -14,7 +14,7 @@ New Donation
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add New Donation') }}</div>
+                <div class="card-header">{{ __('Add New Donation Form') }}</div>
                 <div class="card-body">
                     <form method="POST" action="{{ url('staff/add-donation') }}" aria-label="{{ __('Add New Donation') }}">
                         @csrf

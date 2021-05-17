@@ -42,8 +42,8 @@ Drives
                         <td>{{ $unapproved_drive->time }}</td>
                         <td>{{ $unapproved_drive->created_at->diffForHumans() }}</td>
                         <td>
-                            <a href="{{ url('staff/drive/edit/'.$unapproved_drive->id) }}" class=""><i class="fa fa-edit"></i></a>
-                            <a href="{{ url('staff/drive/delete/'.$unapproved_drive->id) }}" class="" onclick="return confirm('Are you sure you want to dismiss drive scheduled on {{ $unapproved_drive->date }}?')"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-info" href="{{ url('staff/drive/edit/'.$unapproved_drive->id) }}" class=""><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-danger" href="{{ url('staff/drive/delete/'.$unapproved_drive->id) }}" class="" onclick="return confirm('Are you sure you want to dismiss drive scheduled on {{ $unapproved_drive->date }}?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     @empty

@@ -21,7 +21,7 @@ Hospital Requests
                      <th>Remaining Quantity</th>
                      <th>Satisfied At</th>
                      {{-- <th>Available</th> --}}
-                     <th>Issue</th>
+                     <th>Amount to Issue</th>
                  </tr>
             </thead>
             @forelse($requests as $request)
@@ -39,10 +39,10 @@ Hospital Requests
                     {{-- <td>{{count($whole_blood->where('group_id', '=', $request->group_id)) }}</td> --}}
                     @if($request->remaining != '0')
                     @if (count($whole_blood->where('group_id', '=', $request->group_id)) >  0)
-                    @if (count($whole_blood->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) >  $request->remaining)
-                        <a class="btn btn-primary" href="">Full Quantity</a>
+                    @if (count($whole_blood->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) ==  $request->remaining)
+                        <a class="btn btn-primary" href="{{ url('staff/requests/full/'.$request->id) }}">Full Quantity</a>
                     @else
-                        <a class="btn btn-primary" href="">The Available</a>
+                        <a class="btn btn-primary" href="{{ url('staff/requests/available-blood/'.$request->id) }}">The Available</a>
                     @endif
                     @else
                     <p>Out of stock</p>
@@ -56,10 +56,10 @@ Hospital Requests
                     {{-- <td>{{count($plasma->where('group_id', '=', $request->group_id)) }}</td> --}}
                     @if($request->remaining != '0')
                     @if (count($plasma->where('group_id', '=', $request->group_id)) >  0)
-                    @if (count($plasma->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) >  $request->remaining)
-                    <a class="btn btn-primary" href="">Full Quantity</a>
+                    @if (count($plasma->where('group_id', '=', $request->group_id)) >  $request->remaining || count($plasma->where('group_id', '=', $request->group_id)) ==  $request->remaining)
+                    <a class="btn btn-primary" href="{{ url('staff/requests/full/'.$request->id) }}">Full Quantity</a>
                     @else
-                    <a class="btn btn-primary" href="">The Available</a>
+                    <a class="btn btn-primary" href="{{ url('staff/requests/available-plasma/'.$request->id) }}">The Available</a>
                     @endif
                     @else
                     <p>Out of stock</p>
@@ -73,10 +73,10 @@ Hospital Requests
                     {{-- <td>{{count($platelets->where('group_id', '=', $request->group_id)) }}</td> --}}
                     @if($request->remaining != '0')
                     @if (count($platelets->where('group_id', '=', $request->group_id)) > 0)
-                    @if (count($platelets->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) >  $request->remaining)
-                    <a class="btn btn-primary" href="">Full Quantity</a>
+                    @if (count($platelets->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) ==  $request->remaining)
+                    <a class="btn btn-primary" href="{{ url('staff/requests/full/'.$request->id) }}">Full Quantity</a>
                     @else
-                    <a class="btn btn-primary" href="">The Available</a>
+                    <a class="btn btn-primary" href="{{ url('staff/requests/available-platelets/'.$request->id) }}">The Available</a>
                     @endif
                     @else
                     <p>Out of stock</p>
@@ -90,10 +90,10 @@ Hospital Requests
                         {{-- <td>{{count($rbc->where('group_id', '=', $request->group_id)) }}</td> --}}
                     @if($request->remaining != 0)
                     @if (count($rbc->where('group_id', '=', $request->group_id)) >  0)
-                    @if (count($rbc->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) >  $request->remaining)
-                    <a class="btn btn-primary" href="">Full Quantity</a>
+                    @if (count($rbc->where('group_id', '=', $request->group_id)) >  $request->remaining || count($rbc->where('group_id', '=', $request->group_id)) ==  $request->remaining)
+                    <a class="btn btn-primary" href="{{ url('staff/requests/full/'.$request->id) }}">Full Quantity</a>
                     @else
-                    <a class="btn btn-primary" href="">The Available</a>
+                    <a class="btn btn-primary" href="{{ url('staff/requests/available-rbc/'.$request->id) }}">The Available</a>
                     @endif
                     @else
                     <p>Out of stock</p>

@@ -6,7 +6,7 @@ Issued Platelets
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Platelets Issued</div>
+    <div class="panel-heading"><h5>List of Issued Platelets Bags</h5></div>
     <div class="panel-body">
         <div class="col-md">
            <table id="example" class="table table-responsive table-hover">
@@ -41,7 +41,6 @@ Issued Platelets
             </table>
         </div>
     </div>
-
 </div>
 
 @stop

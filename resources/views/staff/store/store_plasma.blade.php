@@ -7,7 +7,7 @@ Store Plasma
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add Plasma to Stock') }}</div>
+                <div class="card-header">{{ __('Add Plasma to Stock Form') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ url('staff/plasma/store/'.$processed_plasma->id) }}" aria-label="{{ __('Add Plasma to Stock') }}">

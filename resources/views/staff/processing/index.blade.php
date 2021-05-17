@@ -5,7 +5,7 @@ Processing
 @section('content')
 @include('flash-message')
 <div class="panel panel-default">
-    <div class="panel-heading"><h5>Safe Blood </h5></div>
+    <div class="panel-heading"><h5>Blood Processing</h5></div>
     <div class="panel-body">
         <div class="col-md">
             <table id="example" class="table table-responsive table-hover">

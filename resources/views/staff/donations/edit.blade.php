@@ -14,7 +14,7 @@ Edit Donation
                         @csrf
 
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label for="donor_id" class="col-md-4 col-form-label text-md-right">{{ __('Donor ID') }}</label>
 
                             <div class="col-md-6">
@@ -24,7 +24,7 @@ Edit Donation
                                     @endforeach
                                     </select>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="form-group row">
                             <label for="bag_serial_number" class="col-md-4 col-form-label text-md-right">{{ __('Bag Serial Number') }}</label>
@@ -43,6 +43,9 @@ Edit Donation
 
                             <div class="col-md-6">
                                 <select  id="blood_group" type="text"  name="group_id">
+                                    @if($donation->group_id )
+                                    <option value="{{ $donation->group_id }}">{{ $donation->group->name }}</option>
+                                    @endif
                                     @foreach ($blood_groups as $blood_group)
                                         <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
                                     @endforeach
@@ -55,6 +58,9 @@ Edit Donation
 
                             <div class="col-md-6">
                                 <select name="status" id="status" class="form-control">
+                                    @if($donation->status )
+                                    <option value="{{ $donation->status }}">{{ $donation->status }}</option>
+                                    @endif
                                     <option value="Safe">Safe</option>
                                     <option value="Unsafe">Unsafe</option>
                                 </select>
@@ -66,7 +72,7 @@ Edit Donation
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Save') }}
                                 </button>
-                                <a href="{{ URL::to('staff/all-donations')  }}" class="btn btn-danger">
+                                <a href="{{ URL::to('staff/unscreened-donations')  }}" class="btn btn-danger">
                                     <i class=""></i>   Cancel</a>
                             </div>
                         </div>

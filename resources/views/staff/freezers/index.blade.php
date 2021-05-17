@@ -4,15 +4,18 @@ Freezers
 @endsection
 @section('content')
 @include('flash-message')
-<div>
+{{-- <div>
     <a href="{{ URL::to('staff/plasma/add')  }}" class="btn btn-success float-right">
         <i class="fa fa-plus-circle"></i>
         Add Plasma to Stock
     </a>
-</div>
+</div> --}}
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Freezers(Store Plasma) </div>
+    <div class="panel-heading"><i class="fa fa-group"></i> Freezers(Plasma) </div>
     <div class="panel-body">
+        @if ($expired_plasma > 0)
+        <div><script>alert('You have an expired plasma bag(s) in stock!!');</script></div>
+        @endif
         <table id="example" class="table table-responsive table-hover">
             <thead>
                 <tr>

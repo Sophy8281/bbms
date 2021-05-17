@@ -5,11 +5,7 @@ Issue RBC
 @section('content')
 
 <div class="panel panel-default">
-    <div class="panel-heading">
-
-
-        <i class="fa fa-ticket"></i> Issue RBC Bag
-    </div>
+    <div class="panel-heading"><h5> Issue RBC Bag</h5></div>
     <div class="panel-body">
 
         <form action="{{ url('staff/rbc/issue/'.$rbc->id) }}" method="POST">
@@ -28,11 +24,24 @@ Issue RBC
                 </p>
             </div>
             <div class="form-group">
+                Blood Group
+                <p class="hint--top" data-hint="Blood Group" id="input-field">
+
+                    <input type="text" name="group_id" class="form-control @error('group_id') is-invalid @enderror" value="{{ $rbc->group->name }}" readonly>
+                    @error('group_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </p>
+            </div>
+            @if(count($hospitals) > 0)
+            <div class="form-group">
                 Hospital
                 <p class="hint--top" data-hint="Hospital" id="input-field">
-                    <select  id="hospital_id" type="text"  name="hospital_id">
+                    <select  id="hospital_id" type="text"  name="hospital_id" class="form-control @error('hospital_id') is-invalid @enderror" required>
                         @foreach ($hospitals as $hospital)
-                            <option value="{{ $hospital->id }}">{{ $hospital->name }}</option>
+                            <option value="{{ $hospital->hospital_id }}">{{ $hospital->hospital->name }}</option>
                         @endforeach
                     </select>
                     @error('hospital_id')
@@ -42,7 +51,11 @@ Issue RBC
                     @enderror
                 </p>
             </div>
+
             <input type="submit" class="btn btn-primary" value="Submit">
+            @else
+            <p class="bg-warning p-3 text-center">There are no requests for red blood cells with blood group {{ $rbc->group->name }}</p>
+            @endif
             <a href="{{ url('staff/all-refrigerators') }}" class="btn btn-danger">Cancel</a>
         </form>
     </div>

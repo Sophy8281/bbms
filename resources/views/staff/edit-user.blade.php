@@ -4,11 +4,8 @@ Update Donor
 @endsection
 @section('content')
 
-
 <div class="panel panel-default">
     <div class="panel-heading">
-
-
         <i class="fa fa-ticket"></i> Edit Donor
     </div>
     <div class="panel-body">
@@ -38,6 +35,7 @@ Update Donor
                     @enderror
                 </p>
             </div>
+            @if ($user->gender == '')
             <div class="form-group">
                 Gender
                 <p class="hint--top" data-hint="Gender" id="input-field">
@@ -53,6 +51,7 @@ Update Donor
                     @enderror
                 </p>
             </div>
+            @endif
             <div class="form-group">
                 Student Number/ID/Passport
                 <p class="hint--top" data-hint="unique_no" id="input-field">

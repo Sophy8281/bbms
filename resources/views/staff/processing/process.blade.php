@@ -6,9 +6,7 @@ Processing
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <i class="fa fa-ticket"></i> Process Blood
-    </div>
+    <div class="panel-heading"><h5>Blood Processing</h5></div>
     <div class="panel-body">
         <form method="POST" action="{{ url('staff/process/'.$unprocessed->id) }}" aria-label="{{ __('Process Blood') }}">
             @csrf

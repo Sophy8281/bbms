@@ -6,7 +6,7 @@ Issued Plasma
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading">Plasma Issued</div>
+    <div class="panel-heading"><h5>List of Issued Plasma Bags</h5></div>
     <div class="panel-body">
         <div class="col-md">
            <table id="example" class="table table-responsive table-hoverr">

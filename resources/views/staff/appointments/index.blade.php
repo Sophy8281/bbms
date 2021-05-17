@@ -19,7 +19,7 @@ Appointments
                             <th>Date</th>
                             <th>Bank</th>
                             <th>Group</th>
-                            <th>Accepted_At</th>
+                            <th>Approved_At</th>
                             <th>Mark</th>
                             <th>Action</th>
                         </tr>
@@ -31,7 +31,11 @@ Appointments
                             <td>{{ $pending_appointment->phone }}</td>
                             <td>{{ $pending_appointment->date }}</td>
                             <td>{{ $pending_appointment->bank->name }}</td>
-                            <td>{{ $pending_appointment->group->name }}</td>
+                            <td>
+                                @if ($pending_appointment->blood_group)
+                                {{ $pending_appointment->blood_group }}
+                                @endif
+                            </td>
                             <td>{{ $pending_appointment->accepted_at }}</td>
                             <td>
                                 <a href="{{ url('staff/appointment/mark/'.$pending_appointment->id) }}" class="">Mark as Done</a>
@@ -78,7 +82,11 @@ Appointments
                             <td>{{ $appointment->phone }}</td>
                             <td>{{ $appointment->date }}</td>
                             <td>{{ $appointment->bank->name }}</td>
-                            <td>{{ $appointment->group->name }}</td>
+                            <td>
+                                @if ($appointment->blood_group)
+                                {{ $appointment->blood_group }}
+                                @endif
+                            </td>
                             <td>{{ $appointment->staff->name }}</td>
                             <td>{{ $appointment->done_at }}</td>
                         </tr>

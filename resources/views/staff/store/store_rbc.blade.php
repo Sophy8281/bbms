@@ -7,7 +7,7 @@ Store RBC
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Add RBC to Stock') }}</div>
+                <div class="card-header">{{ __('Add RBC to Stock Form') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ url('staff/rbc/store/'.$processed_rbc->id) }}" aria-label="{{ __('Add RBC to Stock') }}">

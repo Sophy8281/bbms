@@ -5,14 +5,17 @@ Refrigerators
 @section('content')
 @include('flash-message')
 
-<div>
+{{-- <div>
     <a href="{{ URL::to('staff/rbc/add')  }}" class="btn btn-success float-right">
         <i class="fa fa-plus-circle"></i>   Add RBC to Stock
     </a>
-</div>
+</div> --}}
 <div class="panel panel-default">
-    <div class="panel-heading">Refrigerators(Store RBC) </div>
+    <div class="panel-heading">Refrigerators(RBC) </div>
     <div class="panel-body">
+        @if ($expired_rbc> 0)
+        <div><script>alert('You have an expired rbc bag(s) in stock!!');</script></div>
+        @endif
         <table id="example" class="table table-responsive table-hover">
             <thead>
                 <tr>

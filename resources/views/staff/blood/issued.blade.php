@@ -6,9 +6,8 @@ Issued Blood
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading"><i class="fa fa-group"></i> Whole-Blood Issued</div>
+    <div class="panel-heading"><h5>List of Issued Whole-Blood Bags</h5></div>
     <div class="panel-body">
-
         <div class="col-md">
            <table id="example" class="table table-responsive table-hover">
                <thead>
@@ -20,7 +19,6 @@ Issued Blood
                         <th>Bag Serial No.</th>
                         <th>B_Group</th>
                         <th>Issued_To</th>
-
                     </tr>
                </thead>
                @forelse($blood as $blood)
@@ -41,7 +39,6 @@ Issued Blood
             </table>
         </div>
     </div>
-
 </div>
 
 @stop
@@ -54,7 +51,6 @@ $(document).ready(function(){
         pageLength: 25,
         responsive: true,
         paging:true,
-        // searching:false,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
             {extend: 'copy', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },

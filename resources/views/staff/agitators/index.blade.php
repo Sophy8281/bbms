@@ -4,15 +4,18 @@ Agitators
 @endsection
 @section('content')
 @include('flash-message')
-<div>
+{{-- <div>
     <a href="{{ URL::to('staff/platelets/add')  }}" class="btn btn-success float-right">
         <i class="fa fa-plus-circle"></i>
         Add Platelets to Stock
     </a>
-</div>
+</div> --}}
 <div class="panel panel-default"></div>
-    <div class="panel-heading">Agitators(Store Platelets) </div>
+    <div class="panel-heading">Agitators(Platelets) </div>
     <div class="panel-body">
+        @if ($expired_platelets > 0)
+        <div><script>alert('You have an expired platelet bag(s) in stock!!');</script></div>
+        @endif
         <table id="example" class="table table-responsive table-hover">
             <thead>
                 <tr>

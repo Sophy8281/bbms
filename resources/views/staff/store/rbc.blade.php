@@ -1,11 +1,11 @@
 @extends('layouts.staff_dashboard')
 @section('breadcrumb')
-Processing
+Storage
 @endsection
 @section('content')
 @include('flash-message')
 <div class="panel panel-default">
-    <div class="panel-heading"><h5>Processed Blood (RBC) </h5></div>
+    <div class="panel-heading"><h5>Store RBC</h5></div>
     <div class="panel-body">
         <div class="col-md">
             <table id="example" class="table table-responsive table-hover">

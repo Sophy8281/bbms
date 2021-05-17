@@ -6,7 +6,7 @@ Plasma
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading">Plasma in Stock</div>
+    <div class="panel-heading"><h5>Plasma in Stock</h5></div>
     <div class="panel-body">
         <div class="pull-right">
             <a class="btn btn-primary" href="{{ url('staff/all-freezers') }}" title="Go back"> <i
@@ -43,7 +43,7 @@ Plasma
                             <a href="" class="btn btn-warning"> EXPIRED</a>
                         </td>
                         <td>
-                            <a href="{{ url('staff/plasma/discard/'.$plasma->id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to discard this bag-{{ $plasma->bag_serial_number }}?')"> Discard</a>
+                            <a href="{{ url('staff/plasma/discard/'.$plasma->id) }}" class="btn btn-success" onclick="return confirm('Are you sure you want to discard this bag-{{ $plasma->bag_serial_number }}?')"> Discard</a>
                         </td>
                     @else
                         <td>{{ Carbon\Carbon::create($plasma->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>

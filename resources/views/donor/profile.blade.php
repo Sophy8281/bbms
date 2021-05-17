@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.donor-app')
 
 @section('content')
 @include('flash-message')
@@ -11,7 +11,7 @@
 
                 <div class="card-body">
 
-                    <form action="{{ url('donor/profile/'.$user->id) }}" method="POST" aria-label="{{ __('Profile') }}"">
+                    <form action="{{ url('home/profile/'.$user->id) }}" method="POST" aria-label="{{ __('Profile') }}"">
                         {{ csrf_field() }}
 
                         <div class="form-group">
@@ -25,21 +25,24 @@
                                 @enderror
                             </p>
                         </div>
+                        {{-- @if ($user->gender == '') --}}
                         <div class="form-group">
                             Gender
                             <p class="hint--top" data-hint="Gender" id="input-field">
                                 {{-- <input type="text" name="gender" class="form-control" value="{{ $user->gender }}" placeholder="Gender"> --}}
                                 <select type="text" name="gender" class="form-control  @error('gender') is-invalid @enderror" value="{{ $user->gender }}" required autocomplete="gender" autofocus aria-readonly="true">
-                                    <option value="">Select Gender</option>
+                                    <option value="{{ $user->gender }}" >{{ $user->gender }}</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
                             </p>
                         </div>
+                        {{-- @endif
+                        @if ($user->birth_date == '') --}}
                         <div class="form-group">
                             Date of Birth
                             <p class="hint--top" data-hint="Date of Birth" id="input-field">
-                                <input id="birth_date" type="date" class="form-control datepicker @error('birth_date') is-invalid @enderror" name="birth_date">
+                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror" value="{{ $user->birth_date }}" name="birth_date">
                                 @error('birth_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -47,6 +50,7 @@
                                 @enderror
                             </p>
                         </div>
+                        {{-- @endif --}}
                         <div class="form-group">
                             Student Number/ID/Passport
                             <p class="hint--top" data-hint="unique_no" id="input-field">

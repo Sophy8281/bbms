@@ -1,4 +1,4 @@
-@extends('layouts.donor-app')
+@extends('layouts.app')
 
 @section('content')
 @include('flash-message')
@@ -66,7 +66,7 @@
             <select  id="group_id" type="text" name="group_id" class="form-control @error('group_id') is-invalid @enderror"required>
                 <option value="">Select Blood Group</option>
                 @foreach ($blood_groups as $blood_group)
-                    <option value="{{ $blood_group->id }}">{{ $blood_group->name }}</option>
+                    <option value="{{ $blood_group->name }}">{{ $blood_group->name }}</option>
                 @endforeach
                 </select>
                 @error('group_id')

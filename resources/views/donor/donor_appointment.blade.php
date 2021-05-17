@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.donor-app')
 
 @section('content')
 @include('flash-message')
@@ -10,7 +10,7 @@
                 <div class="card-header bg-danger text-light" >{{ __('Make an Appointment') }}</div>
                 <div class="card-body">
 
-                    <form action="{{ url('donor/appointment/') }}" method="POST">
+                    <form action="{{ url('home/appointment/') }}" method="POST">
                         @csrf
                         <div class="form-row">
                             <div class="col-md form-group">

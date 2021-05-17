@@ -1,4 +1,4 @@
-@extends('layouts.donor-app')
+@extends('layouts.app')
 
 @section('content')
 @include('flash-message')

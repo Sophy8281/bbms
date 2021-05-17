@@ -27,9 +27,7 @@ Refrigerators
             @foreach($refrigerators as $refrigerator)
             <tr>
                 <td>{{ $refrigerator->id }}</td>
-                <td>
-                    <a style="text-decoration:underline;color:blue" href="{{ url('admin/refrigerator/show/'.$refrigerator->id) }}">{{ $refrigerator->name }}</a>
-                </td>
+                <td>{{ $refrigerator->name }}</td>
                 <td>{{ $refrigerator->bank->name }}</td>
                 <td>{{ $refrigerator->capacity }}</td>
                 {{-- @if ($agitator->platelets->count() < $agitator->capacity && $agitator->platelets->count() != $agitator->capacity)
@@ -39,7 +37,7 @@ Refrigerators
                 @endif --}}
                 <td>
                     <a href="{{ url('admin/refrigerator/edit/'.$refrigerator->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('admin/refrigerator/delete/'.$refrigerator->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $refrigerator->name }}?')"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('admin/refrigerator/delete/'.$refrigerator->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this refrigeretor-{{ $refrigerator->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @endforeach

@@ -53,8 +53,8 @@ Donors
         <td>{{ $user->county }}</td>
         <td>{{ date('F d, Y h:m A', strtotime($user->created_at)) }}</td>
         <td>
-            <a href="{{ url('admin/donor/edit/'.$user->id) }}" class=""><i class="fa fa-edit"></i> Edit</a>
-            <a href="{{ url('admin/donor/delete/'.$user->id) }}" class=""><i class="fa fa-trash" onclick="return confirm('Are you sure you want to delete {{ $user->name }}?')"></i> Delete</a>
+            <a href="{{ url('admin/donor/edit/'.$user->id) }}" class="bg-primary" ><i class="fa fa-edit"></i> Edit</a><br>
+            <a href="{{ url('admin/donor/delete/'.$user->id) }}" class="bg-danger" onclick="return confirm('Are you sure you want to delete {{ $user->name }}?')"><i class="fa fa-trash"></i> Delete</a>
         </td>
     </tr>
     @endforeach
@@ -68,6 +68,7 @@ Donors
         $('#example').DataTable({
             pageLength: 25,
             paging:true,
+            // responsive:true,
             dom: '<"html5buttons"B>lTfgitp',
             buttons: [
                 {extend: 'copy', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },

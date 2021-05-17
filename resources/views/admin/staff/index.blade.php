@@ -6,7 +6,7 @@ Staff
 @include('flash-message')
 
 <div class="panel panel-default">
-    <div class="panel-heading">Bank Staff</div>
+    <div class="panel-heading"><h5>Staff List</h5></div>
     <div class="panel-body">
 
         <table id="example" class="table table-responsive table-hover">
@@ -21,7 +21,6 @@ Staff
                     <th>Actions</th>
                 </tr>
             </thead>
-
             @forelse($staffs as $staff)
             <tr>
                 <td>{{ $staff->id }}</td>
@@ -33,7 +32,7 @@ Staff
 
                 <td>
                     <a href="{{ url('admin/staff/edit/'.$staff->id) }}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a>
-                    <a href="{{ url('admin/staff/delete/'.$staff->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ $staff->name }}?')"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ url('admin/staff/delete/'.$staff->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff-{{ $staff->name }}?')"><i class="fa fa-trash"></i> Delete</a>
                 </td>
             </tr>
             @empty

@@ -29,11 +29,11 @@ Route::post('/host', 'App\Http\Controllers\SiteController@store_drive');
 Auth::routes();
 
 //**********************************DONOR ROUTES*************************************************
-Route::get('/donor', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/donor/profile/{id}', 'App\Http\Controllers\HomeController@edit_profile');
-Route::post('/donor/profile/{id}', 'App\Http\Controllers\HomeController@update_profile');
-Route::get('/donor/appointment', 'App\Http\Controllers\HomeController@create_appointment');
-Route::post('/donor/appointment', 'App\Http\Controllers\HomeController@store_appointment');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/profile/{id}', 'App\Http\Controllers\HomeController@edit_profile');
+Route::post('/home/profile/{id}', 'App\Http\Controllers\HomeController@update_profile');
+Route::get('/home/appointment', 'App\Http\Controllers\HomeController@create_appointment');
+Route::post('/home/appointment', 'App\Http\Controllers\HomeController@store_appointment');
 
 //Custom logout for user so that all sessions may not be destroyed
 Route::post('/user/logout', 'App\Http\Controllers\Auth\LoginController@userLogout')->name('user.logout');
@@ -148,11 +148,12 @@ Route::prefix('staff')->group(function () {
         Route::get('/rbc/store/{id}', 'App\Http\Controllers\StorageController@rbc_store_view');
         Route::post('/rbc/store/{id}', 'App\Http\Controllers\StorageController@store_rbc');
 
-        // whole blood stock management routes
+        // Whole blood stock management routes
         Route::get('/cold-room', 'App\Http\Controllers\BloodController@whole_blood');
         Route::get('/blood/issue/{id}', 'App\Http\Controllers\BloodController@issue');
         Route::post('/blood/issue/{id}', 'App\Http\Controllers\BloodController@store_issued');
         Route::get('/blood/issued', 'App\Http\Controllers\BloodController@issued_blood');
+        Route::get('/blood/discarded', 'App\Http\Controllers\BloodController@discarded_blood');
 
         // Rbc stock management routes
         Route::get('/refrigerator/{id}', 'App\Http\Controllers\RbcController@index');
@@ -167,6 +168,7 @@ Route::prefix('staff')->group(function () {
         Route::post('/rbc/edit/{id}', 'App\Http\Controllers\RbcController@update');
         Route::get('/rbc/delete/{id}', 'App\Http\Controllers\RbcController@destroy');
         Route::get('/rbc/discard/{id}', 'App\Http\Controllers\RbcController@discard');
+        Route::get('/rbc/discarded', 'App\Http\Controllers\RbcController@discarded_rbc');
 
         // Platelets stock management routes
         Route::get('/agitator/{id}', 'App\Http\Controllers\PlateletController@index');
@@ -182,6 +184,7 @@ Route::prefix('staff')->group(function () {
         Route::post('/platelets/edit/{id}', 'App\Http\Controllers\PlateletController@update');
         Route::get('/platelets/delete/{id}', 'App\Http\Controllers\PlateletController@destroy');
         Route::get('/platelet/discard/{id}', 'App\Http\Controllers\PlateletController@discard');
+        Route::get('/platelets/discarded', 'App\Http\Controllers\PlateletController@discarded_platelets');
 
         // Plasma stock management routes
         Route::get('/freezer/{id}', 'App\Http\Controllers\PlasmaController@index');
@@ -196,6 +199,7 @@ Route::prefix('staff')->group(function () {
         Route::post('/plasma/edit/{id}', 'App\Http\Controllers\PlasmaController@update');
         Route::get('/plasma/delete/{id}', 'App\Http\Controllers\PlasmaController@destroy');
         Route::get('/plasma/discard/{id}', 'App\Http\Controllers\PlasmaController@discard');
+        Route::get('/plasma/discarded', 'App\Http\Controllers\PlasmaController@discarded_plasma');
 
         // Drives management routes
         Route::get('/drives', 'App\Http\Controllers\StaffController@all_drives');
@@ -215,7 +219,11 @@ Route::prefix('staff')->group(function () {
 
         // Requests management routes
         Route::get('/requests', 'App\Http\Controllers\StaffController@hospital_requests');
-
+        Route::get('/requests/full/{id}', 'App\Http\Controllers\StaffController@issuing_full_quantity');
+        Route::get('/requests/available-blood/{id}', 'App\Http\Controllers\StaffController@issuing_available_blood');
+        Route::get('/requests/available-plasma/{id}', 'App\Http\Controllers\StaffController@issuing_available_plasma');
+        Route::get('/requests/available-platelets/{id}', 'App\Http\Controllers\StaffController@issuing_available_platelets');
+        Route::get('/requests/available-rbc/{id}', 'App\Http\Controllers\StaffController@issuing_available_rbc');
 
         // Report management routes
         Route::get('/reports/donors', 'App\Http\Controllers\StaffController@donors_pdf');
@@ -345,6 +353,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/reports/donors', 'App\Http\Controllers\AdminController@donors_pdf');
     Route::get('/reports/staff', 'App\Http\Controllers\AdminController@staff_pdf');
     Route::get('/reports/donations', 'App\Http\Controllers\AdminController@donations_pdf');
+    Route::get('/reports/blood', 'App\Http\Controllers\AdminController@blood_pdf');
     Route::get('/reports/plasma', 'App\Http\Controllers\AdminController@plasma_pdf');
     Route::get('/reports/platelets', 'App\Http\Controllers\AdminController@platelets_pdf');
     Route::get('/reports/rbc', 'App\Http\Controllers\AdminController@rbc_pdf');
@@ -365,6 +374,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/charts/donations', 'App\Http\Controllers\AdminController@donations_charts');
 
+    Route::get('/charts/blood', 'App\Http\Controllers\AdminController@blood_charts');
     Route::get('/charts/plasma', 'App\Http\Controllers\AdminController@plasma_charts');
     Route::get('/charts/platelets', 'App\Http\Controllers\AdminController@platelets_charts');
     Route::get('/charts/rbc', 'App\Http\Controllers\AdminController@rbc_charts');
@@ -386,26 +396,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/platelets-trends', 'App\Http\Controllers\StatisticsController@platelets_highchart');
     Route::get('/rbc-trends', 'App\Http\Controllers\StatisticsController@rbc_highchart');
 
-
     // Site management routes
     Route::get('/faqs', 'App\Http\Controllers\AdminController@faqs');
     Route::post('/faqs', 'App\Http\Controllers\AdminController@store_faq');
     Route::get('/faqs/change', 'App\Http\Controllers\AdminController@update_faq_status');
     Route::get('/about', 'App\Http\Controllers\AdminController@edit_about');
     Route::post('/about', 'App\Http\Controllers\AdminController@update_about');
-
 });
-
-
-
-Route::get('/chart', 'App\Http\Controllers\ChartController@index');
-Route::get('/users', 'App\Http\Controllers\StaffController@users_datatable');
-//View Page
-Route::get('ViewPages', 'App\Http\Controllers\ViewController@test');
-Route::post('ViewPages', 'App\Http\Controllers\ViewController@index');
-
-Route::get('/all-donors', 'App\Http\Controllers\AdminController@all_donors')->name('donorpdf');
-
-Route::get('/test_table', 'App\Http\Controllers\AdminController@test_table');
-
-Route::post('/test_table', 'App\Http\Controllers\AdminController@search_donor');

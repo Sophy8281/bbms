@@ -23,8 +23,7 @@ class CreateAppointmentsTable extends Migration
             $table->date('date');
             $table->unsignedBigInteger('bank_id');
             $table->foreign('bank_id')->references('id')->on('banks')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('group_id')->nullable();
-            $table->foreign('group_id')->references('id')->on('groups')->onUpdate('cascade');
+            $table->string('blood_group')->nullable();
             $table->unsignedBigInteger('staff_id')->nullable();
             $table->foreign('staff_id')->references('id')->on('staff')->onUpdate('cascade');
             $table->dateTime('accepted_at')->nullable();

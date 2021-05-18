@@ -4,23 +4,47 @@ Blood Charts
 @endsection
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md">
+    <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Whole Blood Charts</div>
+            <div class="card-header">Whole Blood Chart</div>
 
             <div class="card-body">
 
-                <h1>{{ $chart1->options['chart_title'] }}</h1>
+                <h2>{{ $chart1->options['chart_title'] }}</h2>
                     {!! $chart1->renderHtml() !!}
 
-                <hr />
+                {{-- <hr />
 
                 <h1>{{ $chart2->options['chart_title'] }}</h1>
                 <h3>Key</h3>
                 @foreach ($banks as $bank)
                 {{$bank->id}}-{{$bank->name}}<br>
                 @endforeach
-                {!! $chart2->renderHtml() !!}
+                {!! $chart2->renderHtml() !!} --}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Whole Blood Chart</div>
+
+            <div class="card-body">
+
+                <h2>{{ $chart2->options['chart_title'] }}</h2>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <h3>Key</h3>
+                        @foreach ($banks as $bank)
+                        {{$bank->id}}-{{$bank->name}}<br>
+                        @endforeach
+                    </div>
+                    <div class="col-md-6">
+                        {!! $chart2->renderHtml() !!}
+                    </div>
+                    
+                </div>
+
             </div>
         </div>
     </div>

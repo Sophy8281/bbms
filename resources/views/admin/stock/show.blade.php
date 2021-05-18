@@ -12,6 +12,59 @@ Bank Stock
 </h3>
 
 <div class="row">
+    <div class="col-md">
+        <div class="card">
+            <div class="card-header bg-primary text-light">Whole Blood</div>
+            <div class="card-body">
+
+
+                <table class="table table-responsive table-hover">
+
+                    <tr>
+                        <th>#Id</th>
+                        <th>Bank</th>
+                        <th>Stored By</th>
+                        <th>Bag Serial No.</th>
+                        <th>Blood Group</th>
+                        <th>Donation Date</th>
+                        <th>Expiry Date</th>
+                        <th>Days Remaining</th>
+                    </tr>
+
+                    @forelse($blood as $blood)
+                    <tr>
+                        <td>{{ $blood->id }}</td>
+                        <td>{{ $blood->bank->name }}</td>
+                        <td>{{ $blood->staff->name }}</td>
+                        <td>{{ $blood->bag_serial_number }}</td>
+                        <td>{{ $blood->group->name }}</td>
+                        <td>{{ $blood->donation_date }}</td>
+                        <td>{{ $blood->expiry_date }}</td>
+                        @if ($blood->expiry_date == Carbon\Carbon::today()|$blood->expiry_date < Carbon\Carbon::today())
+                            <td>
+                                <a href="" class="btn btn-warning"> EXPIRED</a>
+                            </td>
+
+                        @else
+                            <td>{{ Carbon\Carbon::create($blood->expiry_date)->diffInDays(Carbon\Carbon::today())}}</td>
+
+
+                        @endif
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="4">No Platelets found.</td>
+                    </tr>
+                @endforelse
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
         <div class="col-md">
             <div class="card">
                 <div class="card-header bg-primary text-light">Platelets</div>

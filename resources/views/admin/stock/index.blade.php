@@ -21,9 +21,10 @@ Banks Stock
                             </div>
                             <div class="card-body">
 
-                                <p>Platelets COUNT: {{ $bank->platelets->count() }}</p>
-                                <p>Plasma COUNT: {{ $bank->plasma->count() }}</p>
-                                <p>Red Blood Cells COUNT: {{ $bank->rbc->count() }}</p>
+                                <p>Whole Blood COUNT: {{ $bank->blood->whereNull('issued_at')->whereNull('discarded_at')->count() }}</p>
+                                <p>Platelets COUNT: {{ $bank->platelets->whereNull('issued_at')->whereNull('discarded_at')->count() }}</p>
+                                <p>Plasma COUNT: {{ $bank->plasma->whereNull('issued_at')->whereNull('discarded_at')->count() }}</p>
+                                <p>Red Blood Cells COUNT: {{ $bank->rbc->whereNull('issued_at')->whereNull('discarded_at')->count() }}</p>
 
                             </div>
                         </div>

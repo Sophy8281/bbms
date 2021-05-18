@@ -14,7 +14,7 @@ Issued Platelets
                    <tr>
                         <th>#Id</th>
                         <th>Platelet ID</th>
-                        <th>Bank ID</th>
+                        <th>Bank</th>
                         <th>Issued_By</th>
                         <th>Agitator</th>
                         <th>Bag Serial No.</th>
@@ -27,8 +27,8 @@ Issued Platelets
                <tr>
                     <td>{{ $platelet->id }}</td>
                     <td>{{ $platelet->platelet_id }}</td>
-                    <td>{{ $platelet->bank_id }}</td>
-                    <td>{{ $platelet->staff_id }}</td>
+                    <td>{{ $platelet->bank->name }}</td>
+                    <td>{{ $platelet->staff->name }}</td>
                     <td>{{ $platelet->agitator->name}}</td>
                     <td>{{ $platelet->bag_serial_number }}</td>
                     <td>{{ $platelet->group->name }}</td>

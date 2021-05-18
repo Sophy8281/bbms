@@ -39,6 +39,7 @@ class BloodController extends Controller
 
     public function whole_blood()
     {
+        $today = Carbon::today();
         $bank_id=Auth::user()->bank_id;
         $blood = Blood::get()->where('bank_id',$bank_id)->whereNull('issued_at')
             ->whereNull('discarded_at');

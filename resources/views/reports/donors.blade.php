@@ -45,7 +45,7 @@
             <th>#Id</th>
             <th>Name</th>
             <th>Email</th>
-            {{-- <th>Gender</th> --}}
+            <th>Gender</th>
             <th>DoB</th>
             <th>Phone</th>
             <th>B_Group</th>
@@ -58,7 +58,7 @@
             <td>{{ $user->id }}</td>
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
-            {{-- <td>{{ $user->gender }}</td> --}}
+            <td>{{ $user->gender }}</td>
             {{-- <td>{{ $user->birth_date }}</td> --}}
             <td>{{ date('F d, Y', strtotime($user->birth_date)) }}</td>
             <td>{{ $user->phone }}</td>

@@ -93,9 +93,9 @@ class ProcessingController extends Controller
         $processed_at = Carbon::now();
 
         $constraints = [
-            'plasma_bag_no' => 'string|max:255',
-            'platelet_bag_no'=> 'string|max:255',
-            'rbc_bag_no'=> 'string|max:255',
+            'plasma_bag_no' => 'required_without_all:platelet_bag_no,rbc_bag_no|max:255|unique:plasmas,bag_serial_number',
+            'platelet_bag_no'=> 'required_without_all:plasma_bag_no,rbc_bag_no|max:255|unique:platelets,bag_serial_number',
+            'rbc_bag_no'=> 'required_without_all:plasma_bag_no,platelet_bag_no|max:255|unique:red_blood_cells,bag_serial_number',
         ];
 
         $input = [

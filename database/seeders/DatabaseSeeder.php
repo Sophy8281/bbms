@@ -15,5 +15,22 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         \App\Models\About::factory()->create();
+        // \App\Models\HospitalRequest::factory(3)->create();
+        $this->call([
+            AdminSeeder::class,
+            BankSeeder::class,
+            GroupSeeder::class,
+            StaffSeeder::class,
+            HospitalSeeder::class,
+            AgitatorSeeder::class,
+            FreezerSeeder::class,
+            RefrigeratorSeeder::class,
+            AppointmentSeeder::class,
+            DonationSeeder::class,
+            FaqSeeder::class,
+            DriveSeeder::class,
+            HostDriveSeeder::class,
+            HospitalRequestSeeder::class,
+        ]);
     }
 }

@@ -18,7 +18,7 @@ class AppointmentSeeder extends Seeder
             'user_id' => '1',
             'name' => 'Donor1',
             'email' => 'donor1@gmail.com',
-            'phone' => '0720123456',
+            'phone' => '0718875113',
             'date' => '2021-05-20',
             'bank_id' => '1',
             'blood_group' => 'A+',

@@ -67,7 +67,7 @@ class SiteController extends Controller
             'phone' => ['required'],
             'date' => ['required','after_or_equal:today'],
             'bank_id' => ['required'],
-            'group_id' => ['required', 'string', 'max:255'],
+            // 'group_id' => ['required', 'string', 'max:255'],
         ]);
 
         $data = new Appointment();
@@ -76,7 +76,7 @@ class SiteController extends Controller
         $data['phone']=$request->phone;
         $data['date']=$request->date;
         $data['bank_id']=$request->bank_id;
-        $data['group_id']=$request->group_id;
+        $data['blood_group']=$request->group_id;
 
         // dd($data);
         $data->save();

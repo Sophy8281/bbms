@@ -108,7 +108,7 @@ class HomeController extends Controller
         $data->phone=Auth::user()->phone;
         $data['date']=$request->date;
         $data['bank_id']=$request->bank_id;
-        $data->group_id=Auth::user()->blood_group;
+        $data->blood_group=Auth::user()->blood_group;
 
         // dd($data);
         $data->save();

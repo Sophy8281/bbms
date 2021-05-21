@@ -25,8 +25,8 @@ Route::post('/appointment', 'App\Http\Controllers\SiteController@store_appointme
 Route::get('/host', 'App\Http\Controllers\SiteController@create_drive');
 Route::post('/host', 'App\Http\Controllers\SiteController@store_drive');
 
-// Auth::routes(['verify' => true]);
-Auth::routes();
+Auth::routes(['verify' => true]);
+// Auth::routes();
 
 //**********************************DONOR ROUTES*************************************************
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

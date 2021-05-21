@@ -55,9 +55,9 @@ class AdminController extends Controller
     public function index()
     {
         $donors = User::all()->count();
-        $platelets = Platelet::whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
-        $plasma = Plasma::whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
-        $rbc = Rbc::whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
+        $platelets = Platelet::whereNull('issued_at')->whereNull('discarded_at')->count();
+        $plasma = Plasma::whereNull('issued_at')->whereNull('discarded_at')->count();
+        $rbc = Rbc::whereNull('issued_at')->whereNull('discarded_at')->count();
         return view('admin.admin', compact('donors','platelets','plasma','rbc'));
     }
 
@@ -360,33 +360,34 @@ class AdminController extends Controller
     public function bank_stock($id)
     {
         $blood_groups = Group::all();
-        $platelets = Platelet::get()->where('bank_id',$id);
-        $plasma = Plasma::get()->where('bank_id',$id);
-        $rbcs = Rbc::get()->where('bank_id',$id);
-        return view('admin.stock.show',compact('blood_groups','platelets','plasma','rbcs'));
+        $blood = Blood::get()->where('bank_id',$id)->whereNull('issued_at')->whereNull('discarded_at');
+        $platelets = Platelet::get()->where('bank_id',$id)->whereNull('issued_at')->whereNull('discarded_at');
+        $plasma = Plasma::get()->where('bank_id',$id)->whereNull('issued_at')->whereNull('discarded_at');
+        $rbcs = Rbc::get()->where('bank_id',$id)->whereNull('issued_at')->whereNull('discarded_at');
+        return view('admin.stock.show',compact('blood_groups','blood','platelets','plasma','rbcs'));
     }
 
     public function blood()
     {
-        $bloods = Blood::all();
+        $bloods = Blood::whereNull('issued_at')->whereNull('discarded_at')->get();
         return view('admin.stock.blood',compact('bloods'));
     }
 
     public function plasma()
     {
-        $plasma = Plasma::all();
+        $plasma = Plasma::whereNull('issued_at')->whereNull('discarded_at')->get();
         return view('admin.stock.plasma',compact('plasma'));
     }
 
     public function platelets()
     {
-        $platelets = Platelet::all();
+        $platelets = Platelet::whereNull('issued_at')->whereNull('discarded_at')->get();
         return view('admin.stock.platelets',compact('platelets'));
     }
 
     public function rbc()
     {
-        $rbc = Rbc::all();
+        $rbc = Rbc::whereNull('issued_at')->whereNull('discarded_at')->get();
         return view('admin.stock.rbc',compact('rbc'));
     }
 
@@ -490,25 +491,25 @@ class AdminController extends Controller
     }
     public function blood_pdf(Request $request)
     {
-        $blood = Blood::all();
+        $blood = Blood::whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.blood', compact('blood'));
         return $pdf->stream();
     }
     public function plasma_pdf(Request $request)
     {
-        $plasma = Plasma::all();
+        $plasma = Plasma::whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.plasma', compact('plasma'));
         return $pdf->stream();
     }
     public function platelets_pdf(Request $request)
     {
-        $platelets = Platelet::all();
+        $platelets = Platelet::whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.platelets', compact('platelets'));
         return $pdf->stream();
     }
     public function rbc_pdf(Request $request)
     {
-        $rbc = Rbc::all();
+        $rbc = Rbc::whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.rbc', compact('rbc'));
         return $pdf->stream();
     }
@@ -663,7 +664,7 @@ class AdminController extends Controller
     public function blood_charts()
     {
         $chart_options = [
-            'chart_title' => 'Whole Blood Availability by months',
+            'chart_title' => 'Blood IN by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Blood',
             'group_by_field' => 'created_at',
@@ -677,7 +678,7 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Whole Blood Availability by Bank',
+            'chart_title' => 'Blood IN by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Blood',
             'group_by_field' => 'bank_id',
@@ -696,7 +697,7 @@ class AdminController extends Controller
     public function plasma_charts()
     {
         $chart_options = [
-            'chart_title' => 'Plasma Availability by months',
+            'chart_title' => 'Plasma IN by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Plasma',
             'group_by_field' => 'created_at',
@@ -710,7 +711,7 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Plasma Availability by Bank',
+            'chart_title' => 'Plasma IN by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Plasma',
             'group_by_field' => 'bank_id',
@@ -729,7 +730,7 @@ class AdminController extends Controller
     public function platelets_charts()
     {
         $chart_options = [
-            'chart_title' => 'Platelet Availability by months',
+            'chart_title' => 'Platelet IN by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Platelet',
             'group_by_field' => 'created_at',
@@ -743,7 +744,7 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Platelet Availability by Bank',
+            'chart_title' => 'Platelet IN by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Platelet',
             'group_by_field' => 'bank_id',
@@ -762,7 +763,7 @@ class AdminController extends Controller
     public function rbc_charts()
     {
         $chart_options = [
-            'chart_title' => 'RBC Availability by months',
+            'chart_title' => 'RBC IN by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\Rbc',
             'group_by_field' => 'created_at',
@@ -776,7 +777,7 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'RBC Availability by Bank',
+            'chart_title' => 'RBC IN by Bank',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\Rbc',
             'group_by_field' => 'bank_id',
@@ -795,7 +796,7 @@ class AdminController extends Controller
     public function issued_plasma_charts()
     {
         $chart_options = [
-            'chart_title' => 'Plasma Issued months',
+            'chart_title' => 'Plasma Bags Issued by months',
             'report_type' => 'group_by_date',
             'model' => 'App\Models\IssuedPlasma',
             'group_by_field' => 'created_at',
@@ -809,7 +810,7 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued Plasma by Hospital',
+            'chart_title' => 'Issued Plasma Bags by Hospital',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedPlasma',
             'group_by_field' => 'hospital_id',
@@ -842,7 +843,7 @@ class AdminController extends Controller
         $chart1 = new LaravelChart($chart_options);
 
         $chart_options = [
-            'chart_title' => 'Issued Platelet by Hospital',
+            'chart_title' => 'Issued Platelet Bags by Hospital',
             'report_type' => 'group_by_string',
             'model' => 'App\Models\IssuedPlatelet',
             'group_by_field' => 'hospital_id',
@@ -1020,7 +1021,7 @@ class AdminController extends Controller
         $chart2 = new LaravelChart($chart_options);
         $banks = Bank::all();
 
-        return view('admin.charts.discarded_rbc', compact('chart1', 'chart2'));
+        return view('admin.charts.discarded_rbc', compact('chart1', 'chart2', 'banks'));
     }
 
     public function discarded_blood_charts()

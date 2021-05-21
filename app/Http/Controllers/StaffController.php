@@ -66,9 +66,9 @@ class StaffController extends Controller
     {
         $donors = User::all()->count();
         $bank_id=Auth::user()->bank_id;
-        $platelets = Platelet::where('bank_id',$bank_id)->whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
-        $plasma = Plasma::where('bank_id',$bank_id)->whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
-        $rbc = Rbc::where('bank_id',$bank_id)->whereNotNull('issued_at')->whereNotNull('discarded_at')->count();
+        $platelets = Platelet::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->count();
+        $plasma = Plasma::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->count();
+        $rbc = Rbc::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->count();
 
         return view('staff.staff', compact('donors','platelets','plasma','rbc'));
     }
@@ -146,7 +146,7 @@ class StaffController extends Controller
         $constraints = [
             'name' => 'required|max:255',
             'email'=> 'required|max:255',
-            // 'gender'=> 'required|max:255',
+            'gender'=> 'required|max:255',
             'unique_no'=> 'required|max:255',
             'birth_date'=> 'required|max:255',
             'address'=> 'max:255',
@@ -227,17 +227,17 @@ class StaffController extends Controller
         $data->save();
         $donor = User::get()->where('id',$data['donor_id']);
         // dd($donor);
-       // Notification::send( $donor, new NewDonationNotification($data));
+       Notification::send( $donor, new NewDonationNotification($data));
 
-        // $phone = DB::table('users')
-        //     ->where('id',$data['donor_id'])
-        //     ->select('phone')
-        //     ->pluck('phone')
-        //     ->first();
-        // dd( $phone );
-        // if($phone){
-        //     SendSms::sendsms($phone);
-        // }
+        $phone = DB::table('users')
+            ->where('id',$data['donor_id'])
+            ->select('phone')
+            ->pluck('phone')
+            ->first();
+
+        if($phone){
+            SendSms::sendsms($phone);
+        }
         return redirect('staff/add-donation/')->with('success','Donation Added Successfully!');
     }
 
@@ -384,6 +384,7 @@ class StaffController extends Controller
     // Freezers
     public function all_freezers()
     {
+        $today = Carbon::today();
         $bank_id=Auth::user()->bank_id;
         $freezers = Freezer::where('bank_id',$bank_id)->get();
         $expired_plasma=  Plasma::where('bank_id',$bank_id)->where('expiry_date', '<=', $today)
@@ -421,6 +422,7 @@ class StaffController extends Controller
     // Refrigerators
     public function all_refrigerators()
     {
+        $today = Carbon::today();
         $bank_id=Auth::user()->bank_id;
         $refrigerators = Refrigerator::get()->where('bank_id',$bank_id);
         $expired_rbc =  Rbc::where('bank_id',$bank_id)->where('expiry_date', '<=', $today)
@@ -489,7 +491,7 @@ class StaffController extends Controller
     public function all_drives()
     {
         $bank_id=Auth::user()->bank_id;
-        $unapproved_drives = Drive::whereNull('approved_at')->get();
+        $unapproved_drives = Drive::where('bank_id',$bank_id)->whereNull('approved_at')->get();
         $drives = Drive::get()->where('bank_id',$bank_id)->whereNotNull('approved_at','approved_by');
         return view('staff.drives.index', compact('unapproved_drives','drives'));
     }
@@ -533,11 +535,11 @@ class StaffController extends Controller
     public function update_drive(Request $request, $id)
     {
         $unapproved_drive = Drive::findOrFail($id);
-         $constraints = [
-            'location' => ['required','string'],
-            'date' => ['required','after_or_equal:today'],
-            'time' => ['required','string'],
-         ];
+        $constraints = [
+        'location' => ['required','string'],
+        'date' => ['required','after_or_equal:today'],
+        'time' => ['required','string'],
+        ];
         $input = [
             'location' => $request['location'],
             'date' => $request['date'],
@@ -650,109 +652,110 @@ class StaffController extends Controller
         return view('staff.requests.index', compact('requests','whole_blood','plasma','platelets','rbc'));
     }
 
-    public function issuing_full_quantity($id)
-    {
-        $hospital_request = HospitalRequest::findOrFail($id);
-        $new_remaining = 0;
+    /*******Logic moved to issuance for each component */
+    // public function issuing_full_quantity($id)
+    // {
+    //     $hospital_request = HospitalRequest::findOrFail($id);
+    //     $new_remaining = 0;
 
-        $input = [
-            'remaining' => $new_remaining,
-        ];
+    //     $input = [
+    //         'remaining' => $new_remaining,
+    //     ];
 
-        // dd($input);
-        HospitalRequest::where('id', $id)
-            ->update($input);
+    //     // dd($input);
+    //     HospitalRequest::where('id', $id)
+    //         ->update($input);
 
-        return redirect('staff/requests/')->with('success','Updated Successfully!');
-    }
+    //     return redirect('staff/requests/')->with('success','Updated Successfully!');
+    // }
 
-    public function issuing_available_blood($id)
-    {
-        $hospital_request = HospitalRequest::findOrFail($id);
+    // public function issuing_available_blood($id)
+    // {
+    //     $hospital_request = HospitalRequest::findOrFail($id);
 
-        $bank_id=Auth::user()->bank_id;
-        $group_id = $hospital_request->group_id;
-        $current_remaining = $hospital_request->remaining;
-        $available = Blood::where('bank_id', $bank_id)->where('group_id', $group_id)
-            ->whereNull('issued_at')->whereNull('issued_at')->count();
-        $new_remaining = $current_remaining - $available;
+    //     $bank_id=Auth::user()->bank_id;
+    //     $group_id = $hospital_request->group_id;
+    //     $current_remaining = $hospital_request->remaining;
+    //     $available = Blood::where('bank_id', $bank_id)->where('group_id', $group_id)
+    //         ->whereNull('issued_at')->whereNull('issued_at')->count();
+    //     $new_remaining = $current_remaining - $available;
 
-        $input = [
-            'remaining' => $new_remaining,
-        ];
-        print($bank_id);
-        // HospitalRequest::where('id', $id)
-        //     ->update($input);
+    //     $input = [
+    //         'remaining' => $new_remaining,
+    //     ];
+    //     print($bank_id);
+    //     // HospitalRequest::where('id', $id)
+    //     //     ->update($input);
 
-        return redirect('staff/requests/')->with('success','Updated Successfully!');
-    }
+    //     return redirect('staff/requests/')->with('success','Updated Successfully!');
+    // }
 
-    public function issuing_available_plasma($id)
-    {
-        $hospital_request = HospitalRequest::findOrFail($id);
+    // public function issuing_available_plasma($id)
+    // {
+    //     $hospital_request = HospitalRequest::findOrFail($id);
 
-        $bank_id=Auth::user()->bank_id;
-        $group_id = $hospital_request->group_id;
-        $current_remaining = $hospital_request->remaining;
-        $available = Plasma::where('bank_id', $bank_id)->where('group_id', $group_id)
-            ->whereNull('issued_at')->whereNull('issued_at')->count();
-        $new_remaining = $current_remaining - $available;
+    //     $bank_id=Auth::user()->bank_id;
+    //     $group_id = $hospital_request->group_id;
+    //     $current_remaining = $hospital_request->remaining;
+    //     $available = Plasma::where('bank_id', $bank_id)->where('group_id', $group_id)
+    //         ->whereNull('issued_at')->whereNull('issued_at')->count();
+    //     $new_remaining = $current_remaining - $available;
 
-        $input = [
-            'remaining' => $new_remaining,
-        ];
-        // dd($bank_id);
-        // dd($group_id);
-        // dd($current_remaining);
-        // dd($available);
-        // dd($new_remaining);
-        // dd($input);
-        HospitalRequest::where('id', $id)
-            ->update($input);
+    //     $input = [
+    //         'remaining' => $new_remaining,
+    //     ];
+    //     // dd($bank_id);
+    //     // dd($group_id);
+    //     // dd($current_remaining);
+    //     // dd($available);
+    //     // dd($new_remaining);
+    //     // dd($input);
+    //     HospitalRequest::where('id', $id)
+    //         ->update($input);
 
-        return redirect('staff/requests/')->with('success','Updated Successfully!');
-    }
+    //     return redirect('staff/requests/')->with('success','Updated Successfully!');
+    // }
 
-    public function issuing_available_platelets($id)
-    {
-        $hospital_request = HospitalRequest::findOrFail($id);
+    // public function issuing_available_platelets($id)
+    // {
+    //     $hospital_request = HospitalRequest::findOrFail($id);
 
-        $bank_id=Auth::user()->bank_id;
-        $group_id = $hospital_request->group_id;
-        $current_remaining = $hospital_request->remaining;
-        $available = Platelet::where('bank_id', $bank_id)->where('group_id', $group_id)
-            ->whereNull('issued_at')->whereNull('issued_at')->count();
-        $new_remaining = $current_remaining - $available;
+    //     $bank_id=Auth::user()->bank_id;
+    //     $group_id = $hospital_request->group_id;
+    //     $current_remaining = $hospital_request->remaining;
+    //     $available = Platelet::where('bank_id', $bank_id)->where('group_id', $group_id)
+    //         ->whereNull('issued_at')->whereNull('issued_at')->count();
+    //     $new_remaining = $current_remaining - $available;
 
-        $input = [
-            'remaining' => $new_remaining,
-        ];
+    //     $input = [
+    //         'remaining' => $new_remaining,
+    //     ];
 
-        HospitalRequest::where('id', $id)
-            ->update($input);
+    //     HospitalRequest::where('id', $id)
+    //         ->update($input);
 
-        return redirect('staff/requests/')->with('success','Updated Successfully!');
-    }
+    //     return redirect('staff/requests/')->with('success','Updated Successfully!');
+    // }
 
-    public function issuing_available_rbc($id)
-    {
-        $hospital_request = HospitalRequest::findOrFail($id);
+    // public function issuing_available_rbc($id)
+    // {
+    //     $hospital_request = HospitalRequest::findOrFail($id);
 
-        $bank_id=Auth::user()->bank_id;
-        $group_id = $hospital_request->group_id;
-        $current_remaining = $hospital_request->remaining;
-        $available = Rbc::where('bank_id', $bank_id)->where('group_id', $group_id)
-            ->whereNull('issued_at')->whereNull('issued_at')->count();
-        $new_remaining = $current_remaining - $available;
+    //     $bank_id=Auth::user()->bank_id;
+    //     $group_id = $hospital_request->group_id;
+    //     $current_remaining = $hospital_request->remaining;
+    //     $available = Rbc::where('bank_id', $bank_id)->where('group_id', $group_id)
+    //         ->whereNull('issued_at')->whereNull('issued_at')->count();
+    //     $new_remaining = $current_remaining - $available;
 
-        $input = [
-            'remaining' => $new_remaining,
-        ];
-        HospitalRequest::where('id', $id)
-            ->update($input);
+    //     $input = [
+    //         'remaining' => $new_remaining,
+    //     ];
+    //     HospitalRequest::where('id', $id)
+    //         ->update($input);
 
-        return redirect('staff/requests/')->with('success','Updated Successfully!');
-    }
+    //     return redirect('staff/requests/')->with('success','Updated Successfully!');
+    // }/*******Logic moved to issuance for each component */
 
     /******************** STAFF REPORTS- MANAGEMENT *****************************/
     public function donors_pdf(Request $request)
@@ -772,7 +775,7 @@ class StaffController extends Controller
     public function plasma_pdf(Request $request)
     {
         $bank_id=Auth::user()->bank_id;
-        $plasma = Plasma::where('bank_id',$bank_id)->get();
+        $plasma = Plasma::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.plasma', compact('plasma'));
         return $pdf->stream();
     }
@@ -780,7 +783,7 @@ class StaffController extends Controller
     public function platelets_pdf(Request $request)
     {
         $bank_id=Auth::user()->bank_id;
-        $platelets = Platelet::where('bank_id',$bank_id)->get();
+        $platelets = Platelet::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.platelets', compact('platelets'));
         return $pdf->stream();
     }
@@ -788,7 +791,7 @@ class StaffController extends Controller
     public function rbc_pdf(Request $request)
     {
         $bank_id=Auth::user()->bank_id;
-        $rbc = Rbc::where('bank_id',$bank_id)->get();
+        $rbc = Rbc::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.rbc', compact('rbc'));
         return $pdf->stream();
     }
@@ -796,7 +799,7 @@ class StaffController extends Controller
      public function blood_pdf(Request $request)
     {
         $bank_id=Auth::user()->bank_id;
-        $blood = Blood::where('bank_id',$bank_id)->get();
+        $blood = Blood::where('bank_id',$bank_id)->whereNull('issued_at')->whereNull('discarded_at')->get();
         $pdf = PDF::loadView('reports.blood', compact('blood'));
         return $pdf->stream();
     }

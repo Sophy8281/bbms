@@ -56,6 +56,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
+                                <a href="{{ url('/staff/register') }}">
+                                    {{ __('Create an Account?') }}
+                                </a>
                             </div>
                         </div>
                     </form>

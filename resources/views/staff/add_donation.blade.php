@@ -21,7 +21,7 @@ New Donation
                         <div class="form-group row">
                             <label for="donor_id" class="col-md-4 col-form-label text-md-right">{{ __('Donor') }}</label>
                             <div class="col-md-6">
-                                <select  id="donor_id" type="text"  class="form-control @error('donor_id') is-invalid @enderror" name="donor_id" required>
+                                <select  id="donor_id" type="text"  class="form-control @error('donor_id') is-invalid @enderror" name="donor_id" value="{{ old('donor_id') }}" required>
                                     <option value="">Select Donor Number</option>
                                     @foreach ($donors as $donors)
                                     <option value="{{ $donors->id }}">{{ $donors->id }}</option>

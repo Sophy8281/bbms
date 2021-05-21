@@ -13,7 +13,7 @@ Trends
         var PlateletsRequests = {{ json_encode($platelets_requests,JSON_NUMERIC_CHECK) }};
         $('#highchart').highcharts({
             chart: {
-                type: 'column'
+                type: 'line'
             },
             title: {
                 text: 'PLATELETS TRENDS'

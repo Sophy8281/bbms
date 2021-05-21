@@ -271,30 +271,7 @@
               <li class="nav-item">
                 <a href="{{ URL::to('admin/add-bank') }}" class="nav-link">
                   <i class="fa fa-plus-circle"></i>
-                  <p>Add Bank</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="fa fa-university"></i>
-              <p>
-                Hospitals
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('admin/hospitals') }}" class="nav-link">
-                  <i class="fa fa-university"></i>
-                  <p>All Hospitals</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('admin/hospital/add') }}" class="nav-link">
-                  <i class="fa fa-plus-circle"></i>
-                  <p>Add Hospital</p>
+                  <p>New Bank</p>
                 </a>
               </li>
             </ul>
@@ -317,7 +294,7 @@
               <li class="nav-item">
                 <a href="{{ URL::to('admin/add-blood-group') }}" class="nav-link">
                   <i class="fa fa-plus-circle"></i>
-                  <p>Add Blood Group</p>
+                  <p>New Blood Group</p>
                 </a>
               </li>
             </ul>
@@ -353,6 +330,29 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
+              <i class="fa fa-university"></i>
+              <p>
+                Hospitals
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/hospitals') }}" class="nav-link">
+                  <i class="fa fa-university"></i>
+                  <p>All Hospitals</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/hospital/add') }}" class="nav-link">
+                  <i class="fa fa-plus-circle"></i>
+                  <p>New Hospital</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="fa fa-handshake"></i>
               <p>
                 Donations
@@ -372,7 +372,7 @@
             <a href="#" class="nav-link">
               <i class="fa fa-archive"></i>
               <p>
-                Stock
+                Available Stock
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -401,6 +401,17 @@
                   <p>RBC</p>
                 </a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fa fa-minus-circle"></i>
+              <p>
+                Issued
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ URL::to('admin/issued-blood') }}" class="nav-link">
                   <i class="fa fa-minus-circle"></i>
@@ -425,6 +436,17 @@
                   <p>Issued RBC</p>
                 </a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="fa fa-trash"></i>
+              <p>
+                Discarded
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ URL::to('admin/discarded-blood') }}" class="nav-link">
                   <i class="fa fa-trash"></i>
@@ -479,6 +501,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ URL::to('admin/reports/blood') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ URL::to('admin/reports/plasma') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Plasma</p>
@@ -494,6 +522,12 @@
                 <a href="{{ URL::to('admin/reports/rbc') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Red Blood Cells</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/reports/issued-blood') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Issued Blood</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -515,9 +549,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ URL::to('admin/reports/issued-blood') }}" class="nav-link" target="_blank">
+                <a href="{{ URL::to('admin/reports/discarded-blood') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
-                  <p>Issued Blood</p>
+                  <p>Discarded Blood</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -536,12 +570,6 @@
                 <a href="{{ URL::to('admin/reports/discarded-rbc') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Discarded RBC</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('admin/reports/discarded-blood') }}" class="nav-link" target="_blank">
-                  <i class="fa fa-book"></i>
-                  <p>Discarded Blood</p>
                 </a>
               </li>
             </ul>
@@ -574,6 +602,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{ URL::to('admin/charts/blood') }}" class="nav-link">
+                  <i class="ion ion-pie-graph"></i>
+                  <p>Blood</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ URL::to('admin/charts/plasma') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
                   <p>Plasma</p>
@@ -589,6 +623,12 @@
                 <a href="{{ URL::to('admin/charts/rbc') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
                   <p>RBC</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('admin/charts/issued-blood') }}" class="nav-link">
+                  <i class="ion ion-pie-graph"></i>
+                  <p>Issued Blood</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -610,9 +650,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ URL::to('admin/charts/issued-blood') }}" class="nav-link">
+                <a href="{{ URL::to('admin/charts/discarded-blood') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
-                  <p>Issued Blood</p>
+                  <p>Discarded Blood</p>
                 </a>
               </li>
                 <li class="nav-item">
@@ -631,12 +671,6 @@
                 <a href="{{ URL::to('admin/charts/discarded-rbc') }}" class="nav-link">
                   <i class="ion ion-pie-graph"></i>
                   <p>Discarded RBC</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('admin/charts/discarded-blood') }}" class="nav-link">
-                  <i class="ion ion-pie-graph"></i>
-                  <p>Discarded Blood</p>
                 </a>
               </li>
             </ul>
@@ -674,7 +708,7 @@
             <a href="#" class="nav-link">
                 <i class="ion ion-stats-bars"></i>
               <p>
-                Trends
+                Supply-Demand Trends
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

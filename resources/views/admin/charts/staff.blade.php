@@ -6,7 +6,7 @@ Staff Charts
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Staff Chart</div>
+            <div class="card-header">Staff Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ Staff Charts
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Staff Chart</div>
+            <div class="card-header">Staff Analysis</div>
 
             <div class="card-body">
 

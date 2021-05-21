@@ -636,7 +636,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="text-center white">2020 © BBMS. All Rights Reserved.</p>
+                    <p class="text-center white">2021 © BBMS. All Rights Reserved.</p>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ Platelets Charts
 <div class="row justify-content-center">
     <div class="col-md">
         <div class="card">
-            <div class="card-header">Platelets Chart</div>
+            <div class="card-header">Platelets Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ Platelets Charts
     </div>
     <div class="col-md">
         <div class="card">
-            <div class="card-header">Platelets Chart</div>
+            <div class="card-header">Platelets Analysis</div>
 
             <div class="card-body">
 

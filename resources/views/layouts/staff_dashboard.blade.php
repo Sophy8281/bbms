@@ -219,223 +219,257 @@
             </li>
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
-                  <i class="fa fa-calendar"></i>
+                  <i class="fa fa-ambulance"></i>
                   <p>
-                    Hospital Requests
+                    Drives
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="{{ URL::to('/staff/requests') }}" class="nav-link">
-                      <i class="fa fa-calendar"></i>
-                      <p>Hospital Requests</p>
+                    <a href="{{ URL::to('staff/drives')  }}" class="nav-link">
+                      <i class="fa fa-ambulance"></i>
+                      <p>Drives</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('staff/hosted')  }}" class="nav-link">
+                      <i class="fa fa-ambulance"></i>
+                      <p>Hosting Requests</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fa fa-users"></i>
+                  <p>
+                    Donors
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/all-users') }}" class="nav-link">
+                      <i class="fa fa-users"></i>
+                      <p>Donors</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('/staff/add-user') }}" class="nav-link">
+                      <i class="fa fa-user-plus"></i>
+                      <p>New Donor</p>
                     </a>
                 </li>
                 </ul>
-            </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="fa fa-users"></i>
-              <p>
-                Donors
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('/staff/all-users') }}" class="nav-link">
-                  <i class="fa fa-users"></i>
-                  <p>Donors</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ URL::to('/staff/add-user') }}" class="nav-link">
-                  <i class="fa fa-user-plus"></i>
-                  <p>Add Donor</p>
-                </a>
-            </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="fa fa-handshake"></i>
-              <p>
-                Donation
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('/staff/all-donations') }}" class="nav-link">
+              </li>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
                   <i class="fa fa-handshake"></i>
-                  <p>Donations</p>
+                  <p>
+                    Donation
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/all-donations') }}" class="nav-link">
+                      <i class="fa fa-handshake"></i>
+                      <p>Donations</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/add-donation') }}" class="nav-link">
+                      <i class="fa fa-plus-circle"></i>
+                      <p>New Donation</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('/staff/add-donation') }}" class="nav-link">
-                  <i class="fa fa-plus-circle"></i>
-                  <p>Add Donation</p>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fa fa-flask"></i>
+                  <p>
+                    Screening
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/unscreened-donations') }}" class="nav-link">
+                      <i class="fa fa-plus-circle"></i>
+                      <p>Add Test Results</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="fa fa-flask"></i>
-              <p>
-                Screening
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('/staff/unscreened-donations') }}" class="nav-link">
-                  <i class="fa fa-plus-circle"></i>
-                  <p>Add Test Results</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-             <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="fa fa-hourglass"></i>
-              <p>
-                Processing
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('/staff/process') }}" class="nav-link">
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
                   <i class="fa fa-hourglass"></i>
-                  <p>Process</p>
+                  <p>
+                    Processing
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/process') }}" class="nav-link">
+                      <i class="fa fa-hourglass"></i>
+                      <p>Process</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('/staff/processed') }}" class="nav-link">
+                      <i class="fa fa-hourglass"></i>
+                      <p>All Processed</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('/staff/processed') }}" class="nav-link">
-                  <i class="fa fa-hourglass"></i>
-                  <p>All Processed</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="fa fa-archive"></i>
-              <p>
-               Storage
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/blood')  }}" class="nav-link">
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
                   <i class="fa fa-archive"></i>
-                  <p>Store Blood</p>
+                  <p>
+                   Storage
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ URL::to('staff/blood')  }}" class="nav-link">
+                      <i class="fa fa-archive"></i>
+                      <p>Store Blood</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('staff/plasma')  }}" class="nav-link">
+                      <i class="fa fa-archive"></i>
+                      <p>Store Plasma</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('staff/platelets')  }}" class="nav-link">
+                      <i class="fa fa-archive"></i>
+                      <p>Store Platelets</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('staff/rbc')  }}" class="nav-link">
+                      <i class="fa fa-archive"></i>
+                      <p>Store RBC</p>
+                    </a>
+                  </li>
+                  </ul>
               </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/plasma')  }}" class="nav-link">
-                  <i class="fa fa-archive"></i>
-                  <p>Store Plasma</p>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="fa fa-minus-circle"></i>
+                  <p>
+                   Issuance/Disposal
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ URL::to('/staff/requests') }}" class="nav-link">
+                          <i class="fa fa-calendar"></i>
+                          <p>Hospital Requests</p>
+                        </a>
+                    </li>
+                  <li class="nav-item">
+                    <a href="{{ URL::to('staff/all-agitators')  }}" class="nav-link">
+                      <i class="fa fa-archive"></i>
+                      <p>Agitators</p>
+                    </a>
+                  </li>
+                    <li class="nav-item">
+                      <a href="{{ URL::to('staff/all-freezers')  }}" class="nav-link">
+                        <i class="fa fa-archive"></i>
+                        <p>Freezers</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ URL::to('staff/all-refrigerators')  }}" class="nav-link">
+                        <i class="fa fa-archive"></i>
+                        <p>Refrigerators</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ URL::to('staff/cold-room')  }}" class="nav-link">
+                        <i class="fa fa-archive"></i>
+                        <p>Cold Room</p>
+                      </a>
+                    </li>
+                  </ul>
               </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/platelets')  }}" class="nav-link">
-                  <i class="fa fa-archive"></i>
-                  <p>Store Platelets</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/rbc')  }}" class="nav-link">
-                  <i class="fa fa-archive"></i>
-                  <p>Store RBC</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/all-agitators')  }}" class="nav-link">
-                  <i class="fa fa-archive"></i>
-                  <p>Agitators</p>
-                </a>
-              </li>
-                <li class="nav-item">
-                  <a href="{{ URL::to('staff/all-freezers')  }}" class="nav-link">
-                    <i class="fa fa-archive"></i>
-                    <p>Freezers</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ URL::to('staff/all-refrigerators')  }}" class="nav-link">
-                    <i class="fa fa-archive"></i>
-                    <p>Refrigerators</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ URL::to('staff/cold-room')  }}" class="nav-link">
-                    <i class="fa fa-archive"></i>
-                    <p>Cold Room</p>
-                  </a>
-                </li>
-              </ul>
-          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="fa fa-minus-circle"></i>
               <p>
-                Issuance
+                Issued
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/plasma/issued')  }}" class="nav-link">
-                  <i class="fa fa-minus-circle"></i>
-                  <p>Issued Plasma</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/platelets/issued')  }}" class="nav-link">
-                  <i class="fa fa-minus-circle"></i>
-                  <p>Issued platelets</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/rbc/issued')  }}" class="nav-link">
-                  <i class="fa fa-minus-circle"></i>
-                  <p>Issued RBCs</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/blood/issued')  }}" class="nav-link">
-                  <i class="fa fa-minus-circle"></i>
-                  <p>Issued Blood</p>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/blood/issued')  }}" class="nav-link">
+                      <i class="fa fa-minus-circle"></i>
+                      <p>Issued Blood</p>
+                    </a>
+                  </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/plasma/issued')  }}" class="nav-link">
+                    <i class="fa fa-minus-circle"></i>
+                    <p>Issued Plasma</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/platelets/issued')  }}" class="nav-link">
+                    <i class="fa fa-minus-circle"></i>
+                    <p>Issued platelets</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/rbc/issued')  }}" class="nav-link">
+                    <i class="fa fa-minus-circle"></i>
+                    <p>Issued RBCs</p>
+                    </a>
+                </li>
             </ul>
           </li>
-
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="fa fa-ambulance"></i>
+              <i class="fa fa-trash"></i>
               <p>
-                Drives
+                Discarded
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/drives')  }}" class="nav-link">
-                  <i class="fa fa-ambulance"></i>
-                  <p>Drives</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/hosted')  }}" class="nav-link">
-                  <i class="fa fa-ambulance"></i>
-                  <p>Hosting Requests</p>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/blood/discarded')  }}" class="nav-link">
+                      <i class="fa fa-trash"></i>
+                      <p>Discarded Blood</p>
+                    </a>
+                  </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/plasma/discarded')  }}" class="nav-link">
+                    <i class="fa fa-trash"></i>
+                    <p>Discarded Plasma</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/platelets/discarded')  }}" class="nav-link">
+                    <i class="fa fa-trash"></i>
+                    <p>Discarded platelets</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ URL::to('staff/rbc/discarded')  }}" class="nav-link">
+                    <i class="fa fa-trash"></i>
+                    <p>Discarded RBCs</p>
+                    </a>
+                </li>
             </ul>
           </li>
           <li class="nav-item has-treeview">
@@ -451,6 +485,12 @@
                 <a href="{{ URL::to('staff/reports/donors') }}" class="nav-link" target="_blank">
                   <i class="fa fa-book"></i>
                   <p>Donors</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ URL::to('staff/reports/blood') }}" class="nav-link" target="_blank">
+                  <i class="fa fa-book"></i>
+                  <p>Whole Blood</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -471,12 +511,7 @@
                   <p>Red Blood Cells</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ URL::to('staff/reports/blood') }}" class="nav-link" target="_blank">
-                  <i class="fa fa-book"></i>
-                  <p>Whole Blood</p>
-                </a>
-              </li>
+
             </ul>
           </li>
 

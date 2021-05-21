@@ -63,13 +63,13 @@
               @enderror
           </div>
           <div class="col-md-4 form-group">
-            <select  id="group_id" type="text" name="group_id" class="form-control @error('group_id') is-invalid @enderror"required>
+            <select  id="blood_group" type="text" name="blood_group" class="form-control @error('blood_group') is-invalid @enderror">
                 <option value="">Select Blood Group</option>
                 @foreach ($blood_groups as $blood_group)
                     <option value="{{ $blood_group->name }}">{{ $blood_group->name }}</option>
                 @endforeach
                 </select>
-                @error('group_id')
+                @error('blood_group')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

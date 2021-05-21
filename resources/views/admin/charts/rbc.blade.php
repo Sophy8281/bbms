@@ -6,7 +6,7 @@ RBC Charts
 <div class="row justify-content-center">
     <div class="col-md">
         <div class="card">
-            <div class="card-header">Red Blood Cells Chart</div>
+            <div class="card-header">Red Blood Cells Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ RBC Charts
     </div>
     <div class="col-md">
         <div class="card">
-            <div class="card-header">Red Blood Cells Chart</div>
+            <div class="card-header">Red Blood Cells Analysis</div>
 
             <div class="card-body">
 
@@ -34,7 +34,7 @@ RBC Charts
                         {!! $chart2->renderHtml() !!}
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

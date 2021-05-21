@@ -6,7 +6,7 @@ Issued Plasma
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Plasma Chart</div>
+            <div class="card-header">Plasma Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ Issued Plasma
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Plasma Chart</div>
+            <div class="card-header">Plasma Analysis</div>
 
             <div class="card-body">
 

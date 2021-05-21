@@ -6,11 +6,11 @@ Donors
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Donor Charts</div>
+            <div class="card-header">Donor Analysis</div>
 
             <div class="card-body">
 
-                <h1>{{ $chart1->options['chart_title'] }}</h1>
+                <h2>{{ $chart1->options['chart_title'] }}</h2>
                     {!! $chart1->renderHtml() !!}
 
                 {{-- <hr />
@@ -22,7 +22,7 @@ Donors
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Donor Charts</div>
+            <div class="card-header">Donor Analysis</div>
 
             <div class="card-body">
 
@@ -31,7 +31,7 @@ Donors
 
                 <hr /> --}}
 
-                <h1>{{ $chart2->options['chart_title'] }}</h1>
+                <h2>{{ $chart2->options['chart_title'] }}</h2>
                 {!! $chart2->renderHtml() !!}
             </div>
         </div>

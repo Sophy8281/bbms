@@ -37,9 +37,10 @@ Edit Donor
             <div class="form-group">
                 Gender
                 <p class="hint--top" data-hint="Gender" id="input-field">
-                    <select type="text" name="gender" class="form-control @error('gender') is-invalid @enderror" value="{{ $user->gender }}" placeholder="Gender">
-                        <option>Male</option>
-                        <option>Female</option>
+                    <select type="text" name="gender" class="form-control  @error('gender') is-invalid @enderror" required autofocus aria-readonly="true">
+                        <option value="{{ $user->gender }}" >{{ $user->gender }}</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                     </select>
                     @error('gender')
                     <span class="invalid-feedback" role="alert">
@@ -95,9 +96,12 @@ Edit Donor
             <div class="form-group">
                 Blood Group
                 <p class="hint--top" data-hint="Blood Group" id="input-field">
-                    <select class="form-control @error('blood_group') is-invalid @enderror" value="{{ $user->blood_group }}"  id="blood_group" type="text"  name="blood_group">
+                    <select class="form-control @error('blood_group') is-invalid @enderror" id="blood_group" type="text"  name="blood_group" required>
+                        @if ($user->blood_group )
+                        <option value="{{ $user->blood_group }}">{{ $user->blood_group }}</option>
+                        @endif
                         @foreach ($blood_groups as $blood_group)
-                            <option>{{ $blood_group->name }}</option>
+                            <option value="{{ $blood_group->name }}">{{ $blood_group->name }}</option>
                         @endforeach
                     </select>
                     @error('blood_group')

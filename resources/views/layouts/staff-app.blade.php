@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Favicons -->
+    <link href="{{ asset('site/img/logo.png') }}" rel="icon">
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 

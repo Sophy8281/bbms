@@ -111,10 +111,6 @@
                                 @forelse($donations as $donation)
                                 <tr>
                                     <td>{{ $donation->bag_serial_number }}</td>
-                                    <td> <a class="btn btn-success" href="">{{ $donation->blood_group }}
-                                        <i class="fas fa-heart"></i>
-                                        </a>
-                                    </td>
                                     <td> <a class="btn btn-success" href="">{{ $donation->status  }}
                                         <i class="fas fa-thumbs-up"></i>
                                         </a>

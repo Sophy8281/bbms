@@ -40,6 +40,9 @@ Edit Staff
                             <p class="hint--top" data-hint="Blood Bank" id="input-field">
 
                                 <select  id="bank_id" type="text" name="bank_id" class="form-control @error('bank_id') is-invalid @enderror">
+                                    @if ($staff->bank_id)
+                                    <option value="{{ $staff->bank->name }}">{{ $staff->bank->name }}</option>
+                                    @endif
                                     @foreach ($banks as $bank)
                                         <option value="{{ $bank->id }}">{{ $bank->name }}</option>
                                     @endforeach

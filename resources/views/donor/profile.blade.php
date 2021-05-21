@@ -96,7 +96,7 @@
                             </p>
                         </div>
                         <input type="submit" class="btn btn-primary" value="Submit">
-                        <a href="{{ url('donor/') }}" class="btn btn-primary"><i class=""></i> Back</a>
+                        <a href="{{ url('home/') }}" class="btn btn-primary"><i class=""></i> Back</a>
                     </form>
             </div>
         </div>

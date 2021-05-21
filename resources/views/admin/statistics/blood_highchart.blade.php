@@ -13,7 +13,7 @@ Trends
         var BloodRequests = {{ json_encode($blood_requests,JSON_NUMERIC_CHECK) }};
         $('#highchart').highcharts({
             chart: {
-                type: 'column'
+                type: 'line'
             },
             title: {
                 text: 'BLOOD TRENDS'

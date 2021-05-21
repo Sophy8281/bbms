@@ -27,7 +27,7 @@ Processing
                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('plasma Bag SNo') }}</label>
 
                 <div class="col-md-6">
-                    <input type="text" name="plasma_bag_no" class="form-control @error('plasma_bag_no') is-invalid @enderror">
+                    <input type="text" name="plasma_bag_no" class="form-control @error('plasma_bag_no') is-invalid @enderror" value="{{ old('plasma_bag_no') }}" autofocus>
                     @error('plasma_bag_no')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -39,7 +39,7 @@ Processing
                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Platelet Bag SNo') }}</label>
 
                 <div class="col-md-6">
-                    <input type="text" name="platelet_bag_no" class="form-control @error('platelet_bag_no') is-invalid @enderror">
+                    <input type="text" name="platelet_bag_no" class="form-control @error('platelet_bag_no') is-invalid @enderror" value="{{ old('platelet_bag_no') }}" autofocus>
                     @error('platelet_bag_no')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@ Processing
                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('RBC Bag SNo') }}</label>
 
                 <div class="col-md-6">
-                    <input type="text" name="rbc_bag_no" class="form-control @error('rbc_bag_no') is-invalid @enderror">
+                    <input type="text" name="rbc_bag_no" class="form-control @error('rbc_bag_no') is-invalid @enderror" value="{{ old('rbc_bag_no') }}" autofocus>
                     @error('rbc_bag_no')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

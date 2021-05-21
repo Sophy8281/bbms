@@ -6,7 +6,7 @@ Plasma Charts
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Plasma Chart</div>
+            <div class="card-header">Plasma Analysis</div>
 
             <div class="card-body">
                 <h2>{{ $chart1->options['chart_title'] }}</h2>
@@ -16,7 +16,7 @@ Plasma Charts
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Plasma Chart</div>
+            <div class="card-header">Plasma Analysis</div>
 
             <div class="card-body">
 

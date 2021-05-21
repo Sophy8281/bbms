@@ -18,9 +18,9 @@ Donors
         <div class="col-sm">
             <button type="submit" class="btn btn-primary" name="search" title="Search">Filter Range</button>
         </div>
-        <div class="col-sm">
+        {{-- <div class="col-sm">
             <a class="btn btn-primary" href="{{ url('admin/reports/donors') }}" target="_blank">Export All</a>
-        </div>
+        </div> --}}
     </div>
 </form>
 
@@ -53,7 +53,7 @@ Donors
         <td>{{ $user->county }}</td>
         <td>{{ date('F d, Y h:m A', strtotime($user->created_at)) }}</td>
         <td>
-            <a href="{{ url('admin/donor/edit/'.$user->id) }}" class="bg-primary" ><i class="fa fa-edit"></i> Edit</a><br>
+            <a href="{{ url('admin/donor/edit/'.$user->id) }}" class="bg-info" ><i class="fa fa-edit"></i> Edit</a><br>
             <a href="{{ url('admin/donor/delete/'.$user->id) }}" class="bg-danger" onclick="return confirm('Are you sure you want to delete {{ $user->name }}?')"><i class="fa fa-trash"></i> Delete</a>
         </td>
     </tr>
@@ -71,11 +71,11 @@ Donors
             // responsive:true,
             dom: '<"html5buttons"B>lTfgitp',
             buttons: [
-                {extend: 'copy', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
-                {extend: 'csv', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
-                {extend: 'excel', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
+                {extend: 'copy', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, title: 'Donors', className: 'btn btn-outline-primary btn-lg', text:'<i class="fa fa-copy"></i>' },
+                {extend: 'csv', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, title: 'Donors', className: 'btn btn-primary btn-outline btn-lg',text:'<i class="fa fa-file-csv"></i>'},
+                {extend: 'excel', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, title: 'Donors', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-excel"></i>'},
                 {extend: 'pdf', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, title: 'Donors',  className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-file-pdf"></i>'},
-                {extend: 'print', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, title: 'Donors',className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
+                {extend: 'print', exportOptions: { columns: [0,1,2,3,4,5,6,7,8] }, title: 'Donors', className: 'btn btn-primary btn-outline btn-lg', text:'<i class="fa fa-print"></i>',
                     customize: function (win){
                     $(win.document.body).addClass('white-bg');
                     $(win.document.body).css('font-size', '10px');

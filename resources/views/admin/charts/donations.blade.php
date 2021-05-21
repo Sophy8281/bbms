@@ -6,7 +6,7 @@ Donations Charts
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Donations Chart</div>
+            <div class="card-header">Donations Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ Donations Charts
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Donations Chart</div>
+            <div class="card-header">Donations Analysis</div>
 
             <div class="card-body">
 

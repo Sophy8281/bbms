@@ -6,7 +6,7 @@ Blood Charts
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Whole Blood Chart</div>
+            <div class="card-header">Whole Blood Analysis</div>
 
             <div class="card-body">
 
@@ -26,7 +26,7 @@ Blood Charts
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Whole Blood Chart</div>
+            <div class="card-header">Whole Blood Analysis</div>
 
             <div class="card-body">
 
@@ -42,7 +42,7 @@ Blood Charts
                     <div class="col-md-6">
                         {!! $chart2->renderHtml() !!}
                     </div>
-                    
+
                 </div>
 
             </div>

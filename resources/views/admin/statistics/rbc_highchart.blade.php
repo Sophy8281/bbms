@@ -13,7 +13,7 @@ Trends
         var RbcRequests = {{ json_encode($rbc_requests,JSON_NUMERIC_CHECK) }};
         $('#highchart').highcharts({
             chart: {
-                type: 'column'
+                type: 'line'
             },
             title: {
                 text: 'RED BLOOD CELLS TRENDS'

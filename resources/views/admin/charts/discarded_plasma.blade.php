@@ -6,7 +6,7 @@ Discarded Plasma
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Discarded Plasma Charts</div>
+            <div class="card-header">Discarded Plasma Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ Discarded Plasma
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Discarded Plasma Charts</div>
+            <div class="card-header">Discarded Plasma Analysis</div>
 
             <div class="card-body">
 

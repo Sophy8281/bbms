@@ -6,7 +6,7 @@ Discarded Blood
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Discarded Red Blood Cells Charts</div>
+            <div class="card-header">Discarded Red Blood Cells Analysis</div>
 
             <div class="card-body">
 
@@ -18,7 +18,7 @@ Discarded Blood
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Discarded Red Blood Cells Charts</div>
+            <div class="card-header">Discarded Red Blood Cells Analysis</div>
 
             <div class="card-body">
 

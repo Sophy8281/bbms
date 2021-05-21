@@ -39,12 +39,16 @@ Drives
                 <td>{{ $hosted_drive->bank->name }}</td>
                 <td>{{ $hosted_drive->comment }}</td>
                 <td>{{ $hosted_drive->created_at }}</td>
+                <td>
                 @if ($hosted_drive->accepted_at)
-                <td>{{ $hosted_drive->accepted_at }}</td>
+                {{ $hosted_drive->accepted_at }}
                 @endif
+                </td>
+                <td>
                 @if ($hosted_drive->staff_id)
-                <td>{{ $hosted_drive->staff->name }}</td>
+                {{ $hosted_drive->staff->name }}
                 @endif
+                </td>
                 @if ($hosted_drive->accepted_at)
                 <td></td>
                 @else

@@ -9,8 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
 // use Carbon\Carbon;
 
-// class User extends Authenticatable implements MustVerifyEmail
-class User extends Authenticatable
+// class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
     use Sortable;

@@ -26,7 +26,6 @@ class UserSeeder extends Seeder
             'blood_group' => 'A+',
             'county' => 'Vihiga',
             'password' => bcrypt('12345678'),
-
         ]);
         User::create([
             'name' => 'Donor2',
@@ -36,9 +35,22 @@ class UserSeeder extends Seeder
             'unique_no'=> '23321223',
             'birth_date' => '1990-01-20',
             'address'=> '50 Gakungu',
-            'phone' => '0718875113',
+            'phone' => '0720123456',
             'blood_group' => 'B+',
             'county' => 'Kiambu',
+            'password' => bcrypt('12345678'),
+        ]);
+        User::create([
+            'name' => 'Donor3',
+            'email' => 'donor3@gmail.com',
+            'email_verified_at' => now(),
+            'gender' => 'Female',
+            'unique_no'=> '26253223',
+            'birth_date' => '1994-01-20',
+            'address'=> '50 Koomeni',
+            'phone' => '0721123456',
+            'blood_group' => 'AB+',
+            'county' => 'Nakuru',
             'password' => bcrypt('12345678'),
 
         ]);

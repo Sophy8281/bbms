@@ -26,7 +26,6 @@ class DatabaseSeeder extends Seeder
             AgitatorSeeder::class,
             FreezerSeeder::class,
             RefrigeratorSeeder::class,
-            UserSeeder::class,
             AppointmentSeeder::class,
             DonationSeeder::class,
             BloodSeeder::class,

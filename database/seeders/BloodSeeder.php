@@ -15,6 +15,7 @@ class BloodSeeder extends Seeder
     public function run()
     {
         Blood::create([
+            'donation_id' => '1',
             'bank_id' => '1',
             'Staff_id' => '1',
             'bag_serial_number' => '00100',
